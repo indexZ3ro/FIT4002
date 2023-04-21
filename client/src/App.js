@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import Note from './Components/Note';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         >
           Learn React TEST PUSH TEST
         </a>
+        <Note></Note>
       </header>
     </div>
   );
