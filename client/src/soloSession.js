@@ -1,16 +1,12 @@
 import React from "react";
-import Sidebar from './Components/sidebar';
 import './App.css';
 
 const SoloSession = () => {
   return (
-    <div>
-      <Sidebar/>
-      <div>
-        <p1>TEST</p1>
-      </div>
+    <div>      
+        <h1>TEST</h1>
     </div>
   );
-}
+};
 
 export default SoloSession;
