@@ -1,9 +1,12 @@
 import logo from './logo.svg';
+import Sidebar from './Components/sidebar';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
+      <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
+
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
