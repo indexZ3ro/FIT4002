@@ -1,0 +1,9 @@
+.container {
+    width: 1406;
+    height: 702;
+    background-color: white;
+    position: absolute;
+    box-sizing: border-box;
+    left: 200px;
+    top: 200px;
+}
