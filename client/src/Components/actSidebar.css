@@ -1,0 +1,19 @@
+.actSidebar {
+  position: fixed;
+  top: 20%;
+  left: 50px;
+  height: 47%;
+  width: 88px;
+  background-color: white;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  border-radius: 10px;
+}
+
+.draggable-container {
+  padding: 10px;
+}
+
+.draggable-item {
+  margin-bottom: 40px;
+}
