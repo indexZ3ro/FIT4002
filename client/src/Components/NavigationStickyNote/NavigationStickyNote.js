@@ -1,9 +1,10 @@
-import '../css/navigationStickyNote.css';
+import '../../css/navigationStickyNote.css';
 import $ from 'jquery';
+
 function StickyNotes() {
     function handleClick(event) {
         var el = $(event.currentTarget);
-        var content = el.children();
+        // var content = el.children();
         var border = $('<div>').css({
           position: 'absolute',
           bottom: '0',

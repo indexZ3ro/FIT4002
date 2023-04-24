@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
-import Sidebar from "./Components/Sidebar";
-import TeamHeader from "./Components/TeamHeader";
-import ACTMatrix from "./Components/ACTMatrix";
-import Timer from "./Components/Timer";
+import Sidebar from "./Components/Sidebar/Sidebar";
+import TeamHeader from "./Components/TeamHeader/TeamHeader";
+import ACTMatrix from "./Components/ACTMatrix/ACTMatrix";
+import Timer from "./Components/Timer/Timer";
 
 const SoloSession = () => {
     document.body.style.backgroundColor = "orange";

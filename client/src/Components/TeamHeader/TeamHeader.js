@@ -1,5 +1,5 @@
 import React from "react";
-import "./TeamHeader.css";
+import "../../css/TeamHeader.css";
 
 const TeamHeader = () => {
     return (

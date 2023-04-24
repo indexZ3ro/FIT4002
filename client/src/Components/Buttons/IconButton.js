@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import './button.css';
+import '../../css/button.css';
 
 const IconButton = ({ id }) => {
   const icon = useSelector(state => state.iconButton[id]);
