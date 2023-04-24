@@ -1,12 +1,20 @@
 import React from "react";
-import './App.css';
+import "./App.css";
+import Sidebar from "./Components/Sidebar";
+import TeamHeader from "./Components/TeamHeader";
+import ACTMatrix from "./Components/ACTMatrix";
+import Timer from "./Components/Timer";
 
 const SoloSession = () => {
-  return (
-    <div>      
-        <h1>TEST</h1>
-    </div>
-  );
+    document.body.style.backgroundColor = "orange";
+    return (
+        <div>
+            <TeamHeader />
+            <Sidebar />
+            <ACTMatrix />
+            <Timer />
+        </div>
+    );
 };
 
 export default SoloSession;
