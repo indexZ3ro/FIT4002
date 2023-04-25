@@ -1,7 +1,7 @@
 .container {
     width: 1406px;
     height: 702px;
-    background-color: white;
+    background-image: url("../assets/paper-background.jpg");
     position: absolute;
     box-sizing: border-box;
     border-radius: 100px;

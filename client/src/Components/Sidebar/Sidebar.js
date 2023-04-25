@@ -1,15 +1,22 @@
-import React from 'react';
-import '../../css/sidebar.css';
+import React from "react";
+import "../../css/sidebar.css";
 import { Link } from "react-router-dom";
-import { slide as Menu } from 'react-burger-menu';
+import { slide as Menu } from "react-burger-menu";
 
 const Sidebar = (props) => {
-  return (
-    <Menu width={ '250px' } styles={{bmMenu: {"overflow-y": 'hidden'}}}>
-      <Link to="/" className="menu-item">Home Screen</Link>
-      <Link to="/SoloSession" className="menu-item">Solo Session</Link>
-    </Menu>
-  );
+    return (
+        <Menu width={"250px"} styles={{ bmMenu: { "overflow-y": "hidden" } }}>
+            <Link to="/" className="menu-item">
+                Home Screen
+            </Link>
+            <Link to="/TeamSession" className="menu-item">
+                Team Session
+            </Link>
+            <Link to="/SoloSession" className="menu-item">
+                Solo Session
+            </Link>
+        </Menu>
+    );
 };
 
 export default Sidebar;
