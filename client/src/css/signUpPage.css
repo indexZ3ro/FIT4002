@@ -44,8 +44,8 @@ input:focus {
     border-left: 4vw solid transparent;
     border-bottom: 4vh solid #22A7FF;
     border-right: 4vw solid #22A7FF;
-    transition: transform 1s ease-out;
-    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); */
+    transition: transform 2s ease-out;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
   
 
