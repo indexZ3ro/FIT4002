@@ -1,0 +1,52 @@
+.signUpPage{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #F7A92E;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.signupContainer{
+    display: flex;
+    height: 60%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+/* Input */
+.userInput{
+    width: 30vw;
+    height: 6vh;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    outline: none;
+}
+.userInput::placeholder{
+    font-size: 1vw;
+}
+
+input:focus {
+    border: 2px solid #555;
+    outline: none;
+}
+
+.edge-signup  {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-top: 4vh solid transparent;
+    border-left: 4vw solid transparent;
+    border-bottom: 4vh solid #22A7FF;
+    border-right: 4vw solid #22A7FF;
+    transition: transform 1s ease-out;
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); */
+}
+  
+
+

@@ -1,0 +1,45 @@
+.checkbox-wrapper input[type="checkbox"] {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    width: 1.6vw;
+    height: 1.6vw;
+    border-radius: 0.15em;
+    margin-right: 10px;
+    border: 0.15em solid grey;
+    outline: none;
+    cursor: pointer;
+}
+  
+input:checked {
+    background-color: grey;
+    position: relative;
+}
+  
+input:checked::before {
+    content: '\2713';
+    font-size: 1.5vw;
+    color: #fff;
+    position: absolute;
+    right: 1px;
+    top: -3px;
+}
+  
+
+
+.checkbox-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.checkboxLabel{
+    font-family: 'Racing Sans One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1vw;
+    line-height: 25px;
+
+    color: #FFFFFF;
+}
