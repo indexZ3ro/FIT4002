@@ -3,8 +3,15 @@ import "../css/homepage.css";
 import TextButton from "../Components/Buttons/TextButton";
 import stickyNote from "../assets/stickyNote.png";
 import stickyNotes from "../assets/stickyNotes.png";
+import { useNavigate } from "react-router-dom";
 
 const Homepage = () => {
+  const navigate = useNavigate();
+
+  const routePathToCreateTeamMatrix = () => {
+    navigate(`/CreateTeamMatrix`);
+  };
+
   return (
     <div className="homepage">
       <div className="homepage-title">Teamoji</div>
@@ -40,7 +47,10 @@ const Homepage = () => {
               </div>
             </div>
             <div className="homepage-content-button">
-              <TextButton id="create"></TextButton>
+              <TextButton
+                id="create"
+                handleClick={routePathToCreateTeamMatrix}
+              ></TextButton>
               <TextButton id="join"></TextButton>
             </div>
           </div>
