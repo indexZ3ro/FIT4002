@@ -1,0 +1,96 @@
+.create-team-matrix{
+    display: flex;
+    flex-direction: column;
+    background-color: #22A7FF;
+    height: 100vh;
+    
+}
+
+.team-matrix-top{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 10vh;
+    width: 100vw;
+}
+
+.team-matrix-mid{
+    display: flex;
+    flex-direction: row;
+    height: 80vh;
+    width: 100vw;
+}
+
+.team-matrix-bottom{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.team-matrix-split{
+    margin-left: 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 50vw;
+}
+
+
+/* Text */
+.team-matrix-heading{
+    font-family: 'Racing Sans One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 4vw;
+    margin-bottom: 3vh;
+
+    color: #FFFFFF;
+
+}
+
+.team-matrix-input-label{
+    font-family: 'Racing Sans One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2.5vw;
+    line-height: 44px;
+
+    color: #000000;
+}
+
+/* Input */
+.team-matrix-input-wrapper{
+    display: flex;
+    flex-direction: column;
+    height: 40vh;
+}
+.team-matrix-input-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 15vh;
+}
+
+.team-matrix-input{
+    width: 30vw;
+    height: 4vh;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.team-matrix-input:focus {
+    border: 2px solid #555;
+    outline: none;
+}
+
+
+
+@media only screen and (max-width: 844px) {
+    .team-matrix-split img {
+        width: 15vh;
+        height: 15vh;
+    }
+  }
