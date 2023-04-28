@@ -15,7 +15,7 @@ function App() {
         <div className="App">
           <Sidebar />
           <Routes>
-            <Route path="/" element={<CreateTeamMatrix />} />
+            <Route path="/" element={<Homepage />} />
             <Route path="/Home" element={<Homepage />} />
             <Route path="/CreateTeamMatrix" element={<CreateTeamMatrix />} />
             <Route path="/SoloSession" element={<SoloSession />} />
