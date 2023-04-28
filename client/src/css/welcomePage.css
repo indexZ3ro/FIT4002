@@ -2,7 +2,9 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: #F7A92E;
+    background-color: #22A7FF;
     justify-content: center;
     align-items: center;
+    background-image: url("../assets/teamoji.png");
+    background-position: center center;
 }
