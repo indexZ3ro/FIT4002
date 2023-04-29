@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Notes
+
+to deploy run:
+firebase deploy --only hosting:teamoji-matrix which will deploy the public directory
+
+to compile code to public folder run:
+npx webpack --config webpack.config.js
+
+site: https://teamoji-matrix.web.app/
