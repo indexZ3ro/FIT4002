@@ -6,8 +6,12 @@ import "./App.css";
 import Homepage from "./Homepage";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import db from './firebase';
 
 function App() {
+    console.log(db);
     return (
         <Provider store={store}>
             <Router>
