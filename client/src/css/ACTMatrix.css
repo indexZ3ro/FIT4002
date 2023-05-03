@@ -1,4 +1,7 @@
 .container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     width: 1406px;
     height: 702px;
     background-image: url("../assets/paper-background.jpg");
@@ -9,22 +12,44 @@
     top: 150px;
 }
 
-.line-x {
-    width: 1271px;
-    height: 0px;
-    border-bottom: 3px solid black;
-    position: absolute;
-    left: 65px;
-    top: 351px;
+.inner-container {
+    width: 702.5px;
+    height: 350.5px;
+    background-image: url("../assets/paper-background.jpg");
 }
 
-.line-y {
-    width: 0px;
-    height: 612px;
-    border-right: 3px solid black;
-    position: absolute;
-    left: 703px;
-    top: 45px;
+.quad1 {
+    border-top-left-radius: 100px;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+}
+
+.expanded {
+    width: 1406px;
+    height: 702px;
+    box-sizing: border-box;
+    border-radius: 100px;
+    border-right: 0px;
+}
+
+.hidden {
+    display: none;
+}
+
+.quad2 {
+    border-top-right-radius: 100px;
+    border-bottom: 1px solid;
+}
+
+.quad3 {
+    border-bottom-left-radius: 100px;
+    border-right: 1px solid;
+}
+
+.quad4 {
+    border-top-right-radius: 100px;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap");
@@ -33,12 +58,14 @@
     font-family: "Racing Sans One", cursive;
     opacity: 0.11;
     font-size: 32px;
+    position: absolute;
+    left: 600px;
 }
 
 .text-outside {
     position: absolute;
     top: 650px;
-    left: 650px;
+    left: 715px;
     font-family: "Racing Sans One", cursive;
     opacity: 0.11;
     font-size: 32px;
