@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import "../../css/button.css";
 
-export const TextButton = ({ id, handleClick, type }) => {
+const TextButton = ({ id, handleClick, type }) => {
   const label = useSelector((state) => state.textButton[id]);
   return (
     <div>
@@ -11,3 +11,5 @@ export const TextButton = ({ id, handleClick, type }) => {
     </div>
   );
 };
+
+export default TextButton;

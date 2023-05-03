@@ -25,13 +25,14 @@
 }
 
 .iconButton {
-  background-color: black;  
+  background-color: transparent;  
   border: none;
 }
 
 .iconButton svg{
-  width: 100px;
-  height: 100px;
+  margin-top: 1vh;
+  width: 5vw;
+  height: 5vh;
   color: white;
 }
 
@@ -51,4 +52,3 @@
 .edge-button:hover{
   cursor: pointer;
 }
-

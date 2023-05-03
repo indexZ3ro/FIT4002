@@ -1,0 +1,79 @@
+.homepage{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.left{
+    width: 50vw;
+    background-color: #F7A92E;
+}
+
+
+.right{
+    width: 50vw;
+    background-color: #22A7FF;
+}
+
+.homepage-split-container{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.homepage-img-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+    margin-top: 15vh;
+    margin-bottom: 5vh;
+}
+
+.homepage-img-container img{
+    width: 20vh;
+    height: 20vh;
+}
+
+
+.homepage-content{
+    margin-left: 5vw;
+    height: 80vh;
+}
+
+.homepage-content-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 10vh;
+}
+
+.homepage-content-button{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-top: 10vh;
+    height: 20vh;
+}
+
+/* Text */
+
+.homepage-heading{
+    font-family: 'Racing Sans One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 3.5vw;
+
+    color: #FFFFFF;
+}
+
+.homepage-subheading{
+    font-family: 'Public Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.5vw;
+
+    color: #FFFFFF;
+}
+
+/* Image */
