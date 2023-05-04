@@ -12,6 +12,10 @@ const Homepage = () => {
     navigate(`/CreateTeamMatrix`);
   };
 
+  const createSoloSession = () => {
+    navigate("/SoloSession");
+  };
+
   return (
     <div className="homepage">
       <div className="homepage-title">Teamoji</div>
@@ -31,6 +35,7 @@ const Homepage = () => {
               <TextButton
                 id="create"
                 customStyle={{ color: "#F7A92E" }}
+                handleClick={createSoloSession}
               ></TextButton>
             </div>
           </div>

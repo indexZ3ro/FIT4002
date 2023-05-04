@@ -2,8 +2,15 @@ import stickyNotes from "../assets/stickyNotes.png";
 import "../css/createTeamMatrix.css";
 import TextButton from "../Components/Buttons/TextButton";
 import { CgProfile } from "react-icons/cg";
+import { useNavigate } from "react-router-dom";
 
 const CreateTeamMatrix = () => {
+  const navigate = useNavigate();
+
+  const createTeamMatrix = () => {
+    navigate("/TeamSession");
+  };
+
   return (
     <div className="create-team-matrix">
       <div className="team-matrix-top">
@@ -34,6 +41,7 @@ const CreateTeamMatrix = () => {
               <TextButton
                 id="start"
                 customStyle={{ color: "#22A7FF" }}
+                handleClick={createTeamMatrix}
               ></TextButton>
             </div>
           </div>
