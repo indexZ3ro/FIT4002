@@ -1,4 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import firebase from "firebase/app";
+import "firebase/firestore";
+import db from "./firebase";
 import SoloSession from "./pages/SoloSession";
 import TeamSession from "./pages/TeamSession";
 import Sidebar from "./Components/Sidebar/Sidebar";
