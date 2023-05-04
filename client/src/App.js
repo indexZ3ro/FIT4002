@@ -18,9 +18,8 @@ function App() {
         <div className="App">
           <Sidebar />
           <Routes>
-            <Route path="/" element={<WelcomePage />} />
+            <Route path="/" element={<LogInPage />} />
             <Route path="/Home" element={<Homepage />} />
-            <Route path="/LogIn" element={<LogInPage />} />
             <Route path="/Signup" element={<SignUpPage />} />
             <Route path="/CreateTeamMatrix" element={<CreateTeamMatrix />} />
             <Route path="/SoloSession" element={<SoloSession />} />

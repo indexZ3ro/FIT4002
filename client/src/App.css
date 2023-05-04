@@ -1,9 +1,9 @@
 /* Text */
 .title {
-  font-family: 'Racing Sans One';
+  font-family: 'Mukta';
   font-style: normal;
   font-weight: 400;
-  font-size: 7vw;
+  font-size: 6vw;
   color: #FFFFFF;
 }
 
@@ -25,3 +25,28 @@
   align-items: flex-end;
 }
 
+.homepage-title{
+  position: absolute;
+  top: 1vh;
+  left: 40vw;
+  font-family: 'Racing Sans One';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 4.5vw;
+  text-align: center;
+  
+  color: #FFFFFF;
+}
+
+.team-matrix-title{
+  position: absolute;
+  top: 1vh;
+  left: 40vw;
+  font-family: 'Racing Sans One';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 4.5vw;
+  text-align: center;
+  
+  color: #FFFFFF;
+}

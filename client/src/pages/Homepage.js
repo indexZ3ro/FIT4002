@@ -28,7 +28,10 @@ const Homepage = () => {
               </div>
             </div>
             <div className="homepage-content-button">
-              <TextButton id="create"></TextButton>
+              <TextButton
+                id="create"
+                customStyle={{ color: "#F7A92E" }}
+              ></TextButton>
             </div>
           </div>
         </div>
@@ -50,8 +53,12 @@ const Homepage = () => {
               <TextButton
                 id="create"
                 handleClick={routePathToCreateTeamMatrix}
+                customStyle={{ color: "#22A7FF" }}
               ></TextButton>
-              <TextButton id="join"></TextButton>
+              <TextButton
+                id="join"
+                customStyle={{ color: "#22A7FF" }}
+              ></TextButton>
             </div>
           </div>
         </div>

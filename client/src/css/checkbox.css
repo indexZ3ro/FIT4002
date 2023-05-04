@@ -7,20 +7,20 @@
     height: 1.6vw;
     border-radius: 0.15em;
     margin-right: 10px;
-    border: 0.15em solid grey;
+    border: 0.15em solid white;
     outline: none;
     cursor: pointer;
 }
   
 input:checked {
-    background-color: grey;
+    background-color: white;
     position: relative;
 }
   
 input:checked::before {
     content: '\2713';
     font-size: 1.5vw;
-    color: #fff;
+    color: #22A7FF;
     position: absolute;
     right: 1px;
     top: -3px;

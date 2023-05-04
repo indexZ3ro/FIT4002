@@ -1,9 +1,13 @@
-import { TextButton } from "../Components/Buttons/TextButton";
+import TextButton from "../Components/Buttons/TextButton";
 import { useNavigate } from "react-router-dom";
 import "../css/welcomePage.css";
+import { useDispatch } from "react-redux";
+import { hideSideBar } from "../features/sideBarSlice";
 
 const WelcomePage = () => {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
+  dispatch(hideSideBar());
 
   const routeChangeToSignUp = () => {
     let path = `/SignUp`;

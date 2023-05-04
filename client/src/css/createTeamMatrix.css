@@ -17,23 +17,24 @@
 .team-matrix-mid{
     display: flex;
     flex-direction: row;
-    height: 80vh;
+    height: 90vh;
     width: 100vw;
 }
 
-.team-matrix-bottom{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.team-matrix-split{
+.team-matrix-split-left{
     margin-left: 5vw;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: flex-start;
+    width: 50vw;
+}
+.team-matrix-split-right{
+    margin-left: 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 50vw;
 }
 
@@ -54,32 +55,50 @@
     font-family: 'Racing Sans One';
     font-style: normal;
     font-weight: 400;
-    font-size: 2.5vw;
-    line-height: 44px;
+    font-size: 6vw;
 
-    color: #000000;
+    color: white;
+    margin-bottom: 2vh;
 }
 
 /* Input */
 .team-matrix-input-wrapper{
     display: flex;
     flex-direction: column;
-    height: 40vh;
+    height: 50vh;
+    justify-content: space-evenly;
 }
+
 .team-matrix-input-container{
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    height: 15vh;
+    justify-content: space-evenly;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+.team-matrix-button-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
 }
 
 .team-matrix-input{
-    width: 30vw;
-    height: 4vh;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    width: 24vw;
+    height: 5vh;
     outline: none;
+    border: 1px solid #D5D8DE;
+    border-radius: 5px;
 }
+
+.team-matrix-input::placeholder{
+    font-size: 1vw;
+    font-family: 'Montserrat';
+    font-style: normal;
+    color: #323941;
+}
+
 
 .team-matrix-input:focus {
     border: 2px solid #555;
@@ -87,6 +106,19 @@
 }
 
 
+.icon-button{
+    color: white;
+    font-size: 3vw;
+    margin-top: 2vh;
+    margin-right: 2vw;
+}
+
+
+/* Image */
+.team-matrix-split-right img{
+    height: 40vh;
+    width: 40vh;
+}
 
 @media only screen and (max-width: 844px) {
     .team-matrix-split img {

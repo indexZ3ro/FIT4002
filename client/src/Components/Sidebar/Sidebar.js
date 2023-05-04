@@ -8,7 +8,7 @@ const Sidebar = (props) => {
   const sideBarState = useSelector((state) => state.sideBar.sideBar);
 
   return sideBarState ? (
-    <Menu width={"250px"} styles={{ bmMenu: { "overflow-y": "hidden" } }}>
+    <Menu width={"250px"} styles={{ bmMenu: { overflow: "hidden" } }}>
       <Link to="/" className="menu-item">
         Home Screen
       </Link>

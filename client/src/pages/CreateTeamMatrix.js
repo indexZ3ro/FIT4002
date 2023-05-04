@@ -1,35 +1,46 @@
-import IconButton from "../Components/Buttons/IconButton";
 import stickyNotes from "../assets/stickyNotes.png";
 import "../css/createTeamMatrix.css";
 import TextButton from "../Components/Buttons/TextButton";
+import { CgProfile } from "react-icons/cg";
 
 const CreateTeamMatrix = () => {
   return (
     <div className="create-team-matrix">
       <div className="team-matrix-top">
         <div className="team-matrix-title">Teamoji</div>
-        <IconButton id="profile"></IconButton>
+        <div className="icon-button">
+          <CgProfile />
+        </div>
       </div>
       <div className="team-matrix-mid">
-        <div className="team-matrix-split">
+        <div className="team-matrix-split-left">
           <div className="team-matrix-input-wrapper">
-            <div className="team-matrix-heading">TEAM MATRIX</div>
+            <div className="team-matrix-input-label">TEAM MATRIX</div>
             <div className="team-matrix-input-container">
-              <div className="team-matrix-input-label">Team Name</div>
-              <input className="team-matrix-input" type="text"></input>
+              <input
+                className="team-matrix-input"
+                type="text"
+                placeholder="Team Name"
+              ></input>
             </div>
             <div className="team-matrix-input-container">
-              <div className="team-matrix-input-label">Timer</div>
-              <input className="team-matrix-input" type="text"></input>
+              <input
+                className="team-matrix-input"
+                type="text"
+                placeholder="Timer"
+              ></input>
+            </div>
+            <div className="team-matrix-input-container">
+              <TextButton
+                id="start"
+                customStyle={{ color: "#22A7FF" }}
+              ></TextButton>
             </div>
           </div>
         </div>
-        <div className="team-matrix-split">
+        <div className="team-matrix-split-right">
           <img src={stickyNotes} alt="stickyNotes"></img>
         </div>
-      </div>
-      <div className="team-matrix-bottom">
-        <TextButton id="start"></TextButton>
       </div>
     </div>
   );
