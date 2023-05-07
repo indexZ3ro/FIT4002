@@ -15,6 +15,9 @@ const Homepage = () => {
   const createSoloSession = () => {
     navigate("/SoloSession");
   };
+  const routePathToSettings= () => {
+    navigate("/SettingsPage");
+  };
 
   return (
     <div className="homepage">
@@ -63,6 +66,7 @@ const Homepage = () => {
               <TextButton
                 id="join"
                 customStyle={{ color: "#22A7FF" }}
+                handleClick={routePathToSettings}
               ></TextButton>
             </div>
           </div>

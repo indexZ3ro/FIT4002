@@ -10,6 +10,7 @@ import WelcomePage from "./pages/WelcomePage";
 import LogInPage from "./pages/LogInPage";
 import Homepage from "./pages/Homepage";
 import CreateTeamMatrix from "./pages/CreateTeamMatrix";
+import SettingsPage from "./pages/SettingsPage"
 import { Provider } from "react-redux";
 import store from "./store/store";
 import "./App.css";
@@ -27,6 +28,7 @@ function App() {
             <Route path="/CreateTeamMatrix" element={<CreateTeamMatrix />} />
             <Route path="/SoloSession" element={<SoloSession />} />
             <Route path="/TeamSession" element={<TeamSession />} />
+            <Route path="/SettingsPage" element={<SettingsPage />} />
           </Routes>
         </div>
       </Router>
