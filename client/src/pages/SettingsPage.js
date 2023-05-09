@@ -16,33 +16,53 @@ const SettingsPage = () => {
        
         </div>
       <div className="settingsPage-mid">
-        <div className="settingsPage-split-left">
+        <div className="settingsPage-split-mid">
           <div className="settingsPage-input-wrapper">
-            <div className="settingsPage-input-label">hbjbjb</div>
+          
+            <div className="settingsPage-input-label">Name</div>
             <div className="settingsPage-input-container">
               <input
                 className="settingsPage-input"
                 type="text"
-                placeholder="Team Name"
+                placeholder="Name"
               ></input>
             </div>
+            <div className="settingsPage-input-label">Email</div>
             <div className="settingsPage-input-container">
               <input
                 className="settingsPage-input"
                 type="text"
-                placeholder="Timer"
+                placeholder="Email"
               ></input>
             </div>
+            <div className="settingsPage-input-label">Password</div>
             <div className="settingsPage-input-container">
+              <input
+                className="settingsPage-input"
+                type="text"
+                placeholder="Password"
+              ></input>
+            </div>
+            <div>
+            <div className="settingsPage-button-container">
               <TextButton
-                id="start"
-                customStyle={{ color: "#22A7FF" }}
+                id="update"
+                customStyle={{ fontSize: "12px", color: "black", backgroundColor: "#99CB81", borderColor: "#99CB81" }}
               ></TextButton>
+     <TextButton
+                id="update"
+                customStyle={{ marginLeft: "100px",fontSize: "12px", color: "black", backgroundColor: "#FF2F22", borderColor: "#FF2F22" }}
+              ></TextButton>
+            
+              </div>
             </div>
-          </div>
+           </div>
         </div>
+    
         <div className="settingsPage-split-right">
-         
+          <div className="settingsPage-box-white">
+        </div>
+        
         </div>
       </div>
     </div>

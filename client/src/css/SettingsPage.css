@@ -26,13 +26,24 @@
     top: 0vh;
     left: 20vw;
     text-align: center;
-    background-color: grey;
+    background-color: #323941;
     height: 20%;
     width: 60%;
     border-radius: 10px; /* add a border radius to make the edges more rounded */
 
 }
-
+.settingsPage-box-white
+{
+    position: absolute;
+    top: 15vh;
+    left: 22.5vw;
+    text-align: center;
+    background-color: white;
+    height: 70%;
+    width: 55%;
+    border-radius: 10px; /* add a border radius to make the edges more rounded */
+    z-index: 1;
+}
 .settingsPage-top{
     display: flex;
     flex-direction: row;
@@ -44,12 +55,20 @@
 .settingsPage-mid{
     display: flex;
     flex-direction: row;
-    height: 90vh;
+    height: 80vh;
     width: 100vw;
 }
 
 .settingsPage-split-left{
     margin-left: 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    width: 50vw;
+}
+.settingsPage-split-mid{
+    margin-left: 25vw;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -81,10 +100,10 @@
 .settingsPage-input-label{
     font-family: 'Racing Sans One';
     font-style: normal;
-    font-weight: 400;
-    font-size: 6vw;
+    font-weight: 200;
+    font-size: 1.5vw;
 
-    color: white;
+    color: black;
     margin-bottom: 2vh;
 }
 
@@ -94,6 +113,7 @@
     flex-direction: column;
     height: 50vh;
     justify-content: space-evenly;
+    z-index: 2;
 }
 
 .settingsPage-input-container{
@@ -106,8 +126,8 @@
 
 .settingsPage-button-container{
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
 
 }
 
@@ -116,7 +136,9 @@
     height: 5vh;
     outline: none;
     border: 1px solid #D5D8DE;
+    background-color: #D5D8DE;
     border-radius: 5px;
+   
 }
 
 .settingsPage-input::placeholder{
@@ -134,22 +156,9 @@
 
 
 .icon-button{
-    color: white;
+    color: blue;
     font-size: 3vw;
     margin-top: 2vh;
     margin-right: 2vw;
 }
 
-
-/* Image */
-.settingsPage-split-right img{
-    height: 40vh;
-    width: 40vh;
-}
-
-@media only screen and (max-width: 844px) {
-    .settingsPage-split img {
-        width: 15vh;
-        height: 15vh;
-    }
-  }
