@@ -33,6 +33,8 @@
     font-family: "Racing Sans One", cursive;
     opacity: 0.11;
     font-size: 32px;
+    left: 650px;
+    position: absolute;
 }
 
 .text-outside {
