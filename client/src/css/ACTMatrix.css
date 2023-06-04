@@ -36,7 +36,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap");
 
 .text-inside {
-    font-family: "Racing Sans One", cursive;
     opacity: 0.11;
     font-size: 32px;
     left: 650px;
@@ -47,25 +46,22 @@
     position: absolute;
     top: 650px;
     left: 650px;
-    font-family: "Racing Sans One", cursive;
     opacity: 0.11;
     font-size: 32px;
 }
 
 .text-towards {
     position: absolute;
-    top: 310px;
-    left: 1250px;
-    font-family: "Racing Sans One", cursive;
+    top: 330px;
+    left: 1350px;
     opacity: 0.11;
     font-size: 32px;
 }
 
 .text-away {
     position: absolute;
-    top: 310px;
+    top: 330px;
     left: 50px;
-    font-family: "Racing Sans One", cursive;
     opacity: 0.11;
     font-size: 32px;
 }

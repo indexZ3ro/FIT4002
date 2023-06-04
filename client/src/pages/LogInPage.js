@@ -29,11 +29,11 @@ const LogInPage = () => {
   return (
     <div className="logInPage">
       <div className="split-left-login">
-        <div className="teamoji-title">TEAMOJI</div>
+        <h1 className="teamoji-title">TEAMOJI</h1>
       </div>
       <div className="split-right-login">
         <div className="loginContainer">
-          <div className="heading">Log In</div>
+          <h2>Login</h2>
           <div className="inputContainer">
             <input
               className="userInput"
@@ -48,12 +48,12 @@ const LogInPage = () => {
             ></input>
 
             <div className="rememberMeContainer">
-              <Checkbox style={{"font-family": 'Mukta'}} label="Remember Me" checked={true} />
+              <Checkbox label="Remember Me" checked={true} />
             </div>
           </div>
           <TextButton
             id="submit"
-            customStyle={{ width: "10vw", height: "5vh", color: "#beafe1", 'font-family': "Mukta", }}
+            customStyle={{ width: "10vw", height: "5vh", color: "#beafe1" }}
             handleClick={logIn}
           />
           <div className="guest">Continue as Guest</div>

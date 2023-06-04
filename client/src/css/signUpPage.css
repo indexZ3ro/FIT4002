@@ -52,7 +52,6 @@
 
 .userInput::placeholder{
     font-size: 1vw;
-    font-family: 'Mukta';
     font-style: normal;
     color: #323941;
 }
@@ -77,19 +76,8 @@ input:focus {
 }
   
 /* Text */
-.heading{
-    font-family: 'Racing Sans One';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 6vw;
-    margin-top: 100px;
-
-    color: #FFFFFF;
-
-}
 
 .subheading{
-    font-family: 'Mukta';
     font-style: normal;
     font-weight: 400;
     font-size: 2vw;

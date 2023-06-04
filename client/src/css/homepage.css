@@ -58,21 +58,9 @@
 
 /* Text */
 
-.homepage-heading{
-    font-family: 'Racing Sans One';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 3.5vw;
-
-    color: #FFFFFF;
-}
-
 .homepage-subheading{
-    font-family: 'Mukta';
-    font-style: normal;
     font-weight: 400;
     font-size: 1.5vw;
-
     color: #FFFFFF;
 }
 

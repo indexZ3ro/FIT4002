@@ -18,7 +18,6 @@ const Homepage = () => {
 
   return (
     <div className="homepage">
-      <div className="homepage-title">Teamoji</div>
       <div className="left">
         <div className="homepage-split-container">
           <div className="homepage-img-container">
@@ -26,7 +25,7 @@ const Homepage = () => {
           </div>
           <div className="homepage-content">
             <div className="homepage-content-text">
-              <div className="homepage-heading">SOLO MATRIX</div>
+              <h4 className="">SOLO MATRIX</h4>
               <div className="homepage-subheading">
                 Create your own solo matrix or import a template...
               </div>
@@ -34,7 +33,7 @@ const Homepage = () => {
             <div className="homepage-content-button">
               <TextButton
                 id="create"
-                customStyle={{ color: "#c8d3b8", "font-family": 'Mukta' }}
+                customStyle={{ color: "#c8d3b8" }}
                 handleClick={createSoloSession}
               ></TextButton>
             </div>
@@ -48,7 +47,7 @@ const Homepage = () => {
           </div>
           <div className="homepage-content">
             <div className="homepage-content-text">
-              <div className="homepage-heading">TEAM MATRIX</div>
+              <h4 className="">TEAM MATRIX</h4>
               <div className="homepage-subheading">
                 Create your own team matrix to collaborate with team members or
                 import a template...
@@ -58,11 +57,9 @@ const Homepage = () => {
               <TextButton
                 id="create"
                 handleClick={routePathToCreateTeamMatrix}
-                customStyle={{ color: "#beafe1", "font-family": 'Mukta' }}
               ></TextButton>
               <TextButton
                 id="join"
-                customStyle={{ color: "#beafe1", "font-family": 'Mukta' }}
               ></TextButton>
             </div>
           </div>
