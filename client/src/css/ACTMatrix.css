@@ -45,23 +45,22 @@
 .text-outside {
     position: absolute;
     top: 650px;
-    left: 650px;
+    left: 630px;
     opacity: 0.11;
     font-size: 32px;
 }
 
 .text-towards {
     position: absolute;
-    top: 330px;
-    left: 1350px;
+    top: 310px;
+    left: 1250px;
     opacity: 0.11;
     font-size: 32px;
 }
 
 .text-away {
     position: absolute;
-    top: 330px;
-    left: 50px;
+    top: 310px;
     opacity: 0.11;
     font-size: 32px;
 }
