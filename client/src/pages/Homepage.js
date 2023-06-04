@@ -10,7 +10,7 @@ const Homepage = () => {
 
   const routePathToCreateTeamMatrix = () => {
     navigate(`/CreateTeamMatrix`);
-  };
+  }; 
 
   const createSoloSession = () => {
     navigate("/SoloSession");
@@ -34,7 +34,7 @@ const Homepage = () => {
             <div className="homepage-content-button">
               <TextButton
                 id="create"
-                customStyle={{ color: "#F7A92E" }}
+                customStyle={{ color: "#c8d3b8", "font-family": 'Mukta' }}
                 handleClick={createSoloSession}
               ></TextButton>
             </div>
@@ -58,11 +58,11 @@ const Homepage = () => {
               <TextButton
                 id="create"
                 handleClick={routePathToCreateTeamMatrix}
-                customStyle={{ color: "#22A7FF" }}
+                customStyle={{ color: "#beafe1", "font-family": 'Mukta' }}
               ></TextButton>
               <TextButton
                 id="join"
-                customStyle={{ color: "#22A7FF" }}
+                customStyle={{ color: "#beafe1", "font-family": 'Mukta' }}
               ></TextButton>
             </div>
           </div>

@@ -1,7 +1,7 @@
 .create-team-matrix{
     display: flex;
     flex-direction: column;
-    background-color: #22A7FF;
+    background-color: #beafe1;
     height: 100vh;
     
 }
@@ -90,11 +90,12 @@
     outline: none;
     border: 1px solid #D5D8DE;
     border-radius: 5px;
+    font-family: 'Mukta';
 }
 
 .team-matrix-input::placeholder{
     font-size: 1vw;
-    font-family: 'Montserrat';
+    font-family: 'Mukta';
     font-style: normal;
     color: #323941;
 }

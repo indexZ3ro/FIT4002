@@ -33,7 +33,7 @@ const LogInPage = () => {
       </div>
       <div className="split-right-login">
         <div className="loginContainer">
-          <div className="title">Log In</div>
+          <div className="heading">Log In</div>
           <div className="inputContainer">
             <input
               className="userInput"
@@ -48,12 +48,12 @@ const LogInPage = () => {
             ></input>
 
             <div className="rememberMeContainer">
-              <Checkbox label="Remember Me" checked={true} />
+              <Checkbox style={{"font-family": 'Mukta'}} label="Remember Me" checked={true} />
             </div>
           </div>
           <TextButton
             id="submit"
-            customStyle={{ width: "30vw", height: "5vh", color: "#22A7FF" }}
+            customStyle={{ width: "10vw", height: "5vh", color: "#beafe1", 'font-family': "Mukta", }}
             handleClick={logIn}
           />
           <div className="guest">Continue as Guest</div>

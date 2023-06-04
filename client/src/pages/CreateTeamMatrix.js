@@ -40,7 +40,7 @@ const CreateTeamMatrix = () => {
             <div className="team-matrix-input-container">
               <TextButton
                 id="start"
-                customStyle={{ color: "#22A7FF" }}
+                customStyle={{ color: "#beafe1", "font-family": 'Mukta' }}
                 handleClick={createTeamMatrix}
               ></TextButton>
             </div>

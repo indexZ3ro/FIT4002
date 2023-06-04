@@ -6,13 +6,13 @@
 
 .left{
     width: 50vw;
-    background-color: #F7A92E;
+    background-color: #c8d3b8;
 }
 
 
 .right{
     width: 50vw;
-    background-color: #22A7FF;
+    background-color: #beafe1;
 }
 
 .homepage-split-container{
@@ -68,7 +68,7 @@
 }
 
 .homepage-subheading{
-    font-family: 'Public Sans';
+    font-family: 'Mukta';
     font-style: normal;
     font-weight: 400;
     font-size: 1.5vw;

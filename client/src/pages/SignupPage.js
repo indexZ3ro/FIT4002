@@ -25,12 +25,12 @@ const SignUpPage = () => {
   return (
     <div className="signUpPage">
       <div className="split-left-signup">
-        <div className="heading">New here?</div>
+        <div className="title">New here?</div>
         <div className="subheading">Sign up and discover your potential!</div>
       </div>
       <div className="split-right-signup">
         <div className="signupContainer">
-          <div className="title">Sign Up</div>
+          <div className="heading">Sign Up</div>
           <div className="inputContainer">
             <input
               className="userInput"
@@ -51,7 +51,7 @@ const SignUpPage = () => {
           </div>
           <TextButton
             id="submit"
-            customStyle={{ width: "30vw", height: "5vh", color: "#FF9900" }}
+            customStyle={{ width: "10vw", height: "5vh", color: "#c8d3b8", "font-family": 'Mukta' }}
             handleClick={signUp}
           />
         </div>
