@@ -1,5 +1,5 @@
 import React from "react";
-import "../../css/actSidebar.css";
+import "../../css/ACTSidebar.css";
 import SheetIcon from "../DraggableIcons/SheetIcon";
 import TextIcon from "../DraggableIcons/TextIcon";
 import EditIcon from "../DraggableIcons/EditIcon";

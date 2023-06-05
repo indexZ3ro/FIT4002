@@ -38,29 +38,29 @@
 .text-inside {
     opacity: 0.11;
     font-size: 32px;
-    left: 650px;
+    left: 605px;
     position: absolute;
 }
 
 .text-outside {
     position: absolute;
-    top: 650px;
-    left: 630px;
+    top: 705px;
+    left: 595px;
     opacity: 0.11;
     font-size: 32px;
 }
 
 .text-towards {
     position: absolute;
-    top: 310px;
-    left: 1250px;
+    top: 330px;
+    left: 1160px;
     opacity: 0.11;
     font-size: 32px;
 }
 
 .text-away {
     position: absolute;
-    top: 310px;
+    top: 330px;
     opacity: 0.11;
     font-size: 32px;
 }
