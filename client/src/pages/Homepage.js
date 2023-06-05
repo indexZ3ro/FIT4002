@@ -63,9 +63,11 @@ const Homepage = () => {
             <div className="homepage-content-button">
               <TextButton
                 id="create"
+                customStyle={{color: "#beafe1"}}
                 handleClick={routePathToCreateTeamMatrix}
               ></TextButton>
-              <TextButton id="join"></TextButton>
+              <TextButton id="join"
+              customStyle={{color: "#beafe1"}}></TextButton>
             </div>
           </div>
         </div>
