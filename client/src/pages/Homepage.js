@@ -1,20 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../css/homepage.css";
 import TextButton from "../Components/Buttons/TextButton";
 import stickyNote from "../assets/stickyNote.png";
 import stickyNotes from "../assets/stickyNotes.png";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { showSideBar } from "../features/sideBarSlice";
 
 const Homepage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const routePathToCreateTeamMatrix = () => {
     navigate(`/CreateTeamMatrix`);
-  }; 
+  };
 
   const createSoloSession = () => {
     navigate("/SoloSession");
   };
+
+  useEffect(() => {
+    dispatch(showSideBar());
+  });
 
   return (
     <div className="homepage">
@@ -58,9 +65,7 @@ const Homepage = () => {
                 id="create"
                 handleClick={routePathToCreateTeamMatrix}
               ></TextButton>
-              <TextButton
-                id="join"
-              ></TextButton>
+              <TextButton id="join"></TextButton>
             </div>
           </div>
         </div>

@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import "../css/login.css";
 import { useDispatch } from "react-redux";
 import { hideSideBar } from "../features/sideBarSlice";
+import { useEffect } from "react";
 
 const LogInPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  dispatch(hideSideBar());
 
   const handleClick = () => {
     const edge = document.querySelector(".edge-login");
@@ -25,6 +25,10 @@ const LogInPage = () => {
   const logIn = () => {
     navigate("/Home");
   };
+
+  useEffect(() => {
+    dispatch(hideSideBar());
+  });
 
   return (
     <div className="logInPage">
