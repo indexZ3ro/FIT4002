@@ -1,65 +1,66 @@
 .container {
-    width: 1406px;
-    height: 702px;
+    /* width: 1406px; */
+    width: 80%;
+    /* height: 702px; */
+    height: 80%;
     background-image: url("../assets/paper-background.jpg");
     position: absolute;
     box-sizing: border-box;
-    border-radius: 100px;
+    border-radius: 0;
     left: 150px;
     top: 150px;
 }
 
 .line-x {
-    width: 1271px;
+    /* width: 1271px; */
+    width: 90%;
     height: 0px;
     border-bottom: 3px solid black;
     position: absolute;
     left: 65px;
-    top: 351px;
+    /* top: 351px; */
+    top: 50%;
 }
 
 .line-y {
     width: 0px;
-    height: 612px;
+    /* height: 612px; */
+    height: 90%;
     border-right: 3px solid black;
     position: absolute;
-    left: 703px;
+    /*left: 703px; */
+    left: 50%;
     top: 45px;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap");
 
 .text-inside {
-    font-family: "Racing Sans One", cursive;
     opacity: 0.11;
     font-size: 32px;
-    left: 650px;
+    left: 605px;
     position: absolute;
 }
 
 .text-outside {
     position: absolute;
-    top: 650px;
-    left: 650px;
-    font-family: "Racing Sans One", cursive;
+    top: 705px;
+    left: 595px;
     opacity: 0.11;
     font-size: 32px;
 }
 
 .text-towards {
     position: absolute;
-    top: 310px;
-    left: 1250px;
-    font-family: "Racing Sans One", cursive;
+    top: 330px;
+    left: 1160px;
     opacity: 0.11;
     font-size: 32px;
 }
 
 .text-away {
     position: absolute;
-    top: 310px;
-    left: 50px;
-    font-family: "Racing Sans One", cursive;
+    top: 330px;
     opacity: 0.11;
     font-size: 32px;
 }

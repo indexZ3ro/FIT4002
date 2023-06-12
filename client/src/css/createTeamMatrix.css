@@ -1,7 +1,7 @@
 .create-team-matrix{
     display: flex;
     flex-direction: column;
-    background-color: #22A7FF;
+    background-color: #beafe1;
     height: 100vh;
     
 }
@@ -17,7 +17,6 @@
 .team-matrix-mid{
     display: flex;
     flex-direction: row;
-    height: 90vh;
     width: 100vw;
 }
 
@@ -41,24 +40,12 @@
 
 /* Text */
 .team-matrix-heading{
-    font-family: 'Racing Sans One';
-    font-style: normal;
     font-weight: 400;
     font-size: 4vw;
     margin-bottom: 3vh;
 
     color: #FFFFFF;
 
-}
-
-.team-matrix-input-label{
-    font-family: 'Racing Sans One';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 6vw;
-
-    color: white;
-    margin-bottom: 2vh;
 }
 
 /* Input */
@@ -94,8 +81,6 @@
 
 .team-matrix-input::placeholder{
     font-size: 1vw;
-    font-family: 'Montserrat';
-    font-style: normal;
     color: #323941;
 }
 
