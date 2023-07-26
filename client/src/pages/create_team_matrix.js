@@ -1,55 +1,55 @@
-import stickyNotes from "../assets/stickyNotes.png";
-import "../css/create-team-matrix.css";
-import TextButton from "../Components/Buttons/text_button";
-import { CgProfile } from "react-icons/cg";
-import { useNavigate } from "react-router-dom";
+import stickyNotes from '../assets/stickyNotes.png'
+import '../css/create-team-matrix.css'
+import TextButton from '../Components/Buttons/text_button'
+import { CgProfile } from 'react-icons/cg'
+import { useNavigate } from 'react-router-dom'
 
 const CreateTeamMatrix = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const createTeamMatrix = () => {
-    navigate("/TeamSession");
-  };
+    navigate('/TeamSession')
+  }
 
   return (
-    <div className="create-team-matrix">
-      <div className="team-matrix-top">
-        <div className="icon-button">
+    <div className='create-team-matrix'>
+      <div className='team-matrix-top'>
+        <div className='icon-button'>
           <CgProfile />
         </div>
       </div>
-      <div className="team-matrix-mid">
-        <div className="team-matrix-split-left">
-          <div className="team-matrix-input-wrapper">
+      <div className='team-matrix-mid'>
+        <div className='team-matrix-split-left'>
+          <div className='team-matrix-input-wrapper'>
             <h1>Team Matrix</h1>
-            <div className="team-matrix-input-container">
+            <div className='team-matrix-input-container'>
               <input
-                className="team-matrix-input"
-                type="text"
-                placeholder="Team Name"
-              ></input>
+                className='team-matrix-input'
+                type='text'
+                placeholder='Team Name'
+              />
             </div>
-            <div className="team-matrix-input-container">
+            <div className='team-matrix-input-container'>
               <input
-                className="team-matrix-input"
-                type="text"
-                placeholder="Timer"
-              ></input>
+                className='team-matrix-input'
+                type='text'
+                placeholder='Timer'
+              />
             </div>
-            <div className="team-matrix-input-container">
+            <div className='team-matrix-input-container'>
               <TextButton
-                id="start"
+                id='start'
                 handleClick={createTeamMatrix}
-              ></TextButton>
+              />
             </div>
           </div>
         </div>
-        <div className="team-matrix-split-right">
-          <img src={stickyNotes} alt="stickyNotes"></img>
+        <div className='team-matrix-split-right'>
+          <img src={stickyNotes} alt='stickyNotes' />
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CreateTeamMatrix;
+export default CreateTeamMatrix

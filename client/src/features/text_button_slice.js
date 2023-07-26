@@ -1,26 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 const buttons = [
-  { id: "signUp", label: "Sign Up" },
-  { id: "logIn", label: "Log In" },
-  { id: "create", label: "Create" },
-  { id: "join", label: "Join" },
-  { id: "start", label: "Start " },
-  { id: "update", label: "Update" },
-  { id: "deleteAccount", label: "Delete Account" },
-  { id: "submit", label: "Submit" },
-];
+  { id: 'signUp', label: 'Sign Up' },
+  { id: 'logIn', label: 'Log In' },
+  { id: 'create', label: 'Create' },
+  { id: 'join', label: 'Join' },
+  { id: 'start', label: 'Start ' },
+  { id: 'update', label: 'Update' },
+  { id: 'deleteAccount', label: 'Delete Account' },
+  { id: 'submit', label: 'Submit' }
+]
 
-const initialState = {};
+const initialState = {}
 buttons.forEach((button) => {
-  initialState[button.id] = button.label;
-});
+  initialState[button.id] = button.label
+})
 
 const buttonSlice = createSlice({
-  name: "buttonLabels",
+  name: 'buttonLabels',
   initialState,
-  reducers: {},
-});
+  reducers: {}
+})
 
 // export const { setButtonLabel} = buttonSlice.actions;
-export default buttonSlice.reducer;
+export default buttonSlice.reducer
