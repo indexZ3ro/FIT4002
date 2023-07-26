@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/signUpPage.css";
-import TextButton from "../Components/Buttons/TextButton";
+import "../css/sign-up.css";
+import TextButton from "../Components/Buttons/text_button";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -23,28 +23,28 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="signUpPage">
+    <div className="sign-up-page">
       <div className="split-left-signup">
         <h2 className="title">New here?</h2>
         <div className="subheading">Sign up and discover your potential!</div>
       </div>
       <div className="split-right-signup">
-        <div className="signupContainer">
+        <div className="sign-up-container">
           <h3 className="heading">Sign Up</h3>
-          <div className="inputContainer">
+          <div className="input-container">
             <input
-              className="userInput"
+              className="user-input"
               placeholder="Email"
               type="text"
             ></input>
             <input
-              className="userInput"
+              className="user-input"
               type="text"
               placeholder="Username"
             ></input>
-            <input className="userInput" placeholder="Name" type="text"></input>
+            <input className="user-input" placeholder="Name" type="text"></input>
             <input
-              className="userInput"
+              className="user-input"
               type="password"
               placeholder="Password"
             ></input>
@@ -61,7 +61,7 @@ const SignUpPage = () => {
             onTransitionEnd={handleAnimationEnd}
           ></div>
           <TextButton
-            id="logIn"
+            id="login"
             handleClick={routeChangeToLogIn}
             type="edge-button"
             textColor="white"

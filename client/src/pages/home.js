@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import "../css/homepage.css";
-import TextButton from "../Components/Buttons/TextButton";
+import TextButton from "../Components/Buttons/text_button";
 import stickyNote from "../assets/stickyNote.png";
 import stickyNotes from "../assets/stickyNotes.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { showSideBar } from "../features/sideBarSlice";
+import { showSideBar } from "../features/sidebar_slice";
 
 const Homepage = () => {
   const navigate = useNavigate();

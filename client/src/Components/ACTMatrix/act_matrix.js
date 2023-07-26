@@ -1,5 +1,5 @@
 import React from "react";
-import "../../css/ACTMatrix.css";
+import "../../css/act-matrix.css";
 
 const ACTMatrix = () => {
     return (

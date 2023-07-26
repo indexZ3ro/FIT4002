@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import textButtonReducer from "../features/textButtonSlice";
-import sideBarReducer from "../features/sideBarSlice";
+import textButtonReducer from "../features/text_button_slice";
+import sideBarReducer from "../features/sidebar_slice";
 
 export default configureStore({
   reducer: {

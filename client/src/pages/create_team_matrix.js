@@ -1,6 +1,6 @@
 import stickyNotes from "../assets/stickyNotes.png";
-import "../css/createTeamMatrix.css";
-import TextButton from "../Components/Buttons/TextButton";
+import "../css/create-team-matrix.css";
+import TextButton from "../Components/Buttons/text_button";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 

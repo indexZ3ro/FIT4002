@@ -1,10 +1,10 @@
 import React from "react";
-import "../../css/ACTSidebar.css";
-import SheetIcon from "../DraggableIcons/SheetIcon";
-import TextIcon from "../DraggableIcons/TextIcon";
-import EditIcon from "../DraggableIcons/EditIcon";
-import BluePointerIcon from "../DraggableIcons/BluePointerIcon";
-import Note from "../Note/Note";
+import "../../css/act-sidebar.css";
+import SheetIcon from "../DraggableIcons/sheet_icon";
+import TextIcon from "../DraggableIcons/text_icon";
+import EditIcon from "../DraggableIcons/edit_icon";
+import BluePointerIcon from "../DraggableIcons/blue_poiner_icon";
+import Note from "../Note/note";
 
 const ACTSidebar = () => {
   const [showNotes, setShowNotes] = React.useState([]);

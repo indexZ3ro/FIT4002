@@ -2,16 +2,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import db from "./firebase";
-import SoloSession from "./pages/SoloSession";
-import TeamSession from "./pages/TeamSession";
-import Sidebar from "./Components/Sidebar/Sidebar";
-import SignUpPage from "./pages/SignupPage";
-import WelcomePage from "./pages/WelcomePage";
-import LogInPage from "./pages/LogInPage";
-import Homepage from "./pages/Homepage";
-import CreateTeamMatrix from "./pages/CreateTeamMatrix";
+import SoloSession from "./pages/solo_session";
+import TeamSession from "./pages/team_session";
+import SignUpPage from "./pages/sign_up";
+import LogInPage from "./pages/login";
+import Homepage from "./pages/home";
+import CreateTeamMatrix from "./pages/create_team_matrix";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import Sidebar from "./Components/Sidebar/sidebar";
 import "./App.css";
 
 function App() {

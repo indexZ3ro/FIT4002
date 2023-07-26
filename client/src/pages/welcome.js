@@ -1,8 +1,8 @@
-import TextButton from "../Components/Buttons/TextButton";
+import TextButton from "../Components/Buttons/text_button";
 import { useNavigate } from "react-router-dom";
 import "../css/welcomePage.css";
 import { useDispatch } from "react-redux";
-import { hideSideBar } from "../features/sideBarSlice";
+import { hideSideBar } from "../features/sidebar_slice";
 
 const WelcomePage = () => {
   let navigate = useNavigate();
@@ -20,7 +20,7 @@ const WelcomePage = () => {
   };
 
   return (
-    <div className="welcomePage">
+    <div className="welcome-page">
       <div className="title">TEAMOJI</div>
       <TextButton id="signUp" handleClick={routeChangeToSignUp} />
       <TextButton id="logIn" handleClick={routeChangeToLogIn} />

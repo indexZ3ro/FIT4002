@@ -7,7 +7,7 @@
     width: 88px;
     border: 1px;
     background-color: white;
-    box-shadow: 2px 0 10px rgba(0 0 0 / 30%);
+    box-shadow: 2px 0 10px rgb(0 0 0 / 30%);
     z-index: 999;
     border-radius: 10px;
 }

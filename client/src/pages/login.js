@@ -1,9 +1,9 @@
-import TextButton from "../Components/Buttons/TextButton";
-import Checkbox from "../Components/Buttons/Checkbox";
+import TextButton from "../Components/Buttons/text_button";
+import Checkbox from "../Components/Buttons/checkbox";
 import { useNavigate } from "react-router-dom";
 import "../css/login.css";
 import { useDispatch } from "react-redux";
-import { hideSideBar } from "../features/sideBarSlice";
+import { hideSideBar } from "../features/sidebar_slice";
 import { useEffect } from "react";
 
 const LogInPage = () => {
@@ -31,27 +31,27 @@ const LogInPage = () => {
   });
 
   return (
-    <div className="logInPage">
+    <div className="login-page">
       <div className="split-left-login">
         <h1 className="teamoji-title">TEAMOJI</h1>
       </div>
       <div className="split-right-login">
-        <div className="loginContainer">
+        <div className="login-container">
           <h2>Login</h2>
-          <div className="inputContainer">
+          <div className="input-container">
             <input
-              className="userInput"
+              className="user-input"
               placeholder="Username"
               type="text"
             ></input>
             <input
-              className="userInput"
+              className="user-input"
               type={"password"}
               name="password"
               placeholder="Password"
             ></input>
 
-            <div className="rememberMeContainer">
+            <div className="remember-me-container">
               <Checkbox label="Remember Me" checked={true} />
             </div>
           </div>
@@ -69,7 +69,7 @@ const LogInPage = () => {
             onTransitionEnd={handleAnimationEnd}
           ></div>
           <TextButton
-            id="signUp"
+            id="sign-up"
             handleClick={handleClick}
             type="edge-button"
             textColor="white"
