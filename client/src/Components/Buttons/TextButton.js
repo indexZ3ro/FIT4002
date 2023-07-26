@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
-import "../../css/button.css";
+import "../../css/text-button.css";
 
 const TextButton = ({ id, handleClick, type, customStyle }) => {
   const label = useSelector((state) => state.textButton[id]);
   return (
     <div>
       <button
-        className={type ? type : "textButton"}
+        className={type ? type : "text-button"}
         style={customStyle}
         onClick={handleClick}
       >

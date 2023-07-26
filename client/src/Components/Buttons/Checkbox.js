@@ -13,7 +13,7 @@ const Checkbox = ({ label, checked, ...props }) => {
         onChange={() => setIsChecked((prev) => !prev)}
         {...props}
       />
-      <span className="checkboxLabel">{label}</span>
+      <span className="checkbox-label">{label}</span>
     </div>
   );
 };
