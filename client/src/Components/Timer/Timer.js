@@ -95,8 +95,8 @@ function Timer () {
                   ? null
                   : (
                     <button onClick={handleResetClick}>
-                        Reset
-                                </button>
+                      Reset
+                    </button>
                     )}
                 <button onClick={handleStartClick}>Start</button>
               </>
