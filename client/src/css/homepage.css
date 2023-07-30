@@ -6,13 +6,13 @@
 
 .left{
     width: 50vw;
-    background-color: #F7A92E;
+    background-color: #c8d3b8;
 }
 
 
 .right{
     width: 50vw;
-    background-color: #22A7FF;
+    background-color: #beafe1;
 }
 
 .homepage-split-container{
@@ -58,21 +58,9 @@
 
 /* Text */
 
-.homepage-heading{
-    font-family: 'Racing Sans One';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 3.5vw;
-
-    color: #FFFFFF;
-}
-
 .homepage-subheading{
-    font-family: 'Public Sans';
-    font-style: normal;
     font-weight: 400;
     font-size: 1.5vw;
-
     color: #FFFFFF;
 }
 

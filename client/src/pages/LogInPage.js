@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import "../css/login.css";
 import { useDispatch } from "react-redux";
 import { hideSideBar } from "../features/sideBarSlice";
+import { useEffect } from "react";
 
 const LogInPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  dispatch(hideSideBar());
 
   const handleClick = () => {
     const edge = document.querySelector(".edge-login");
@@ -26,14 +26,18 @@ const LogInPage = () => {
     navigate("/Home");
   };
 
+  useEffect(() => {
+    dispatch(hideSideBar());
+  });
+
   return (
     <div className="logInPage">
       <div className="split-left-login">
-        <div className="teamoji-title">TEAMOJI</div>
+        <h1 className="teamoji-title">TEAMOJI</h1>
       </div>
       <div className="split-right-login">
         <div className="loginContainer">
-          <div className="title">Log In</div>
+          <h2>Login</h2>
           <div className="inputContainer">
             <input
               className="userInput"
@@ -53,7 +57,7 @@ const LogInPage = () => {
           </div>
           <TextButton
             id="submit"
-            customStyle={{ width: "30vw", height: "5vh", color: "#22A7FF" }}
+            customStyle={{ width: "10vw", height: "5vh", color: "#beafe1" }}
             handleClick={logIn}
           />
           <div className="guest">Continue as Guest</div>

@@ -14,7 +14,6 @@ const CreateTeamMatrix = () => {
   return (
     <div className="create-team-matrix">
       <div className="team-matrix-top">
-        <div className="team-matrix-title">Teamoji</div>
         <div className="icon-button">
           <CgProfile />
         </div>
@@ -22,7 +21,7 @@ const CreateTeamMatrix = () => {
       <div className="team-matrix-mid">
         <div className="team-matrix-split-left">
           <div className="team-matrix-input-wrapper">
-            <div className="team-matrix-input-label">TEAM MATRIX</div>
+            <h1>Team Matrix</h1>
             <div className="team-matrix-input-container">
               <input
                 className="team-matrix-input"
@@ -40,7 +39,6 @@ const CreateTeamMatrix = () => {
             <div className="team-matrix-input-container">
               <TextButton
                 id="start"
-                customStyle={{ color: "#22A7FF" }}
                 handleClick={createTeamMatrix}
               ></TextButton>
             </div>
