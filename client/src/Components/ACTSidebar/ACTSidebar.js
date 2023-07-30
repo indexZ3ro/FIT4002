@@ -6,29 +6,23 @@ import EditIcon from "../DraggableIcons/EditIcon";
 import BluePointerIcon from "../DraggableIcons/BluePointerIcon";
 import Note from "../Note/Note";
 
-const ACTSidebar = () => {
-  const [showNotes, setShowNotes] = React.useState([]);
+const ACTSidebar = ({ notes, setNotes }) => {
 
-  function handleClick() {
-    setShowNotes([...showNotes, {}]);
-  }
+  const handleIconAdded = (x, y) => {
+    setNotes([...notes, { x, y }]);
+  };
 
   function handleRemove(index) {
-    setShowNotes(showNotes.filter((_, i) => i !== index));
+    setNotes(notes.filter((_, i) => i !== index));
   }
 
   return (
     <div className="ACTSidebar">
       <div className="draggable-container">
         {/* Add draggable components here */}
-        <div className="draggable-item sheet" onClick={handleClick}>
+        <div className="draggable-item sheet" onClick={() => handleIconAdded(50, 50)}>
           <SheetIcon />
         </div>
-
-        {/* Create Notes*/}
-        {showNotes.map((_, index) => (
-          <Note key={index} onRemove={() => handleRemove(index)} />
-        ))}
 
         <div className="draggable-item text">
           <TextIcon />

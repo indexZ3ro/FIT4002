@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "../App.css";
 import "../css/SoloSession.css";
 import Sidebar from "../Components/Sidebar/Sidebar";
@@ -8,13 +8,16 @@ import Timer from "../Components/Timer/Timer";
 import ACTSidebar from "../Components/ACTSidebar/ACTSidebar";
 
 const SoloSession = () => {
+  // handle sticky notes state management here
+  const [notes, setNotes] = useState([]);
+  
   return (
     <div className="SoloSession">
       <TeamHeader />
       <Sidebar />
-      <ACTMatrix />
-      <Timer />
-      <ACTSidebar />
+      <ACTMatrix notes={notes}/>
+      {/* <Timer /> */}
+      <ACTSidebar notes={notes} setNotes={setNotes}/>
     </div>
   );
 };
