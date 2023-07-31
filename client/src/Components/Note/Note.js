@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import Draggable from "react-draggable";
 
-const Note = ({ x, y }) => {
+const Note = ({ x, y, id, text }) => {
 
-    const [noteText, setNoteText] = useState("");
+    const [noteText, setNoteText] = useState(text || "");
     const textareaRef = useRef(null);
     const [position, setPosition] = useState({ x, y });
 
@@ -47,6 +47,11 @@ const Note = ({ x, y }) => {
             </div>
         </Draggable>
     );
+};
+
+// Define the default prop value for the 'text' prop
+Note.defaultProps = {
+    text: null, // Replace 'null' with the default value you want
 };
 
 export default Note;
