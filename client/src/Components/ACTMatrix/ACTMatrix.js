@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import "../../css/ACTMatrix.css";
 import Note from "../Note/Note.js";
 
-const ACTMatrix = ({ notes }) => {
+const ACTMatrix = ({ notes, setNotes }) => {
     return (
         <div className="ACTMatrix">
             <div>
@@ -15,8 +15,8 @@ const ACTMatrix = ({ notes }) => {
             <div className="text-away">Away</div> */}
 
             {/* stickynotes */}
-            {notes.map((icon, index) => (
-                <Note key={index} x={icon.x} y={icon.y} text={icon.text} />
+            {notes.map((note) => (
+                <Note key={note.id} x={note.x} y={note.y} text={note.text} />
             ))}
         </div>
     );

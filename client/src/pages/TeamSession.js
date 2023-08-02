@@ -32,7 +32,7 @@ const TeamSession = () => {
     <div className="TeamSession">
       <TeamHeader />
       <Sidebar />
-      <ACTMatrix notes={notes}/>
+      <ACTMatrix notes={notes} setNotes={setNotes}/>
       {/* <Timer /> */}
       <ACTSidebar notes={notes} setNotes={setNotes}/>
     </div>
