@@ -5,30 +5,36 @@ import TextIcon from "../DraggableIcons/TextIcon";
 import EditIcon from "../DraggableIcons/EditIcon";
 import BluePointerIcon from "../DraggableIcons/BluePointerIcon";
 import Note from "../Note/Note";
+import axios from "axios";
 
-const ACTSidebar = () => {
-  const [showNotes, setShowNotes] = React.useState([]);
+const ACTSidebar = ({ notes, setNotes }) => {
+  const apiUrl = "http://localhost:8080";
 
-  function handleClick() {
-    setShowNotes([...showNotes, {}]);
-  }
+  const handleIconAdded = (x, y) => {
+    setNotes([...notes, { x, y }]);
+
+    // Make a POST request to create the new sticky note on the server
+    axios
+      .post(apiUrl + "/api/sticky-notes", { projectKey: '1', x, y, text: null })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error creating sticky note:", error);
+      });
+  };
 
   function handleRemove(index) {
-    setShowNotes(showNotes.filter((_, i) => i !== index));
+    setNotes(notes.filter((_, i) => i !== index));
   }
 
   return (
     <div className="ACTSidebar">
       <div className="draggable-container">
         {/* Add draggable components here */}
-        <div className="draggable-item sheet" onClick={handleClick}>
+        <div className="draggable-item sheet" onClick={() => handleIconAdded(50, 50)}>
           <SheetIcon />
         </div>
-
-        {/* Create Notes*/}
-        {showNotes.map((_, index) => (
-          <Note key={index} onRemove={() => handleRemove(index)} />
-        ))}
 
         <div className="draggable-item text">
           <TextIcon />
