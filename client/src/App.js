@@ -9,6 +9,7 @@ import SignUpPage from "./pages/SignupPage";
 import WelcomePage from "./pages/WelcomePage";
 import LogInPage from "./pages/LogInPage";
 import Homepage from "./pages/Homepage";
+import LandingPage from "./pages/LandingPage";
 import CreateTeamMatrix from "./pages/CreateTeamMatrix";
 import { Provider } from "react-redux";
 import store from "./store/store";
@@ -21,7 +22,8 @@ function App() {
         <div className="App">
           <Sidebar />
           <Routes>
-            <Route path="/" element={<LogInPage />} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/LogIn" element={<LogInPage />} />
             <Route path="/Home" element={<Homepage />} />
             <Route path="/Signup" element={<SignUpPage />} />
             <Route path="/CreateTeamMatrix" element={<CreateTeamMatrix />} />

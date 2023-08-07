@@ -9,6 +9,8 @@ const buttons = [
   { id: "update", label: "Update" },
   { id: "deleteAccount", label: "Delete Account" },
   { id: "submit", label: "Submit" },
+  { id: "getStarted", label: "Get Started" },
+  { id: "aboutUs", label: "About Us" },
 ];
 
 const initialState = {};
