@@ -5,11 +5,23 @@ import TextIcon from "../DraggableIcons/TextIcon";
 import EditIcon from "../DraggableIcons/EditIcon";
 import BluePointerIcon from "../DraggableIcons/BluePointerIcon";
 import Note from "../Note/Note";
+import axios from "axios";
 
 const ACTSidebar = ({ notes, setNotes }) => {
+  const apiUrl = "http://localhost:8080";
 
   const handleIconAdded = (x, y) => {
     setNotes([...notes, { x, y }]);
+
+    // Make a POST request to create the new sticky note on the server
+    axios
+      .post(apiUrl + "/api/sticky-notes", { projectKey: '1', x, y, text: null })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error creating sticky note:", error);
+      });
   };
 
   function handleRemove(index) {

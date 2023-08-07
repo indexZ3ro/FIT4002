@@ -16,7 +16,7 @@ const TeamSession = () => {
 
   // Fetch all sticky notes from the database when the component mounts
   useEffect(() => {
-    axios.get(apiUrl + "/api/sticky-notes")
+    axios.get(apiUrl + "/api/project/1/sticky-notes")
       .then((response) => {
         // The response data will contain an array of sticky notes
         // Update the notes state with the fetched data
