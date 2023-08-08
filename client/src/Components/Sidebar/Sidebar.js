@@ -18,6 +18,9 @@ const Sidebar = (props) => {
       <Link to="/SoloSession" className="menu-item">
         Solo Session
       </Link>
+      <Link to="/HistoryPage" className="menu-item">
+        History
+      </Link>
     </Menu>
   ) : (
     <div></div>
