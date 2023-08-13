@@ -109,10 +109,10 @@ app.put("/api/sticky-notes/:noteId", (req, res) => {
 // API route for deleting a sticky note
 app.delete("/api/sticky-notes/:noteId", (req, res) => {
   const { noteId } = req.params;
-  const notesRef = admin.database().ref("project/stickyNotes");
+  const { projectKey} = req.body;
+  const notesRef = admin.database().ref(`Projects/${projectKey}/stickyNotes/${noteId}`);
 
   notesRef
-    .child(noteId)
     .remove()
     .then(() => {
       res.status(200).json({ message: "Sticky note deleted successfully" });
