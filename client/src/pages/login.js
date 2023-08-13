@@ -1,5 +1,5 @@
 import TextButton from '../Components/Buttons/text_button'
-import Checkbox from '../Components/Buttons/checkbox'
+import Checkbox from '../Components/Buttons/Checkbox'
 import { useNavigate } from 'react-router-dom'
 import '../css/login.css'
 import { useDispatch } from 'react-redux'

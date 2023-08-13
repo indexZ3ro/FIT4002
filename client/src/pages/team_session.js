@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../App.css";
-import "../css/TeamSession.css";
+import "../css/team-session.css";
 import Sidebar from "../Components/Sidebar/Sidebar";
-import TeamHeader from "../Components/TeamHeader/TeamHeader";
-import ACTMatrix from "../Components/ACTMatrix/ACTMatrix";
+import TeamHeader from "../Components/TeamHeader/team_header";
+import ACTMatrix from "../Components/ACTMatrix/act_matrix";
 import Timer from "../Components/Timer/Timer";
-import ACTSidebar from "../Components/ACTSidebar/ACTSidebar";
+import ACTSidebar from "../Components/ACTSidebar/act-sidebar";
 
 const TeamSession = () => {
   const apiUrl = "http://localhost:8080";

@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import "../../css/ACTMatrix.css";
+import "../../css/act-matrix.css";
 import Note from "../Note/Note.js";
 
 const ACTMatrix = ({ notes, setNotes }) => {

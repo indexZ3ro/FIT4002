@@ -10,7 +10,7 @@ import Homepage from './pages/home'
 import CreateTeamMatrix from './pages/create_team_matrix'
 import { Provider } from 'react-redux'
 import store from './store/store'
-import Sidebar from './Components/Sidebar/sidebar'
+import Sidebar from './Components/Sidebar/Sidebar'
 import './App.css'
 
 function App () {
