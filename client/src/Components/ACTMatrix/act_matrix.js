@@ -16,7 +16,7 @@ const ACTMatrix = ({ notes, setNotes }) => {
 
             {/* stickynotes */}
             {notes.map((note) => (
-                <Note id={note.id} x={note.x} y={note.y} text={note.text} />
+                <Note key={note.id} id={note.id} x={note.x} y={note.y} text={note.text} />
             ))}
         </div>
     );

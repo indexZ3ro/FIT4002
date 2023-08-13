@@ -37,6 +37,10 @@ const Note = ({ x, y, id, text }) => {
     };
 
     useEffect(() => {
+        setNoteText(text || "");
+    }, [text]);
+
+    useEffect(() => {
         // Make the axios request to update the sticky note on the server
         if (!isInitialMount && isUpdated) {
             axios
