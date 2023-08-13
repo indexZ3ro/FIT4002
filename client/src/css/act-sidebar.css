@@ -1,18 +1,15 @@
-.ACTSidebar {
+.draggable-container {
+    padding: 10px;
     position: fixed;
     top: 150px;
-    left: 0px;
+    left: 0;
     height: 702px;
     width: 88px;
     border: 1px;
     background-color: white;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 0 10px rgb(0 0 0 / 30%);
     z-index: 999;
     border-radius: 10px;
-}
-
-.draggable-container {
-    padding: 10px;
 }
 
 .draggable-item {
@@ -21,17 +18,17 @@
 }
 
 .sheet:hover {
-    opacity: 50%;
+    opacity: 0.5;
 }
 
 .text:hover {
-    opacity: 50%;
+    opacity: 0.5;
 }
 
 .edit:hover {
-    opacity: 50%;
+    opacity: 0.5;
 }
 
 .move:hover {
-    opacity: 50%;
+    opacity: 0.5;
 }

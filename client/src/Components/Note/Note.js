@@ -86,4 +86,4 @@ Note.defaultProps = {
     text: null, // Replace 'null' with the default value you want
 };
 
-export default Note;
+export default Note
