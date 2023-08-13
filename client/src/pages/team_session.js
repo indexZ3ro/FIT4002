@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "../App.css";
 import "../css/team-session.css";
@@ -9,10 +9,12 @@ import Timer from "../Components/Timer/Timer";
 import ACTSidebar from "../Components/ACTSidebar/act-sidebar";
 import { realtimeDb } from "../firebase";
 import { onValue, ref } from "firebase/database";
+import LocalChangeContext from "../contexts/LocalChangeContext";
 
 const TeamSession = () => {
   const apiUrl = "http://localhost:8080";
   const projectId = "1";
+  const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
 
   // handle sticky notes state management here
   const [notes, setNotes] = useState([]);
@@ -36,18 +38,38 @@ const TeamSession = () => {
       const unsubscribe = onValue(notesRef, (snapshot) => {
           const updatedNotes = [];
           snapshot.forEach((childSnapshot) => {
-              updatedNotes.push({ ...childSnapshot.val(), id: childSnapshot.key });
-          });
+            const noteId = childSnapshot.key;
+            const noteData = childSnapshot.val();
+            if (localChanges.some(change => change.id === noteId)) {
+                // If the note ID is in localChanges, then retain the current note data
+                // Find the current note data
+                const currentNote = notes.find(note => note.id === noteId);
+                if (currentNote) {
+                  updatedNotes.push(currentNote);
+                  const currentTime = Date.now();
+                  
+                  setLocalChanges(prevChanges =>
+                    prevChanges.filter(change =>{
+                      const timeDifference = currentTime - change.timestamp;
+                      return !(change.id === noteId && timeDifference > 5000);
+                    })
+                  );
+                }
+            } else {
+                updatedNotes.push({ ...noteData, id: noteId });
+                console.log("local changes: ", localChanges);
+                console.log(noteId);
+            }
+        });
           // Log the updated notes to the console
           console.log("Updated notes:", updatedNotes);
           setNotes(updatedNotes);
-          console.log(notes);
       });
 
       return () => {
           unsubscribe();
       };
-  }, [projectId, setNotes]);
+  }, [projectId, localChanges]);
 
   return (
     <div className="TeamSession">

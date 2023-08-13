@@ -12,13 +12,13 @@ import store from './store/store'
 import Sidebar from './Components/Sidebar/Sidebar'
 import './App.css'
 import LocalChangeContext from './contexts/LocalChangeContext';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 function App () {
-  const localChangeRef = useRef(false);
+  const [localChanges, setLocalChanges] = useState([]);
   return (
     <Provider store={store}>
-      <LocalChangeContext.Provider value={localChangeRef}>
+      <LocalChangeContext.Provider value={{ localChanges, setLocalChanges }}>
         <Router>
           <div className='App'>
             <Sidebar />
