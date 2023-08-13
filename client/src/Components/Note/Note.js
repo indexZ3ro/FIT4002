@@ -48,6 +48,11 @@ const Note = ({ x, y, id, text }) => {
     }, [text]);
 
     useEffect(() => {
+        setPosition({ x, y });
+        console.log(x, y);
+    }, [x, y]);
+
+    useEffect(() => {
         // Make the axios request to update the sticky note on the server
         if (!isInitialMount && isUpdated) {
             axios
@@ -85,7 +90,7 @@ const Note = ({ x, y, id, text }) => {
     };
 
     return (
-        <Draggable onStop={handleDragStop} defaultPosition={{x: x, y: y}}>
+        <Draggable onStop={handleDragStop}  position={{ x: position.x, y: position.y }}>
             <div
                 className="note-container"
             >
