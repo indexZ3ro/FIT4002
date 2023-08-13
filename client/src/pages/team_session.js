@@ -5,6 +5,7 @@ import "../css/team-session.css";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import TeamHeader from "../Components/TeamHeader/team_header";
 import ACTMatrix from "../Components/ACTMatrix/act_matrix";
+import ACTQuestions from "../Components/ACTQuestions/act_questions";
 import Timer from "../Components/Timer/Timer";
 import ACTSidebar from "../Components/ACTSidebar/act-sidebar";
 import { realtimeDb } from "../firebase";
@@ -52,6 +53,7 @@ const TeamSession = () => {
   return (
     <div className="TeamSession">
       <TeamHeader />
+      <ACTQuestions />
       <Sidebar />
       <ACTMatrix notes={notes} setNotes={setNotes}/>
       {/* <Timer /> */}
