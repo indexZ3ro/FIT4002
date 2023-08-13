@@ -1,8 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import Draggable from "react-draggable";
 import axios from "axios";
+import LocalChangeContext from "../../contexts/LocalChangeContext";
 
 const Note = ({ x, y, id, text }) => {
+    const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
     const apiUrl = "http://localhost:8080";
     const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
     const [isInitialMount, setIsInitialMount] = useState(true); // Flag to track initial mount
@@ -14,6 +16,11 @@ const Note = ({ x, y, id, text }) => {
     const handleNoteTextChange = (e) => {
         setNoteText(e.target.value);
         setIsUpdated(true);
+        const newChange = {
+            id: id,
+            timestamp: Date.now() // Gets the current timestamp in milliseconds
+          };
+        setLocalChanges(prevChanges => [...prevChanges, newChange]);
     };
 
     const handleTextareaClick = (e) => {
