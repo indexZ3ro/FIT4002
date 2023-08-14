@@ -1,4 +1,4 @@
-import stickyNotes from '../assets/stickyNotes.png'
+import stickyNotes from '../assets/StickyNotesMultiple.png'
 import '../css/create-team-matrix.css'
 import TextButton from '../Components/Buttons/text_button'
 import { CgProfile } from 'react-icons/cg'

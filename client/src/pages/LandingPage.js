@@ -1,9 +1,9 @@
-import TextButton from "../Components/Buttons/TextButton";
+import TextButton from "../Components/Buttons/text_button";
 import Checkbox from "../Components/Buttons/Checkbox";
 import { useNavigate } from "react-router-dom";
 import "../css/login.css";
 import { useDispatch } from "react-redux";
-import { hideSideBar } from "../features/sideBarSlice";
+import { hideSideBar } from "../features/sidebar_slice";
 import { useEffect } from "react";
 import "../css/landingPage.css";
 import LandingPageCover from "../assets/LandingPage.svg";
