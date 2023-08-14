@@ -59,11 +59,26 @@ const Note = ({ x, y, id, text }) => {
           }
       }, [position, noteText, id, isUpdated, isInitialMount]);
 
+    const handleDelete = () => {
+        // API request to delete the sticky note from the server
+        axios.delete(`${apiUrl}/api/sticky-notes/${id}`, {
+                data: {projectKey: 1 }
+            })
+            .then(response => {
+                console.log(id);
+                console.log("Sticky note deleted successfully:", response.data);
+            })
+            .catch(error => {
+                console.error("Error deleting sticky note:", error);
+            });
+    };
+
     return (
         <Draggable onStop={handleDragStop} defaultPosition={{x: x, y: y}}>
             <div
                 className="note-container"
             >
+                <button className="delete-note" onClick={handleDelete}>×</button>
                 <textarea
                     ref={textareaRef}
                     className="note-text"
@@ -86,4 +101,4 @@ Note.defaultProps = {
     text: null, // Replace 'null' with the default value you want
 };
 
-export default Note;
+export default Note

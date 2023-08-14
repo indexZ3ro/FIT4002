@@ -28,6 +28,7 @@
     align-items: flex-start;
     width: 50vw;
 }
+
 .team-matrix-split-right{
     margin-left: 5vw;
     display: flex;
@@ -43,9 +44,7 @@
     font-weight: 400;
     font-size: 4vw;
     margin-bottom: 3vh;
-
-    color: #FFFFFF;
-
+    color: #FFF;
 }
 
 /* Input */
@@ -105,7 +104,7 @@
     width: 40vh;
 }
 
-@media only screen and (max-width: 844px) {
+@media only screen and (width <= 844px) {
     .team-matrix-split img {
         width: 15vh;
         height: 15vh;
