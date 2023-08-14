@@ -19,16 +19,16 @@ const LogInPage = () => {
   };
 
   return (
-    <div className="logInPage">
+    <div className="login-page">
       <div className="split-left-login">
         <div className="logInPageTeam">Teamoji</div>
         <img className="logInPageCoverImg" src={LogInCover}></img>
       </div>
 
       <div className="split-right-login">
-        <div className="loginContainer">
+        <div className="login-container">
           <h1>Login</h1>
-          <div className="inputContainer">
+          <div className="input-container">
             <input
               className="userInput text"
               placeholder="Email"

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/sign_up.css";
-import TextButton from "../Components/Buttons/TextButton";
+import "../css/sign-up.css";
+import TextButton from "../Components/Buttons/text_button";
 import SignUpPageCover from "../assets/signUpPageCover.svg";
 
 const SignUpPage = () => {

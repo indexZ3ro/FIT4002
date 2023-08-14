@@ -1,0 +1,97 @@
+.signUpPage{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+}
+
+/* Split Screen */
+.split-left-signup{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+}
+  
+.split-right-signup{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    margin-left: 5vw;
+}
+
+/* Input */
+.userInput{
+    width: 40vw;
+    height: 6vh;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    border: 1px solid #D5D8DE;
+    border-radius: 5px;
+}
+
+.userInput::placeholder{
+    font-size: 1vw;
+    font-style: normal;
+    color: #323941;
+}
+
+input:focus {
+    border: 2px solid #555;
+    outline: none;
+}
+
+  
+.signUpPageTeam{
+    height: 10%;
+    margin-left: 5vw;
+    margin-top: 6vh;
+}
+
+.signUpPageCover{
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5vw;
+    
+}
+
+.signUpPageCoverImg{
+    width: 45vw;
+}
+
+/* Text */
+.subheading{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2vw;
+    margin-top: 50px;
+
+    color: #FFFFFF;
+}
+
+.signUpPageTeam{
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.text{
+    font-family: 'Poppins', sans-serif;
+}
+
+.signUpToLogin{
+    text-decoration: underline;
+    font-size: 1vw;
+    margin-top: 1vh;
+}
+
+.signUpToLogin.text:hover{
+    cursor: pointer;
+}
