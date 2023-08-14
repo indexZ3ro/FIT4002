@@ -43,16 +43,16 @@ const ACTQuestions = ({ id, text, type }) => {
   }, [name]);
 
     // // Get the Question
-    // useEffect(() => {
-    //   axios.get(apiUrl + `/api/project/${projectId}/questions`)
-    //     .then((response) => {
-    //       setQuestions(response.data);
-    //       console.log(response.data);
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error fetching questions:", error);
-    //     });
-    // }, [projectId, name]);
+    useEffect(() => {
+      axios.get(apiUrl + `/api/project/${projectId}/questions`)
+        .then((response) => {
+          setQuestions(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching questions:", error);
+        });
+    }, [projectId, name]);
 
 //   useEffect(() => {
 //     const questionsRef = ref(realtimeDb, `Projects/${projectId}/questions`);
@@ -102,7 +102,7 @@ const ACTQuestions = ({ id, text, type }) => {
 
   return (
     <div className='act-questions-inner'>
-      <ACTQuestionsDropdown />
+      <ACTQuestionsDropdown divRef={divRef} questionArray={questions}/>
       <div className='act-questions-label'>Question:</div>
       <div ref={divRef} className='act-questions' contentEditable onInput={handleInput}></div>
     </div>

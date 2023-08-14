@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from "axios";
 
 const dropdownItems = [
   {
@@ -16,15 +17,20 @@ const dropdownItems = [
   {
     value: '4',
     imageSource: require('../../assets/Camera.png'),
-  },
-  // Add more items as needed
+  }
 ];
 
-const ACTQuestionsDropdown = () => {
+const ACTQuestionsDropdown = ( {divRef, questionArray} ) => {
+    const apiUrl = "http://localhost:8080";
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('1');
   const dropdownRef = useRef(null);
   const outsideClickRef = useRef(null);
+  const projectId = "1";
+  const [questions, setQuestions] = useState([]);
+  var displayText = "";
+  var questionID = "";
+    const [newQuestion, setNewQuestion] = useState(true);
 
   const toggleDropdown = () => {
     setIsOpen(prevIsOpen => !prevIsOpen);
@@ -33,6 +39,43 @@ const ACTQuestionsDropdown = () => {
   const handleOptionClick = (value) => {
     setSelectedValue(value);
     setIsOpen(false);
+
+    // Get the Question
+    axios.get(apiUrl + `/api/project/${projectId}/questions`)
+    .then((response) => {
+        setQuestions(response.data);
+        console.log(response.data);
+    })
+    .catch((error) => {
+        console.error("Error fetching questions:", error);
+    });
+
+    questions.forEach(question => {
+        if (String(question.type) == String(value)) {
+            displayText = question.text;
+            questionID = question.id;
+            divRef.current.textContent = displayText;
+            setNewQuestion(false);
+        }
+    });
+
+    // if (newQuestion === true) {
+    //     divRef.current.textContent = "";
+    //     axios
+    //     .post(apiUrl + `/api/questions/`, {
+    //         projectKey: 1,
+    //         text: "",
+    //         type: value
+    //     })
+    //     .then((response) => {
+    //         console.log("Question created successfully:", response.data);
+    //     })
+    //     .catch((error) => {
+    //         console.error("Error creating question:", error);
+    //     });
+    // }
+    setNewQuestion(true);
+
   };
 
   useEffect(() => {
