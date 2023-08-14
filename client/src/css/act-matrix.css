@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap");
+.ACTMatrix {
+    width: 80%; /* width: 1406px; */
+    height: 80%; /* height: 702px; */
+    background-image: url("../assets/paper-background.jpg");
+    position: absolute;
+    box-sizing: border-box;
+    border-radius: 0;
+    left: 150px;
+    top: 150px;
+}
+
+.line-x {
+    width: 90%; /* width: 1271px; */
+    height: 0;
+    border-bottom: 3px solid black;
+    position: absolute;
+    left: 65px;
+    top: 50%; /* top: 351px; */
+}
+
+.line-y {
+    width: 0;
+    height: 90%; /* height: 612px; */
+    border-right: 3px solid black;
+    position: absolute;
+    left: 50%; /* left: 703px; */
+    top: 45px;
+}
+
+.text-inside {
+    opacity: 0.11;
+    font-size: 32px;
+    left: 605px;
+    position: absolute;
+}
+
+.text-outside {
+    position: absolute;
+    top: 705px;
+    left: 595px;
+    opacity: 0.11;
+    font-size: 32px;
+}
+
+.text-towards {
+    position: absolute;
+    top: 330px;
+    left: 1160px;
+    opacity: 0.11;
+    font-size: 32px;
+}
+
+.text-away {
+    position: absolute;
+    top: 330px;
+    opacity: 0.11;
+    font-size: 32px;
+}

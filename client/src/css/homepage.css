@@ -6,13 +6,13 @@
 
 .left{
     width: 50vw;
-    background-color: #c8d3b8;
+    background-color: #FFFFFF;
 }
 
 
 .right{
     width: 50vw;
-    background-color: #beafe1;
+    background-color: #FFFFFF;
 }
 
 .homepage-split-container{
@@ -35,9 +35,18 @@
     height: 20vh;
 }
 
+.vertical-line {
+    position: absolute;
+    left: 50%; /* Position the line in the middle of the page horizontally */
+    top: 0;
+    bottom: 0;
+    width: 2px; /* Adjust the width as needed */
+    background-color: black; /* Adjust the color as needed */
+    margin-left: -1px; /* Half of the line width, used to center the line */
+  }
 
 .homepage-content{
-    margin-left: 5vw;
+    margin-left: 9vw;
     height: 80vh;
 }
 
@@ -45,23 +54,34 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height: 10vh;
+    height: 7vh;
 }
 
 .homepage-content-button{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    margin-top: 10vh;
+    margin-top: 12vh;
     height: 20vh;
+
 }
+
+
 
 /* Text */
 
 .homepage-subheading{
     font-weight: 400;
-    font-size: 1.5vw;
-    color: #FFFFFF;
+    font-size: 1.2vw;
+    color: #FFF;
+    color: #000000;
+}
+
+.homepage-heading{
+    font-weight: 600;
+    font-size: 4vw;
+    color: #000000;
+    font-family: "Poppins";
 }
 
 /* Image */

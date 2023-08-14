@@ -1,12 +1,11 @@
-import React from "react";
-import "../../css/sidebar.css";
-import { Link } from "react-router-dom";
-import { slide as Menu } from "react-burger-menu";
-import { useSelector } from "react-redux";
+import React from 'react'
+import '../../css/sidebar.css'
+import { Link } from 'react-router-dom'
+import { slide as Menu } from 'react-burger-menu'
+import { useSelector } from 'react-redux'
 
 const Sidebar = (props) => {
-  const sideBarState = useSelector((state) => state.sideBar.sideBar);
-
+  const sideBarState = useSelector((state) => state.sideBar.sideBar)
   return sideBarState ? (
     <Menu width={"250px"} styles={{ bmMenu: { overflow: "hidden" } }}>
       <Link to="/" className="menu-item">
@@ -27,4 +26,5 @@ const Sidebar = (props) => {
   );
 };
 
-export default Sidebar;
+
+export default Sidebar

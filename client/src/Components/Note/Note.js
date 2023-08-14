@@ -1,8 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import Draggable from "react-draggable";
 import axios from "axios";
+import LocalChangeContext from "../../contexts/LocalChangeContext";
 
 const Note = ({ x, y, id, text }) => {
+    const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
     const apiUrl = "http://localhost:8080";
     const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
     const [isInitialMount, setIsInitialMount] = useState(true); // Flag to track initial mount
@@ -14,6 +16,11 @@ const Note = ({ x, y, id, text }) => {
     const handleNoteTextChange = (e) => {
         setNoteText(e.target.value);
         setIsUpdated(true);
+        const newChange = {
+            id: id,
+            timestamp: Date.now() // Gets the current timestamp in milliseconds
+          };
+        setLocalChanges(prevChanges => [...prevChanges, newChange]);
     };
 
     const handleTextareaClick = (e) => {
@@ -35,6 +42,15 @@ const Note = ({ x, y, id, text }) => {
         setPosition({ x: ui.lastX, y: ui.lastY });
         setIsUpdated(true);
     };
+
+    useEffect(() => {
+        setNoteText(text || "");
+    }, [text]);
+
+    useEffect(() => {
+        setPosition({ x, y });
+        console.log(x, y);
+    }, [x, y]);
 
     useEffect(() => {
         // Make the axios request to update the sticky note on the server
@@ -59,11 +75,26 @@ const Note = ({ x, y, id, text }) => {
           }
       }, [position, noteText, id, isUpdated, isInitialMount]);
 
+    const handleDelete = () => {
+        // API request to delete the sticky note from the server
+        axios.delete(`${apiUrl}/api/sticky-notes/${id}`, {
+                data: {projectKey: 1 }
+            })
+            .then(response => {
+                console.log(id);
+                console.log("Sticky note deleted successfully:", response.data);
+            })
+            .catch(error => {
+                console.error("Error deleting sticky note:", error);
+            });
+    };
+
     return (
-        <Draggable onStop={handleDragStop} defaultPosition={{x: x, y: y}}>
+        <Draggable onStop={handleDragStop}  position={{ x: position.x, y: position.y }}>
             <div
                 className="note-container"
             >
+                <button className="delete-note" onClick={handleDelete}>×</button>
                 <textarea
                     ref={textareaRef}
                     className="note-text"
@@ -86,4 +117,4 @@ Note.defaultProps = {
     text: null, // Replace 'null' with the default value you want
 };
 
-export default Note;
+export default Note

@@ -1,79 +1,62 @@
-import TextButton from "../Components/Buttons/TextButton";
+import TextButton from "../Components/Buttons/text_button";
 import Checkbox from "../Components/Buttons/Checkbox";
 import { useNavigate } from "react-router-dom";
 import "../css/login.css";
 import { useDispatch } from "react-redux";
-import { hideSideBar } from "../features/sideBarSlice";
+import { hideSideBar } from "../features/sidebar_slice";
 import { useEffect } from "react";
+import LogInCover from "../assets/logInCover.svg";
 
 const LogInPage = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleClick = () => {
-    const edge = document.querySelector(".edge-login");
-    edge.style.transform = "translateY(-96vh) translateX(-96vw) scale(26, 26)";
-
-    const hideButton = document.querySelector(".edge-button");
-    hideButton.style.display = "none";
-  };
-
-  const handleAnimationEnd = () => {
-    navigate("/SignUp");
-  };
 
   const logIn = () => {
     navigate("/Home");
   };
 
-  useEffect(() => {
-    dispatch(hideSideBar());
-  });
+  const signUp = () => {
+    navigate("/SignUp");
+  };
 
   return (
-    <div className="logInPage">
+    <div className="login-page">
       <div className="split-left-login">
-        <h1 className="teamoji-title">TEAMOJI</h1>
+        <div className="logInPageTeam">Teamoji</div>
+        <img className="logInPageCoverImg" src={LogInCover}></img>
       </div>
+
       <div className="split-right-login">
-        <div className="loginContainer">
-          <h2>Login</h2>
-          <div className="inputContainer">
+        <div className="login-container">
+          <h1>Login</h1>
+          <div className="input-container">
             <input
-              className="userInput"
-              placeholder="Username"
+              className="userInput text"
+              placeholder="Email"
               type="text"
             ></input>
             <input
-              className="userInput"
+              className="userInput text"
               type={"password"}
               name="password"
               placeholder="Password"
             ></input>
 
-            <div className="rememberMeContainer">
+            {/* <div className="rememberMeContainer">
               <Checkbox label="Remember Me" checked={true} />
-            </div>
+            </div> */}
           </div>
           <TextButton
             id="submit"
-            customStyle={{ width: "10vw", height: "5vh", color: "#beafe1" }}
+            customStyle={{
+              width: "15vw",
+              height: "5vh",
+              background: "#EFDFFD",
+            }}
             handleClick={logIn}
           />
-          <div className="guest">Continue as Guest</div>
-        </div>
-
-        <div className="edge-wrapper">
-          <div
-            className="edge-login"
-            onTransitionEnd={handleAnimationEnd}
-          ></div>
-          <TextButton
-            id="signUp"
-            handleClick={handleClick}
-            type="edge-button"
-            textColor="white"
-          />
+          <div className="loginToSignUp text" onClick={signUp}>
+            New Here?
+          </div>
         </div>
       </div>
     </div>

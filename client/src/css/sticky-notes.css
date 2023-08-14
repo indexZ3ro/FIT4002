@@ -1,0 +1,43 @@
+.sticky-note {
+    position: relative;
+    z-index: 1;
+    width: 45%;
+    height: 45%;
+    background-color: #fff9b1;
+    border: 2px solid #fc0;
+    border-radius: 5px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .sticky-note:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 2px 5px rgb(0 0 0 / 20%);
+  }
+  
+  .sticky-note::before {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-right: 20px solid #fc0;
+    transition: all 0.3s ease-in-out; /* Added transition property */
+  }
+  
+  .sticky-note:hover::before {
+    border-right-width: 40px; /* Expanded border-right-width on hover */
+    border-top-width: 40px; /* Expanded border-right-width on hover */
+  }
+
+  .pink {
+    background-color: pink;
+    border-color: plum;
+  }
+  
+  .pink::before {
+    border-right-color: plum;
+  }

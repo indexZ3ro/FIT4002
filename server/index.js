@@ -109,10 +109,10 @@ app.put("/api/sticky-notes/:noteId", (req, res) => {
 // API route for deleting a sticky note
 app.delete("/api/sticky-notes/:noteId", (req, res) => {
   const { noteId } = req.params;
-  const notesRef = admin.database().ref("project/stickyNotes");
+  const { projectKey} = req.body;
+  const notesRef = admin.database().ref(`Projects/${projectKey}/stickyNotes/${noteId}`);
 
   notesRef
-    .child(noteId)
     .remove()
     .then(() => {
       res.status(200).json({ message: "Sticky note deleted successfully" });
@@ -120,6 +120,74 @@ app.delete("/api/sticky-notes/:noteId", (req, res) => {
     .catch((error) => {
       console.error("Error deleting sticky note:", error);
       res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+// fetch all questions for a particular project
+app.get("/api/project/:projectKey/questions", (req, res) => {
+  const { projectKey } = req.params;
+  const questionsRef = admin.database().ref(`Projects/${projectKey}/questions`);
+  // Fetch all questions from the database
+  questionsRef
+    .once("value")
+    .then((snapshot) => {
+      const questionsData = snapshot.val();
+      // Convert the questionsData object to an array of questions objects with IDs
+      const questionsArray = Object.entries(questionsData || {}).map(
+        ([key, value]) => ({ ...value, id: key })
+      );
+      res.json(questionsArray);
+    })
+    .catch((error) => {
+      console.error("Error fetching questions:", error);
+      res.status(500).json({ error: "Failed to fetch questions" });
+    });
+});
+
+// API route for creating a question
+app.post("/api/questions", (req, res) => {
+  const projectKey = req.body.projectKey;
+  const { text, type } = req.body;
+  const questionRef = admin.database().ref(`Projects/${projectKey}/questions`);
+
+  const newQuestionRef = questionRef.push();
+  const newQuesitonId = newQuestionRef.key; // Get the newly generated ID
+  newQuestionRef
+    .set({ text, type })
+    .then(() => {
+      res.status(201).json({ message: "Question created successfully", id: newQuesitonId });
+    })
+    .catch((error) => {
+      console.error("Error creating question:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+// API route for updating a question
+app.put("/api/questions/:questionId", (req, res) => {
+  const { questionId } = req.params;
+  const { projectKey, text, type } = req.body;
+  const questionRef = admin.database().ref(`Projects/${projectKey}/questions`);
+
+
+  questionRef
+    .child(questionId)
+    .update({ text, type }) // Update the question data
+    .then(() => {
+      // Send a success response back to the client
+      res.status(200).json({ message: "Question updated successfully"});
+
+      // If you want to notify clients about the update, you can do it here
+      // For example, you can use a WebSocket to send real-time updates to connected clients
+      const updatedQuestionData = { id: questionId, text, type };
+      wss.clients.forEach((client) => {
+        client.send(JSON.stringify(updatedQuestionData));
+      });
+    })
+    .catch((error) => {
+      console.error("Error updating question:", error);
+      res.status(500).json({ error: "Internal server error" });
+      console.log(error);
     });
 });
 

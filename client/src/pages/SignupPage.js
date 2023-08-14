@@ -1,71 +1,63 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/signUpPage.css";
-import TextButton from "../Components/Buttons/TextButton";
+import "../css/sign-up.css";
+import TextButton from "../Components/Buttons/text_button";
+import SignUpPageCover from "../assets/signUpPageCover.svg";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-
-  const routeChangeToLogIn = () => {
-    const edge = document.querySelector(".edge-signup");
-    edge.style.transform = "translateY(-96vh) translateX(-96vw) scale(26, 26)";
-
-    const hideButton = document.querySelector(".edge-button");
-    hideButton.style.display = "none";
-  };
-
-  const handleAnimationEnd = () => {
-    navigate("/");
-  };
 
   const signUp = () => {
     navigate("/Home");
   };
 
+  const logIn = () => {
+    navigate("/LogIn");
+  };
+
   return (
     <div className="signUpPage">
       <div className="split-left-signup">
-        <h2 className="title">New here?</h2>
-        <div className="subheading">Sign up and discover your potential!</div>
+        <div className="signUpPageTeam">Teamoji</div>
+        <div className="signUpPageCover">
+          <img className="signUpPageCoverImg" src={SignUpPageCover}></img>
+        </div>
       </div>
       <div className="split-right-signup">
-        <div className="signupContainer">
-          <h3 className="heading">Sign Up</h3>
-          <div className="inputContainer">
-            <input
-              className="userInput"
-              placeholder="Email"
-              type="text"
-            ></input>
-            <input
-              className="userInput"
-              type="text"
-              placeholder="Username"
-            ></input>
-            <input className="userInput" placeholder="Name" type="text"></input>
-            <input
-              className="userInput"
-              type="password"
-              placeholder="Password"
-            ></input>
-          </div>
+        <h1>Sign Up</h1>
+        <div className="inputContainer">
+          <input
+            className="userInput text"
+            placeholder="Email"
+            type="text"
+          ></input>
+          <input
+            className="userInput text "
+            type="text"
+            placeholder="Username"
+          ></input>
+          <input
+            className="userInput text"
+            placeholder="Name"
+            type="text"
+          ></input>
+          <input
+            className="userInput text"
+            type="password"
+            placeholder="Password"
+          ></input>
           <TextButton
             id="submit"
-            customStyle={{ width: "10vw", height: "5vh", color: "#c8d3b8" }}
+            customStyle={{
+              width: "15vw",
+              height: "5vh",
+              background: "#EFDFFD",
+            }}
             handleClick={signUp}
           />
-        </div>
-        <div className="edge-wrapper">
-          <div
-            className="edge-signup"
-            onTransitionEnd={handleAnimationEnd}
-          ></div>
-          <TextButton
-            id="logIn"
-            handleClick={routeChangeToLogIn}
-            type="edge-button"
-            textColor="white"
-          />
+          <div className="signUpToLogin text" onClick={logIn}>
+            Already have an account?
+          </div>
         </div>
       </div>
     </div>
