@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
+import { getDatabase } from 'firebase/database'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDqRkt4tKFwMOIv66HzpKgM__sAeCrH_bY',
@@ -11,7 +11,11 @@ const firebaseConfig = {
   measurementId: 'G-R1ZS47V8MX'
 }
 
-// Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig)
-const db = getFirestore(firebaseApp)
-export default db
+// Initialize firestore (we dont use currently)
+// const db = getFirestore(firebaseApp)
+
+// Initialize the Realtime Database
+const realtimeDb = getDatabase(firebaseApp);
+
+export {realtimeDb}
