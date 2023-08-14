@@ -9,7 +9,7 @@ const Sidebar = (props) => {
 
   return sideBarState
     ? (
-      <Menu width='250px' styles={{ bmMenu: { overflow: 'hidden' } }}>
+      <Menu width='250px' styles={{bmMenu: { overflow: 'hidden' } }}>
         <Link to='/' className='menu-item'>
           Home Screen
         </Link>
