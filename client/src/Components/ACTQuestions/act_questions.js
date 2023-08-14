@@ -4,6 +4,7 @@ import '../../index.css';
 import { realtimeDb } from "../../firebase";
 import QuestionContext from "../../contexts/QuestionContext";
 import { onValue, ref } from "firebase/database";
+import ACTQuestionsDropdown from './act-questions-icons';
 
 const ACTQuestions = ({ id, text, type }) => {
   const apiUrl = "http://localhost:8080";
@@ -101,6 +102,7 @@ const ACTQuestions = ({ id, text, type }) => {
 
   return (
     <div className='act-questions-inner'>
+      <ACTQuestionsDropdown />
       <div className='act-questions-label'>Question:</div>
       <div ref={divRef} className='act-questions' contentEditable onInput={handleInput}></div>
     </div>

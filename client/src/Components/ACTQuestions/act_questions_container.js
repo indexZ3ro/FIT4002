@@ -1,9 +1,5 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
-import axios from "axios";
+import React from 'react';
 import '../../index.css';
-import { realtimeDb } from "../../firebase";
-import QuestionContext from "../../contexts/QuestionContext";
-import { onValue, ref } from "firebase/database";
 import ACTQuestions from './act_questions';
 
 const ACTQuestionsContainer = ({ questions, setQuestions }) => {
