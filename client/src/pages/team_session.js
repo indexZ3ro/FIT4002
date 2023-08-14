@@ -11,6 +11,7 @@ import ACTSidebar from "../Components/ACTSidebar/act-sidebar";
 import { realtimeDb } from "../firebase";
 import { onValue, ref } from "firebase/database";
 import LocalChangeContext from "../contexts/LocalChangeContext";
+import ACTQuestionsContainer from "../Components/ACTQuestions/act_questions_container";
 
 const TeamSession = () => {
   const apiUrl = "http://localhost:8080";
@@ -19,6 +20,7 @@ const TeamSession = () => {
 
   // handle sticky notes state management here
   const [notes, setNotes] = useState([]);
+  const [questions, setQuestions] = useState([]);
 
   // Fetch all sticky notes from the database when the component mounts
   useEffect(() => {
@@ -31,6 +33,18 @@ const TeamSession = () => {
         console.error("Error fetching sticky notes:", error);
       });
   }, [projectId, setNotes]);
+
+  // Get the Question
+  useEffect(() => {
+    axios.get(apiUrl + `/api/project/${projectId}/questions`)
+      .then((response) => {
+        setQuestions(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching questions:", error);
+      });
+  }, [projectId, setQuestions]);
 
   // Firebase Realtime Database listener for updates
   useEffect(() => {
@@ -75,7 +89,7 @@ const TeamSession = () => {
   return (
     <div className="TeamSession">
       <TeamHeader />
-      <ACTQuestions />
+      <ACTQuestionsContainer questions={questions} setQuestions={setQuestions}/>
       <Sidebar />
       <ACTMatrix notes={notes} setNotes={setNotes}/>
       {/* <Timer /> */}
