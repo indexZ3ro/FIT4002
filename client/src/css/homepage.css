@@ -6,13 +6,13 @@
 
 .left{
     width: 50vw;
-    background-color: #c8d3b8;
+    background-color: #FFFFFF;
 }
 
 
 .right{
     width: 50vw;
-    background-color: #beafe1;
+    background-color: #FFFFFF;
 }
 
 .homepage-split-container{
@@ -61,7 +61,14 @@
 .homepage-subheading{
     font-weight: 400;
     font-size: 1.5vw;
-    color: #FFFFFF;
+    color: #000000;
+}
+
+.homepage-heading{
+    font-weight: 200;
+    font-size: 3vw;
+    color: #000000;
+    font-family: "Poppins";
 }
 
 /* Image */

@@ -32,7 +32,7 @@ const Homepage = () => {
           </div>
           <div className="homepage-content">
             <div className="homepage-content-text">
-              <h4 className="">SOLO MATRIX</h4>
+              <h4 className="homepage-heading" >Solo Matrix</h4>
               <div className="homepage-subheading">
                 Create your own solo matrix or import a template...
               </div>
@@ -40,7 +40,7 @@ const Homepage = () => {
             <div className="homepage-content-button">
               <TextButton
                 id="create"
-                customStyle={{ color: "#c8d3b8" }}
+                customStyle={{ background: "#C896F9" }}
                 handleClick={createSoloSession}
               ></TextButton>
             </div>
@@ -54,7 +54,7 @@ const Homepage = () => {
           </div>
           <div className="homepage-content">
             <div className="homepage-content-text">
-              <h4 className="">TEAM MATRIX</h4>
+              <h4 className="homepage-heading" >Team Matrix</h4>
               <div className="homepage-subheading">
                 Create your own team matrix to collaborate with team members or
                 import a template...
@@ -63,11 +63,11 @@ const Homepage = () => {
             <div className="homepage-content-button">
               <TextButton
                 id="create"
-                customStyle={{color: "#beafe1"}}
+                customStyle={{color: "#C896F9"}}
                 handleClick={routePathToCreateTeamMatrix}
               ></TextButton>
               <TextButton id="join"
-              customStyle={{color: "#beafe1"}}></TextButton>
+              customStyle={{color: "#989FCE"}}></TextButton>
             </div>
           </div>
         </div>
