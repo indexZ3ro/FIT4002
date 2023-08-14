@@ -6,6 +6,7 @@ import TeamSession from './pages/team_session'
 import SignUpPage from './pages/sign_up'
 import LogInPage from './pages/login'
 import Homepage from './pages/home'
+import LandingPage from "./pages/LandingPage";
 import CreateTeamMatrix from './pages/create_team_matrix'
 import { Provider } from 'react-redux'
 import store from './store/store'
@@ -26,7 +27,8 @@ function App () {
             <div className='App'>
               <Sidebar />
               <Routes>
-                <Route path='/' element={<LogInPage />} />
+                <Route path='/' element={<LandingPage />} />
+                <Route path="/LogIn" element={<LogInPage />} />
                 <Route path='/Home' element={<Homepage />} />
                 <Route path='/Signup' element={<SignUpPage />} />
                 <Route path='/CreateTeamMatrix' element={<CreateTeamMatrix />} />

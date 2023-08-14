@@ -3,15 +3,12 @@
     flex-direction: row;
     height: 100vh;
     width: 100vw;
-    background-color: #beafe1;
 }
   
 .login-container{
     display: flex;
     height: 60%;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
 }
 
 /* Split Screen */
@@ -19,20 +16,15 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    width: 50vw;
-    background-image: url("../assets/teamoji.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-
+    height: 100%;
+    width: 50%;
 }
   
 .split-right-login{
     display: flex;
-    justify-content: center;
     align-items: center;
     width: 50vw;
+    margin-left: 5vw;
 }
 
 
@@ -46,13 +38,13 @@
     display: flex;
 }
 
-.remember-ne-container{
+/* .rememberMeContainer{
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-top: 10px;
     margin-bottom: 10px;
-}
+} */
 
 
 .input-container{
@@ -63,8 +55,8 @@
 
 
 /* Input */
-.user-input{
-    width: 30vw;
+.userInput{
+    width: 40vw;
     height: 6vh;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -83,27 +75,32 @@ input:focus {
     outline: none;
 }
 
-.edge-login  {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 0;
-    height: 0;
-    border-top: 6vh solid transparent;
-    border-left: 4vw solid transparent;
-    border-bottom: 6vh solid #c8d3b8;
-    border-right: 4vw solid #c8d3b8;
-    transition: transform 0.6s ease-in;
-    box-shadow: 0 0 5px rgb(0 0 0 / 30%);
+.logInPageCoverImg{
+    height: 90%;
+    width: 40vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5vw;
 }
 
 /* Text */
-.teamoji-title{
-    font-size: 6vw;
-    line-height: 94px;
-    color: #FFF;
+
+.logInPageTeam{
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    height: 10%;
+    margin-left: 5vw;
+    margin-top: 6vh;
+}
+  
+.text{
+    font-family: 'Poppins', sans-serif;
 }
 
-.sign-up {
-    height: 10px;
+.loginToSignUp{
+    text-decoration: underline;
+    font-size: 1.5vw;
+    margin-top: 1vh;
 }
