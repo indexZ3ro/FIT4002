@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/signUpPage.css";
+import "../css/sign_up.css";
 import TextButton from "../Components/Buttons/TextButton";
 import SignUpPageCover from "../assets/signUpPageCover.svg";
 
