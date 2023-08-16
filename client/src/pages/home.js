@@ -33,7 +33,7 @@ const Homepage = () => {
           </div>
           <div className='homepage-content'>
             <div className='homepage-content-text'>
-              <h4 className='homepage-heading'>Solo Matrix</h4>
+              <h className='homepage-heading'>Solo Matrix</h>
               <div className='homepage-subheading'>
                 Create your own solo matrix or import a template...
               </div>
@@ -56,7 +56,7 @@ const Homepage = () => {
           </div>
           <div className='homepage-content'>
             <div className='homepage-content-text'>
-              <h4 className='homepage-heading'>Team Matrix</h4>
+              <h className='homepage-heading'>Team Matrix</h>
               <div className='homepage-subheading'>
                 Create your own team matrix to collaborate with team members or
                 import a template...

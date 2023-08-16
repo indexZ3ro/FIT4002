@@ -9,7 +9,7 @@ const TextButton = ({ id, handleClick, type, customStyle }) => {
         className={type || 'text-button'}
         style={customStyle}
         onClick={handleClick}
-      >Get Started
+      >
         {label}
       </button>
     </div>
