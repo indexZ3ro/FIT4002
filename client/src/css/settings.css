@@ -1,0 +1,100 @@
+body {
+    margin: 0;
+    display: flex;
+}
+
+.container {
+    margin: 0;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.header {
+    position: absolute;
+    top: -1.5vh;
+    left: -5vw;
+}
+
+h2 {
+    top: 10vh;
+    left: 58vw;
+    font-size: 8vh;
+}
+
+form {
+    position: absolute;
+    top: 22vh;
+    left: 58vw;
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    width: 35vw;
+    margin-bottom: 5vh;
+    padding: 2vh;
+    border-color: #d5d8de;
+}
+
+input:focus {
+    border-color: #f553cc;
+}
+
+input:focus::placeholder {
+    color: #f553cc;
+}
+
+input::placeholder {
+    color: #323941;
+    font-weight: bold;
+    font-family: Poppins;
+}
+
+img {
+    display: block;
+    max-width: 80vw;
+    max-height: 50vh;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 25vh;
+    left: 10vw;
+}
+
+button {
+    width: 20vw;
+    height: 6vh;
+    font-size: 2vh;
+    font-family: Poppins;
+    font-weight: 300;
+    color: black;
+    margin-bottom: 2vh;
+    margin-top: 2vh;
+    border-radius: 3vw;
+    border: 0;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:hover.update {
+    background-color: rgba(200, 150, 249, 1);
+}
+
+button:hover.delete {
+    background-color: rgba(255, 47, 34, 1);
+}
+
+.update {
+    background-color: rgba(200, 150, 249, 0.3);
+    box-shadow: inset 3px 3px 5px 0 rgba(200, 150, 249, 0.3),
+        inset -3px -3px 5px 0 rgba(200, 150, 249, 0.3);
+}
+
+.delete {
+    background-color: rgba(255, 47, 34, 0.3);
+    box-shadow: inset 3px 3px 5px 0 rgba(255, 47, 34, 0.3),
+        inset -3px -3px 5px 0 rgba(255, 47, 34, 0.3);
+}
