@@ -25,6 +25,7 @@ const LogInPage = () => {
 
   return (
     <div className="login-page">
+      <div> test test</div>
       <div className="split-left-login">
         <div className="logInPageTeam">Teamoji</div>
         <img className="logInPageCoverImg" src={LogInCover}></img>
