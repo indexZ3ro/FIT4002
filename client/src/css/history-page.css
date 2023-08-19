@@ -48,33 +48,3 @@ h2 {
     max-height: 50vh;
     overflow-y: scroll;
 }
-
-table {
-    font-family: Poppins;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td,
-th {
-    text-align: left;
-    padding: 8px;
-    height: 4vh;
-}
-
-tbody tr:nth-child(odd) {
-    background-color: #f7f6fe;
-}
-
-thead tr {
-    background-color: white;
-}
-
-th:first-child,
-th:last-child {
-    text-align: center;
-}
-
-.tableContainer {
-    width: 90%;
-}

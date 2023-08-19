@@ -91,7 +91,6 @@ const HistoryTable = () => {
         {
             header: "Number",
             accessorKey: "id",
-            muiTableHeadCellProps: { sx: { color: "green" } },
         },
         {
             header: "Name ACT Matrix",
@@ -120,7 +119,21 @@ const HistoryTable = () => {
             data={data}
             enableRowSelection //enable some features
             enableColumnOrdering
-            enableGlobalFilter={false} //turn off a feature
+            enableGlobalFilter={true} //turn off a feature
+            muiTableHeadCellProps={{
+                //simple styling with the `sx` prop, works just like a style prop in this example
+                sx: {
+                    fontWeight: 600,
+                    fontSize: "16px",
+                },
+            }}
+            muiTableBodyProps={{
+                sx: {
+                    "& tr:nth-of-type(odd)": {
+                        backgroundColor: "#F7F6FE",
+                    },
+                },
+            }}
         />
     );
 };
