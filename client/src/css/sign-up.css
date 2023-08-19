@@ -76,22 +76,25 @@ input:focus {
     color: #FFFFFF;
 }
 
+
+.signUpTitle{
+    font-size: 6vw;
+    font-weight: 600;
+}
+
 .signUpPageTeam{
     font-family: 'Poppins', sans-serif;
     font-size: 24px;
     font-weight: 600;
 }
 
-.text{
-    font-family: 'Poppins', sans-serif;
-}
-
 .signUpToLogin{
     text-decoration: underline;
     font-size: 1vw;
     margin-top: 1vh;
+    font-weight: 600;
 }
 
-.signUpToLogin.text:hover{
+.signUpToLogin:hover{
     cursor: pointer;
 }

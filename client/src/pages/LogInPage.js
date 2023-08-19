@@ -3,12 +3,17 @@ import Checkbox from "../Components/Buttons/Checkbox";
 import { useNavigate } from "react-router-dom";
 import "../css/login.css";
 import { useDispatch } from "react-redux";
-import { hideSideBar } from "../features/sidebar_slice";
+import { hideSideBar } from "../features/sidebarSlice";
 import { useEffect } from "react";
 import LogInCover from "../assets/logInCover.svg";
 
 const LogInPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(hideSideBar());
+  });
 
   const logIn = () => {
     navigate("/Home");
@@ -27,15 +32,15 @@ const LogInPage = () => {
 
       <div className="split-right-login">
         <div className="login-container">
-          <h1>Login</h1>
+          <div className="loginTitle">Login</div>
           <div className="input-container">
             <input
-              className="userInput text"
+              className="userInput"
               placeholder="Email"
               type="text"
             ></input>
             <input
-              className="userInput text"
+              className="userInput"
               type={"password"}
               name="password"
               placeholder="Password"
@@ -45,17 +50,19 @@ const LogInPage = () => {
               <Checkbox label="Remember Me" checked={true} />
             </div> */}
           </div>
-          <TextButton
-            id="submit"
-            customStyle={{
-              width: "15vw",
-              height: "5vh",
-              background: "#EFDFFD",
-            }}
-            handleClick={logIn}
-          />
-          <div className="loginToSignUp text" onClick={signUp}>
-            New Here?
+          <div>
+            <TextButton
+              id="logIn"
+              customStyle={{
+                width: "15vw",
+                height: "5vh",
+                background: "#EFDFFD",
+              }}
+              handleClick={logIn}
+            />
+            <div className="loginToSignUp" onClick={signUp}>
+              New Here?
+            </div>
           </div>
         </div>
       </div>
