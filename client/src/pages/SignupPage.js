@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { hideSideBar } from "../features/sidebarSlice";
 import "../css/sign-up.css";
-import TextButton from "../Components/Buttons/text_button";
+import TextButton from "../Components/Buttons/textButton";
 import SignUpPageCover from "../assets/signUpPageCover.svg";
 
 const SignUpPage = () => {

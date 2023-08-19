@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "../css/homepage.css";
-import TextButton from "../Components/Buttons/text_button";
+import TextButton from "../Components/Buttons/textButton";
 import stickyNote from "../assets/StickyNoteIcon.png";
 import stickyNotes from "../assets/StickyNotesMultiple.png";
 import Sidebar from "../Components/Sidebar/Sidebar";

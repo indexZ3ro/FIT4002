@@ -1,4 +1,4 @@
-import TextButton from "../Components/Buttons/text_button";
+import TextButton from "../Components/Buttons/textButton";
 import Checkbox from "../Components/Buttons/Checkbox";
 import { useNavigate } from "react-router-dom";
 import "../css/login.css";
