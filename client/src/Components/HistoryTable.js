@@ -1,76 +1,127 @@
-import { useState, useEffect, useMemo } from "react";
-import { useTable } from "react-table";
+import React, { useMemo } from "react";
+import { MaterialReactTable } from "material-react-table";
 import "../css/history-page.css";
-import fakeData from "../MOCK_DATA.json";
 
 const HistoryTable = () => {
-    const data = useMemo(() => fakeData, []);
-
-    const COLUMNS = [
+    const data = [
         {
-            Header: "Number",
-            accessor: "id",
+            id: 1, // key "id" matches `accessorKey` in ColumnDef down below
+            act_name: "Career",
+            lead_name: "John",
+            date: "19/08/2023",
+            towards_away: "towards",
+            action: "",
         },
         {
-            Header: "Name ACT Matrix",
-            accessor: "first_name",
+            id: 1, // key "id" matches `accessorKey` in ColumnDef down below
+            act_name: "Career",
+            lead_name: "George",
+            date: "19/08/2023",
+            towards_away: "away",
+            action: "",
         },
         {
-            Header: "Lead Member",
-            accessor: "last_name",
+            id: 1, // key "id" matches `accessorKey` in ColumnDef down below
+            act_name: "Career",
+            lead_name: "John",
+            date: "19/08/2023",
+            towards_away: "towards",
+            action: "",
         },
         {
-            Header: "Date",
-            accessor: "email",
+            id: 1, // key "id" matches `accessorKey` in ColumnDef down below
+            act_name: "Job",
+            lead_name: "Scott",
+            date: "19/08/2023",
+            towards_away: "away",
+            action: "",
         },
         {
-            Header: "Towards/Away",
-            accessor: "gender",
+            id: 1, // key "id" matches `accessorKey` in ColumnDef down below
+            act_name: "Career",
+            lead_name: "John",
+            date: "19/08/2023",
+            towards_away: "towards",
+            action: "",
         },
         {
-            Header: "Action",
-            accessor: "university",
+            id: 1, // key "id" matches `accessorKey` in ColumnDef down below
+            act_name: "Career",
+            lead_name: "John",
+            date: "19/08/2023",
+            towards_away: "towards",
+            action: "",
+        },
+        {
+            id: 1, // key "id" matches `accessorKey` in ColumnDef down below
+            act_name: "Career",
+            lead_name: "John",
+            date: "19/08/2023",
+            towards_away: "towards",
+            action: "",
+        },
+        {
+            id: 1, // key "id" matches `accessorKey` in ColumnDef down below
+            act_name: "Career",
+            lead_name: "John",
+            date: "19/08/2023",
+            towards_away: "towards",
+            action: "",
+        },
+        {
+            id: 1, // key "id" matches `accessorKey` in ColumnDef down below
+            act_name: "Career",
+            lead_name: "John",
+            date: "19/08/2023",
+            towards_away: "towards",
+            action: "",
+        },
+        {
+            id: 1, // key "id" matches `accessorKey` in ColumnDef down below
+            act_name: "Career",
+            lead_name: "John",
+            date: "19/08/2023",
+            towards_away: "towards",
+            action: "",
         },
     ];
 
-    const columns = useMemo(() => COLUMNS, []);
-    const tableInstance = useTable({ columns, data });
-
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-        useTable({ columns, data });
-
+    // accessor will be the name defined inside dataset
+    const columns = useMemo(() => [
+        {
+            header: "Number",
+            accessorKey: "id",
+            muiTableHeadCellProps: { sx: { color: "green" } },
+        },
+        {
+            header: "Name ACT Matrix",
+            accessorKey: "act_name",
+        },
+        {
+            header: "Lead Member",
+            accessorKey: "lead_name",
+        },
+        {
+            header: "Date",
+            accessorKey: "date",
+        },
+        {
+            header: "Towards/Away",
+            accessorKey: "towards_away",
+        },
+        {
+            header: "Action",
+            accessorKey: "action",
+        },
+    ]);
     return (
-        <div className="tableContainer">
-            <table {...getTableProps()}>
-                <thead>
-                    {headerGroups.map((headerGroup) => (
-                        <tr {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map((column) => (
-                                <th {...column.getHeaderProps()}>
-                                    {column.render("Header")}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
-                </thead>
-                <tbody {...getTableBodyProps()}>
-                    {rows.map((row) => {
-                        prepareRow(row);
-                        return (
-                            <tr {...row.getRowProps()}>
-                                {row.cells.map((cell) => {
-                                    return (
-                                        <td {...cell.getCellProps()}>
-                                            {cell.render("Cell")}
-                                        </td>
-                                    );
-                                })}
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
-        </div>
+        <MaterialReactTable
+            columns={columns}
+            data={data}
+            enableRowSelection //enable some features
+            enableColumnOrdering
+            enableGlobalFilter={false} //turn off a feature
+        />
     );
 };
 export default HistoryTable;
