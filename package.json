@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon --quiet server",
+    "server": "--quiet server",
     "client": "npm start --prefix client",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "postinstall": "node -e \"if (process.platform !== 'darwin') { console.log('Skipping fsevents installation'); process.exit(0); }\""
@@ -35,7 +35,6 @@
     "babel-loader": "^9.1.2",
     "concurrently": "^8.0.1",
     "css-loader": "^6.7.3",
-    "nodemon": "^2.0.22",
     "style-loader": "^3.3.2",
     "svg-inline-loader": "^0.8.2",
     "svg-url-loader": "^8.0.0",
