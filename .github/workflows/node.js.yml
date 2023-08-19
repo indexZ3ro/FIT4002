@@ -20,7 +20,7 @@ jobs:
           node-version: 14.x
 
       - name: Install server dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Build server (if applicable)
         run: npm run build --if-present
@@ -32,7 +32,7 @@ jobs:
         run: cd client
 
       - name: Install client dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Build client (if applicable)
         run: npm run build --if-present
