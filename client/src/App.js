@@ -12,26 +12,30 @@ import store from './store/store'
 import Sidebar from './Components/Sidebar/Sidebar'
 import './App.css'
 import LocalChangeContext from './contexts/LocalChangeContext';
+import QuestionContext from './contexts/QuestionContext';
 import React, { useRef, useState } from 'react';
 
 function App () {
   const [localChanges, setLocalChanges] = useState([]);
+  const [localQuestions, setLocalQuestions] = useState([]);
   return (
     <Provider store={store}>
       <LocalChangeContext.Provider value={{ localChanges, setLocalChanges }}>
-        <Router>
-          <div className='App'>
-            <Sidebar />
-            <Routes>
-              <Route path='/' element={<LogInPage />} />
-              <Route path='/Home' element={<Homepage />} />
-              <Route path='/Signup' element={<SignUpPage />} />
-              <Route path='/CreateTeamMatrix' element={<CreateTeamMatrix />} />
-              <Route path='/SoloSession' element={<SoloSession />} />
-              <Route path='/TeamSession' element={<TeamSession />} />
-            </Routes>
-          </div>
-        </Router>
+        <QuestionContext.Provider value={{ localQuestions, setLocalQuestions }}>
+          <Router>
+            <div className='App'>
+              <Sidebar />
+              <Routes>
+                <Route path='/' element={<LogInPage />} />
+                <Route path='/Home' element={<Homepage />} />
+                <Route path='/Signup' element={<SignUpPage />} />
+                <Route path='/CreateTeamMatrix' element={<CreateTeamMatrix />} />
+                <Route path='/SoloSession' element={<SoloSession />} />
+                <Route path='/TeamSession' element={<TeamSession />} />
+              </Routes>
+            </div>
+          </Router>
+        </QuestionContext.Provider>
       </LocalChangeContext.Provider>
     </Provider>
   )
