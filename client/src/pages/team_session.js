@@ -14,7 +14,7 @@ import LocalChangeContext from "../contexts/LocalChangeContext";
 import ACTQuestionsContainer from "../Components/ACTQuestions/act_questions_container";
 
 const TeamSession = () => {
-  const apiUrl = "http://localhost:8080";
+  const apiUrl = "https://project-5389016526708021196.ts.r.appspot.com";
   const projectId = "1";
   const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
 
@@ -27,9 +27,11 @@ const TeamSession = () => {
     axios.get(apiUrl + `/api/project/${projectId}/sticky-notes`)
       .then((response) => {
         setNotes(response.data);
+        console.error("apiURL is:" + apiUrl);
         console.log(response.data);
       })
       .catch((error) => {
+        console.error("apiURL is:" + apiUrl);
         console.error("Error fetching sticky notes:", error);
       });
   }, [projectId, setNotes]);
