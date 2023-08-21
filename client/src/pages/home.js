@@ -1,81 +1,92 @@
-import React, { useEffect } from 'react'
-import '../css/homepage.css'
-import TextButton from '../Components/Buttons/text_button'
-import stickyNote from '../assets/stickyNote.png'
-import stickyNotes from '../assets/stickyNotes.png'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { showSideBar } from '../features/sidebar_slice'
+import React, { useEffect } from "react";
+import "../css/homepage.css";
+import TextButton from "../Components/Buttons/textButton";
+import stickyNote from "../assets/StickyNoteIcon.png";
+import stickyNotes from "../assets/StickyNotesMultiple.png";
+import Sidebar from "../Components/Sidebar/Sidebar";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { showSideBar } from "../features/sidebarSlice";
 
 const Homepage = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const routePathToCreateTeamMatrix = () => {
-    navigate('/CreateTeamMatrix')
-  }
+    navigate("/CreateTeamMatrix");
+  };
 
   const createSoloSession = () => {
-    navigate('/SoloSession')
-  }
+    navigate("/SoloSession");
+  };
 
   useEffect(() => {
-    dispatch(showSideBar())
-  })
+    dispatch(showSideBar());
+  });
 
   return (
-    <div className='homepage'>
-      <div className='left'>
-        <div className='homepage-split-container'>
-          <div className='homepage-img-container'>
-            <img src={stickyNote} alt='stickyNote' />
+    <div className="homepage">
+      <div className="left">
+        <div className="homepage-split-container">
+          <div className="homepage-img-container">
+            <img src={stickyNote} alt="stickyNote" />
           </div>
-          <div className='homepage-content'>
-            <div className='homepage-content-text'>
-              <h4 className=''>SOLO MATRIX</h4>
-              <div className='homepage-subheading'>
+          <div className="homepage-content">
+            <div className="homepage-content-text">
+              <h className="homepage-heading">Solo Matrix</h>
+              <div className="homepage-subheading">
                 Create your own solo matrix or import a template...
               </div>
             </div>
-            <div className='homepage-content-button'>
+            <div className="homepage-content-button">
               <TextButton
-                id='create'
-                customStyle={{ color: '#c8d3b8' }}
+                id="create"
+                customStyle={{
+                  backgroundColor: "rgba(200, 150, 249, 0.3)",
+                  borderColor: "rgba(200, 150, 249, 0.3)",
+                }}
                 handleClick={createSoloSession}
               />
             </div>
           </div>
         </div>
       </div>
-      <div className='right'>
-        <div className='homepage-split-container'>
-          <div className='homepage-img-container'>
-            <img src={stickyNotes} alt='stickyNotes' />
+      <div className="vertical-line"></div>
+      <div className="right">
+        <div className="homepage-split-container">
+          <div className="homepage-img-container">
+            <img src={stickyNotes} alt="stickyNotes" />
           </div>
-          <div className='homepage-content'>
-            <div className='homepage-content-text'>
-              <h4 className=''>TEAM MATRIX</h4>
-              <div className='homepage-subheading'>
+          <div className="homepage-content">
+            <div className="homepage-content-text">
+              <h className="homepage-heading">Team Matrix</h>
+              <div className="homepage-subheading">
                 Create your own team matrix to collaborate with team members or
                 import a template...
               </div>
             </div>
-            <div className='homepage-content-button'>
+            <div className="homepage-content-button">
               <TextButton
-                id='create'
-                customStyle={{ color: '#beafe1' }}
+                id="create"
+                customStyle={{
+                  backgroundColor: "rgba(200, 150, 249, 0.3)",
+                  borderColor: "rgba(200, 150, 249, 0.3)",
+                }}
                 handleClick={routePathToCreateTeamMatrix}
               />
               <TextButton
-                id='join'
-                customStyle={{ color: '#beafe1' }}
+                id="join"
+                customStyle={{
+                  backgroundColor: "rgba(152, 159, 206, 0.3)",
+                  borderColor: "rgba(152, 159, 206, 0.3)",
+                }}
               />
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Homepage
+export default Homepage;

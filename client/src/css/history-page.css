@@ -1,0 +1,80 @@
+body {
+    color: black;
+    display: flex;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+h4 {
+    color: black;
+    font-family: Poppins;
+    font-size: 2.6vh;
+    letter-spacing: -0.05vw;
+    position: absolute;
+    left: 14vw;
+    top: 5.2vh;
+    margin: 0;
+}
+
+#title-search {
+    top: 16vh;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100vw;
+    padding: 2vh 5vw 2vh 5vw;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+h2 {
+    color: black;
+    font-family: Poppins;
+    font-size: 5vh;
+    letter-spacing: -0.2vw;
+    margin: 0;
+    position: relative;
+}
+
+#main-content {
+    top: 30vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    max-height: 50vh;
+    overflow-y: scroll;
+}
+
+table {
+    font-family: Poppins;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    text-align: left;
+    padding: 8px;
+    height: 4vh;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f7f6fe;
+}
+
+thead tr {
+    background-color: white;
+}
+
+th:first-child,
+th:last-child {
+    text-align: center;
+}
+
+.tableContainer {
+    width: 90%;
+}

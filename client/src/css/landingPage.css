@@ -1,0 +1,93 @@
+.landingPage{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+.landingPageTop{
+    display: flex;
+    flex-direction: row;
+    height: 10%;
+    margin: 2vw;
+}
+
+.landingPageTeamTitleContainer{
+    width: 70%;
+    margin-left: 4vw;
+    margin-top: 5vh;
+}
+
+.landingPageTopButton{
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vh;
+    margin-right: 5vw;
+    
+}
+
+.landingPageTopButton.textFont.s:hover{
+    cursor: pointer;
+    border-radius: 40px;
+    
+    border: none;
+    background-color: #EFDFFD
+}
+
+
+.landingPageBottom{
+    display: flex;
+    flex-direction: row;
+    height: 70%;
+}
+
+.landingPageBottomLeft{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 5vw;
+}
+
+.landingPageBottomRight{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.landingPageCover{
+    margin-top: 10vh;
+    width: 50vw;
+}
+
+.landingPageSubtitle{
+    margin-top: 3vh;
+}
+
+.textFont{
+    font-family: 'Poppins', sans-serif;
+}
+
+.semiBold{
+    font-weight: 600;
+}
+
+.l{
+    font-size: 65px;
+}
+
+.m{
+    font-size: 24px;
+}
+
+.s{
+    font-size: 18px;
+}
+
+.xs{
+    font-size: 16px;
+}
