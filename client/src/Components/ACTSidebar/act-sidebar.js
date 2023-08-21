@@ -8,18 +8,19 @@ import Note from "../Note/Note";
 import axios from "axios";
 
 const ACTSidebar = ({ notes, setNotes }) => {
-  const apiUrl = "http://localhost:8080";
+  const apiUrl = "https://project-5389016526708021196.ts.r.appspot.com";
 
   const handleIconAdded = (x, y) => {
     setNotes([...notes, { x, y }]);
 
     // Make a POST request to create the new sticky note on the server
     axios
-      .post(apiUrl + "/api/sticky-notes", { projectKey: '1', x, y, text: null })
+      .post("https://project-5389016526708021196.ts.r.appspot.com" + "/api/sticky-notes", { projectKey: '1', x, y, text: null })
       .then((response) => {
         console.log(response.data);
       })
       .catch((error) => {
+        console.log("Backend URL:", process.env.REACT_APP_BACKEND_URL);
         console.error("Error creating sticky note:", error);
       });
   };

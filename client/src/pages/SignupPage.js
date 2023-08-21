@@ -1,11 +1,19 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { hideSideBar } from "../features/sidebarSlice";
 import "../css/sign-up.css";
-import TextButton from "../Components/Buttons/text_button";
+import TextButton from "../Components/Buttons/textButton";
 import SignUpPageCover from "../assets/signUpPageCover.svg";
 
 const SignUpPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(hideSideBar());
+  });
 
   const signUp = () => {
     navigate("/Home");
@@ -24,7 +32,7 @@ const SignUpPage = () => {
         </div>
       </div>
       <div className="split-right-signup">
-        <h1>Sign Up</h1>
+        <div className="signUpTitle">Sign Up</div>
         <div className="inputContainer">
           <input
             className="userInput text"
@@ -47,7 +55,7 @@ const SignUpPage = () => {
             placeholder="Password"
           ></input>
           <TextButton
-            id="submit"
+            id="signUp"
             customStyle={{
               width: "15vw",
               height: "5vh",
@@ -55,7 +63,7 @@ const SignUpPage = () => {
             }}
             handleClick={signUp}
           />
-          <div className="signUpToLogin text" onClick={logIn}>
+          <div className="signUpToLogin" onClick={logIn}>
             Already have an account?
           </div>
         </div>
