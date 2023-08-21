@@ -12,18 +12,19 @@ const Settings = () => {
     };
 
     return (
-        <div className="container">
-            <img src={settingsIcon} alt="Settings Icon" />
-            <div className="header">
-                <h4>Teamoji</h4>
+        <div className="settings-container">
+            <img className="settings-img" src={settingsIcon} alt="Settings Icon" />
+            <div className="settings-header">
+                <h4 className="settings-h4">Teamoji</h4>
             </div>
-            <div className="title">
-                <h2>Settings</h2>
+            <div className="settings-title">
+                <h2 className="settings-h2">Settings</h2>
             </div>
-            <div className="form">
+            <div className="settings-form">
                 <form>
                     <label>
                         <input
+                            className="settings-input"
                             type="text"
                             name="name"
                             placeholder="Name"
@@ -31,6 +32,7 @@ const Settings = () => {
                     </label>
                     <label>
                         <input
+                            className="settings-input"
                             type="text"
                             name="email"
                             placeholder="Email"
@@ -38,6 +40,7 @@ const Settings = () => {
                     </label>
                     <label>
                         <input
+                            className="settings-input"
                             type="text"
                             name="password"
                             placeholder="Password"
@@ -46,7 +49,7 @@ const Settings = () => {
                     <button
                         type="update"
                         value="Update"
-                        className="update"
+                        className="settings-button update"
                         onClick={update()}
                     >
                         Update
@@ -54,7 +57,7 @@ const Settings = () => {
                     <button
                         type="delete"
                         value="Delete"
-                        className="delete"
+                        className="settings-button delete"
                         onClick={deleteAcc()}
                     >
                         Delete Account
