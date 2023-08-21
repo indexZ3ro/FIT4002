@@ -6,7 +6,8 @@
   "scripts": {
     "server": "--quiet server",
     "client": "npm start --prefix client",
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node server/index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "postinstall": "node -e \"if (process.platform !== 'darwin') { console.log('Skipping fsevents installation'); process.exit(0); }\""
   },
   "keywords": [],
@@ -35,9 +36,12 @@
     "babel-loader": "^9.1.2",
     "concurrently": "^8.0.1",
     "css-loader": "^6.7.3",
+    "file-loader": "^6.2.0",
+    "nodemon": "^2.0.22",
     "style-loader": "^3.3.2",
     "svg-inline-loader": "^0.8.2",
     "svg-url-loader": "^8.0.0",
+    "url-loader": "^4.1.1",
     "webpack-cli": "^5.0.2"
   }
 }

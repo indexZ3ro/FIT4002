@@ -16,7 +16,7 @@ admin.initializeApp({
 });
 
 const app = express();
-const allowedOrigins = ["http://localhost:3000"]; // Add your frontend application's URL here
+const allowedOrigins = ["http://localhost:3000", "https://teamoji-matrix.web.app"]; // Add your frontend application's URL here
 
 // CORS configuration
 app.use(
