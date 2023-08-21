@@ -78,3 +78,7 @@ to compile code to public folder run:
 npx webpack --config webpack.config.js
 
 site: https://teamoji-matrix.web.app/
+
+to deploy the backend
+use: "C:\Users\Kieran\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin\gcloud" app deploy (for Kieran only)
+Or the google cloud sdk with app deploy
