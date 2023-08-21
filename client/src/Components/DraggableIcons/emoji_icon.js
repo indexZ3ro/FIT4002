@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Edit from '../../assets/Edit.png'
+import Face from '../../assets/Face.png'
 
-const EditIcon = () => {
+const TextIcon = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [dragging, setDragging] = useState(false)
 
@@ -34,9 +34,9 @@ const EditIcon = () => {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
-      <img src={Edit} style={{ width: '72px', height: '72px' }} alt='draggable component' />
+      <img src={Face} style={{ width: '4.5vh', height: '4.5vh' }} alt='draggable component' />
     </div>
   )
 }
 
-export default EditIcon
+export default TextIcon

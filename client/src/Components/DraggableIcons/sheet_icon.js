@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Sheet from '../../assets/Sheet.png'
+import StickNoteIcon from '../../assets/StickyNote-Icon.png'
 
 const SheetIcon = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 })
@@ -34,7 +34,7 @@ const SheetIcon = () => {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
-      <img src={Sheet} style={{ width: '72px', height: '72px' }} alt='draggable component' />
+      <img src={StickNoteIcon} style={{  width: '4.5vh', height: '4.5vh'  }} alt='draggable component' />
     </div>
   )
 }

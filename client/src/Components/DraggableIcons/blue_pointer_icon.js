@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import BluePointer from '../../assets/BluePointer.png'
+import Pointer from '../../assets/Pointer.png'
 
 const BluePointerIcon = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 })
@@ -34,7 +34,7 @@ const BluePointerIcon = () => {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
-      <img src={BluePointer} style={{ width: '72px', height: '72px' }} alt='draggable component' />
+      <img src={Pointer} style={{  width: '4.5vh', height: '4.5vh'  }} alt='draggable component' />
     </div>
   )
 }
