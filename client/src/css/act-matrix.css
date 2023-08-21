@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap");
 .ACTMatrix {
+    background: #d1d1d1;
     width: 80%; /* width: 1406px; */
     height: 80%; /* height: 702px; */
     background-image: url("../assets/paper-background.jpg");
