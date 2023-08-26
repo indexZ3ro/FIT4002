@@ -5,7 +5,7 @@ import LocalChangeContext from "../../contexts/LocalChangeContext";
 
 const Note = ({ x, y, id, text }) => {
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
-    const apiUrl = "http://localhost:8080";
+    const apiUrl = "https://project-5389016526708021196.ts.r.appspot.com";
     const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
     const [isInitialMount, setIsInitialMount] = useState(true); // Flag to track initial mount
 
@@ -48,6 +48,11 @@ const Note = ({ x, y, id, text }) => {
     }, [text]);
 
     useEffect(() => {
+        setPosition({ x, y });
+        console.log(x, y);
+    }, [x, y]);
+
+    useEffect(() => {
         // Make the axios request to update the sticky note on the server
         if (!isInitialMount && isUpdated) {
             axios
@@ -85,7 +90,7 @@ const Note = ({ x, y, id, text }) => {
     };
 
     return (
-        <Draggable onStop={handleDragStop} defaultPosition={{x: x, y: y}}>
+        <Draggable onStop={handleDragStop}  position={{ x: position.x, y: position.y }}>
             <div
                 className="note-container"
             >

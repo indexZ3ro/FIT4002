@@ -36,13 +36,23 @@
   text-align: center;
 }
 
-body {
-  font-family: Inter, sans-serif;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Public+Sans:wght@200&display=swap');
+
+
+body, body * {
+  font-family: 'Poppins', sans-serif;
+}
+
+.semiBold {
+  font-weight: 600;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Roboto Mono", monospace;
-  color: #FFF;
+  font-family: 'Poppins', sans-serif;
+  color: black;
+  /* font-weight: 600; */
 }
 
 h1{

@@ -1,0 +1,15 @@
+.search {
+    box-sizing: border-box;
+    width: 14vw;
+    height: 4vh;
+    border-radius: 1vh;
+    border-width: 0.2vh;
+    padding: 0.6vh 0vw 0.6vh 2vw;
+    border-color: #9E9E9E;
+    background-image: url("../assets/search-icon.png");
+    background-repeat: no-repeat;
+    background-position: 4% 50%;
+    background-size: auto;
+    font-family: Poppins;
+    font-size: 0.8em;
+}

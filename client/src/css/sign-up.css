@@ -1,10 +1,9 @@
-.sign-up-page{
+.signUpPage{
     display: flex;
     flex-direction: row;
+    width: 100vw;
     height: 100vh;
-    background-color: #c8d3b8;
     justify-content: center;
-    align-items: center;
 }
 
 /* Split Screen */
@@ -12,36 +11,22 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 50vw;
-    background-image: url("../assets/falling-notes.png");
-    background-size: 35vw 40vh;
-    background-repeat: no-repeat;
-    background-position: top center;
-
+    height: 100%;
+    width: 50%;
 }
   
 .split-right-signup{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 50vw;
-}
-
-.sign-up-container{
-    display: flex;
-    height: 80%;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    margin-left: 5vw;
 }
-
 
 /* Input */
-.user-input{
-    width: 30vw;
+.userInput{
+    width: 40vw;
     height: 6vh;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -50,7 +35,7 @@
     border-radius: 5px;
 }
 
-.user-input::placeholder{
+.userInput::placeholder{
     font-size: 1vw;
     font-style: normal;
     color: #323941;
@@ -61,27 +46,55 @@ input:focus {
     outline: none;
 }
 
-.edge-signup  {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 0;
-    height: 0;
-    border-top: 6vh solid transparent;
-    border-left: 4vw solid transparent;
-    border-bottom: 6vh solid #beafe1;
-    border-right: 4vw solid #beafe1;
-    transition: transform 0.6s ease-in;
-    box-shadow: 0 0 5px rgb(0 0 0 / 30%);
-}
   
+.signUpPageTeam{
+    height: 10%;
+    margin-left: 5vw;
+    margin-top: 6vh;
+}
+
+.signUpPageCover{
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5vw;
+    
+}
+
+.signUpPageCoverImg{
+    width: 45vw;
+}
+
 /* Text */
 .subheading{
     font-style: normal;
     font-weight: 400;
     font-size: 2vw;
     margin-top: 50px;
-    color: #FFF;
+
+    color: #FFFFFF;
 }
 
 
+.signUpTitle{
+    font-size: 6vw;
+    font-weight: 600;
+}
+
+.signUpPageTeam{
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.signUpToLogin{
+    text-decoration: underline;
+    font-size: 1vw;
+    margin-top: 1vh;
+    font-weight: 600;
+}
+
+.signUpToLogin:hover{
+    cursor: pointer;
+}
