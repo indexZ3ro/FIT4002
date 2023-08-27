@@ -7,7 +7,7 @@ import { onValue, ref } from "firebase/database";
 import ACTQuestionsDropdown from './act-questions-icons';
 
 const ACTQuestions = ({ id, text, type }) => {
-  const apiUrl = "https://project-5389016526708021196.ts.r.appspot.com";
+  const apiUrl = "http://localhost:8080";
 
   const [name, setName] = useState(text || ''); // Renamed state variable from 'Question' to 'name'
   const divRef = useRef();
@@ -16,6 +16,7 @@ const ACTQuestions = ({ id, text, type }) => {
   const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
   const [questions, setQuestions] = useState([]);
   const [isInitialMount, setIsInitialMount] = useState(true);
+  const [selectedQuestion, setSelectedQuestion] = useState(id);
   
   useEffect(() => {
     divRef.current.textContent = name;
@@ -28,8 +29,8 @@ const ACTQuestions = ({ id, text, type }) => {
         .put(apiUrl + `/api/questions/${id}`, {
             projectKey: 1,
             text: name,
-            type: 1
-        })
+            type: type
+        }) 
         .then((response) => {
             console.log("Question updated successfully:", response.data);
             setIsUpdated(false); // Reset the isUpdated flag after the update
@@ -43,17 +44,25 @@ const ACTQuestions = ({ id, text, type }) => {
       }
   }, [name]);
 
-    // // Get the Question
-    useEffect(() => {
-      axios.get(apiUrl + `/api/project/${projectId}/questions`)
-        .then((response) => {
-          setQuestions(response.data);
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching questions:", error);
+  // // Get the Questions
+  useEffect(() => {
+    axios.get(apiUrl + `/api/project/${projectId}/questions`)
+      .then((response) => {
+        setQuestions(response.data);
+        console.log(response.data);
+
+        questions.forEach(question => {
+          if (question.status == "active") {
+            setSelectedQuestion(question.id);
+            return;
+          }
         });
-    }, [projectId, name]);
+
+      })
+      .catch((error) => {
+        console.error("Error fetching questions:", error);
+      });
+  }, [projectId, name]);
 
 //   useEffect(() => {
 //     const questionsRef = ref(realtimeDb, `Projects/${projectId}/questions`);
@@ -103,8 +112,8 @@ const ACTQuestions = ({ id, text, type }) => {
 
   return (
     <div className='act-questions-inner'>
-      <ACTQuestionsDropdown divRef={divRef} questionArray={questions}/>
-      <div className='act-questions-label'>Question:</div>
+      <ACTQuestionsDropdown divRef={divRef} questionArray={questions} selectedQuestionId={id}/>
+      <div className='act-questions-label'>Question</div>
       <div ref={divRef} className='act-questions' contentEditable onInput={handleInput}></div>
     </div>
   );

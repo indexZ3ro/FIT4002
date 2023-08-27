@@ -1,6 +1,3 @@
-
-
-
 const DropdownWithImages = () => {
     return (
       <View>
