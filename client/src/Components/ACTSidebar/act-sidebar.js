@@ -8,7 +8,7 @@ import Note from "../Note/Note";
 import axios from "axios";
 
 const ACTSidebar = ({ notes, setNotes }) => {
-  const apiUrl = "https://project-5389016526708021196.ts.r.appspot.com";
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleIconAdded = (x, y) => {
     setNotes([...notes, { x, y }]);

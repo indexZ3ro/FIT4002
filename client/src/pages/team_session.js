@@ -14,7 +14,7 @@ import LocalChangeContext from "../contexts/LocalChangeContext";
 import ACTQuestionsContainer from "../Components/ACTQuestions/act_questions_container";
 
 const TeamSession = () => {
-  const apiUrl = "https://project-5389016526708021196.ts.r.appspot.com";
+  const apiUrl = process.env.REACT_APP_API_URL;
   const projectId = "1";
   const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
 

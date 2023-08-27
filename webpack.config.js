@@ -1,4 +1,5 @@
-const path = require('path')
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './client/src/index.js',
@@ -51,5 +52,10 @@ module.exports = {
     proxy: {
       '/api': 'http://localhost:3000'
     }
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.REACT_APP_API_URL': JSON.stringify('https://project-5389016526708021196.ts.r.appspot.com')
+    }),
+  ]
 }

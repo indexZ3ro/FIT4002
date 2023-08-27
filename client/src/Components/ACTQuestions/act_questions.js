@@ -7,7 +7,8 @@ import { onValue, ref } from "firebase/database";
 import ACTQuestionsDropdown from './act-questions-icons';
 
 const ACTQuestions = ({ id, text, type }) => {
-  const apiUrl = "https://project-5389016526708021196.ts.r.appspot.com";
+  
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const [name, setName] = useState(text || ''); // Renamed state variable from 'Question' to 'name'
   const divRef = useRef();
