@@ -3,11 +3,14 @@ import '../../index.css';
 import ACTQuestions from './act_questions';
 
 const ACTQuestionsContainer = ({ questions, setQuestions }) => {
+    const selectedQuestion = questions.find(question => question.status === "active");
     return (
         <div className='act-questions-container'>
-            {questions.map((question) => (
-                <ACTQuestions key={question.id} id={question.id} text={question.text} type={question.type}/>
-            ))}
+            {selectedQuestion && (
+                <ACTQuestions key={selectedQuestion.id} id={selectedQuestion.id} text={selectedQuestion.text} type={selectedQuestion.type}/>
+            )
+
+            }
         </div>
     );
 }

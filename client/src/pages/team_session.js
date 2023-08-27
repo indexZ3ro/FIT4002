@@ -74,8 +74,8 @@ const TeamSession = () => {
                 }
             } else {
                 updatedNotes.push({ ...noteData, id: noteId });
-                console.log("local changes: ", localChanges);
-                console.log(noteId);
+                // console.log("local changes: ", localChanges);
+                // console.log(noteId);
             }
         });
           // Log the updated notes to the console

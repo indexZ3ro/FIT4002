@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 // Firebase initialization
 const admin = require("firebase-admin");
 const serviceAccount = require("../project-5389016526708021196-firebase-adminsdk-hitz3-cab5dbb661.json");
+const { stat } = require("fs");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -147,15 +148,15 @@ app.get("/api/project/:projectKey/questions", (req, res) => {
 // API route for creating a question
 app.post("/api/questions", (req, res) => {
   const projectKey = req.body.projectKey;
-  const { text, type } = req.body;
+  const { text, type, status } = req.body;
   const questionRef = admin.database().ref(`Projects/${projectKey}/questions`);
 
   const newQuestionRef = questionRef.push();
-  const newQuesitonId = newQuestionRef.key; // Get the newly generated ID
+  const newQuestionId = newQuestionRef.key; // Get the newly generated ID
   newQuestionRef
-    .set({ text, type })
+    .set({ text, type, status })
     .then(() => {
-      res.status(201).json({ message: "Question created successfully", id: newQuesitonId });
+      res.status(201).json({ message: "Question created successfully", id: newQuestionId });
     })
     .catch((error) => {
       console.error("Error creating question:", error);
@@ -166,20 +167,19 @@ app.post("/api/questions", (req, res) => {
 // API route for updating a question
 app.put("/api/questions/:questionId", (req, res) => {
   const { questionId } = req.params;
-  const { projectKey, text, type } = req.body;
+  const { projectKey, text, type, status } = req.body;
   const questionRef = admin.database().ref(`Projects/${projectKey}/questions`);
-
 
   questionRef
     .child(questionId)
-    .update({ text, type }) // Update the question data
+    .update({ text, type, status }) // Update the question data
     .then(() => {
       // Send a success response back to the client
       res.status(200).json({ message: "Question updated successfully"});
 
       // If you want to notify clients about the update, you can do it here
       // For example, you can use a WebSocket to send real-time updates to connected clients
-      const updatedQuestionData = { id: questionId, text, type };
+      const updatedQuestionData = { id: questionId, text, type, status };
       wss.clients.forEach((client) => {
         client.send(JSON.stringify(updatedQuestionData));
       });
