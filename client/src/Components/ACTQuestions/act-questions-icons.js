@@ -21,7 +21,7 @@ const dropdownItems = [
 ];
 
 const ACTQuestionsDropdown = ( {divRef, questionArray, selectedQuestionId} ) => {
-  const apiUrl = "http://localhost:8080";
+  const apiUrl = "https://project-5389016526708021196.ts.r.appspot.com";
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('1');
   const dropdownRef = useRef(null);
