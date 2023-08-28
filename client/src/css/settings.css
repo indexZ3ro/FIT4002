@@ -1,93 +1,85 @@
-.settings-container {
-    width: 100vw;
+
+
+.settings-page{
+    display: flex;
+    flex-direction: row;
     height: 100vh;
+    width: 100vw;
+}
+  
+.settings-container{
+    display: flex;
+    height: 60%;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.settings-header {
-    position: absolute;
-    top: -1.5vh;
-    left: -6vw;
-}
-
-.settings-h2 {
-    top: 10vh;
-    left: 52vw;
-    font-size: 8vh;
-}
-
-.settings-form {
-    position: absolute;
+/* Split Screen */
+.split-left-settings{
     display: flex;
     flex-direction: column;
-    top: 22vh;
-    left: 52vw;
-    width: 39vw;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+}
+  
+.split-right-settings{
+    display: flex;
+    align-items: center;
+    width: 50vw;
+    margin-left: 5vw;
 }
 
-.settings-input {
-    width: 35vw;
-    margin-top: 5vh;
-    padding: 2vh;
-    border-color: #d5d8de;
+
+.input-container-settings{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 
-.settings-input:focus {
-    border-color: #f553cc;
-}
 
-.settings-input:focus::placeholder {
-    color: #f553cc;
-}
-
-.settings-input::placeholder {
-    color: #323941;
-    font-weight: bold;
-    font-family: Poppins;
-}
-
-.settings-img {
-    display: block;
-    max-width: 80vw;
-    max-height: 50vh;
-    width: auto;
-    height: auto;
-    position: absolute;
-    top: 25vh;
-    left: 13vw;
-}
-
-.settings-button {
-    width: 20vw;
+/* Input */
+.userInput-settings{
+    width: 40vw;
     height: 6vh;
-    font-size: 2vh;
-    font-family: Poppins;
-    font-weight: 300;
-    color: black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    border: 1px solid #D5D8DE;
+    border-radius: 5px;
+}
+
+.user-input-settings::placeholder{
+    font-size: 1vw;
+    color: #323941;
+}
+
+input:focus {
+    border: 2px solid #555;
+    outline: none;
+}
+
+.settingsPageCoverImg{
+
+    width: 30vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5vw;
+}
+
+/* Text */
+
+.settings-Teamoji{
+    font-size: 24px;
+    font-weight: 600;
+    height: 10%;
+    margin-left: 5vw;
     margin-top: 5vh;
-    border-radius: 3vw;
-    border: 0;
 }
 
-.settings-button:hover {
-    cursor: pointer;
+.settings-Title{
+    font-size: 6vw;
+    font-weight: 600;
 }
-
-.settings-button:hover.update {
-    background-color: rgba(200, 150, 249, 1);
-}
-
-.settings-button:hover.delete {
-    background-color: rgba(255, 47, 34, 1);
-}
-
-.update {
-    background-color: rgba(200, 150, 249, 0.3);
-    box-shadow: inset 3px 3px 5px 0 rgba(200, 150, 249, 0.3),
-        inset -3px -3px 5px 0 rgba(200, 150, 249, 0.3);
-}
-
-.delete {
-    background-color: rgba(255, 47, 34, 0.3);
-    box-shadow: inset 3px 3px 5px 0 rgba(255, 47, 34, 0.3),
-        inset -3px -3px 5px 0 rgba(255, 47, 34, 0.3);
-}
+  

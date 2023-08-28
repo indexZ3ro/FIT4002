@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/settings.css";
 import settingsIcon from "../assets/settings-icon.png";
+import TextButton from "../Components/Buttons/textButton";
 
 const Settings = () => {
     const update = () => {
@@ -11,61 +12,59 @@ const Settings = () => {
         // TO DO
     };
 
-    return (
-        <div className="settings-container">
-            <img className="settings-img" src={settingsIcon} alt="Settings Icon" />
-            <div className="settings-header">
-                <h4 className="settings-h4">Teamoji</h4>
-            </div>
-            <div className="settings-title">
-                <h2 className="settings-h2">Settings</h2>
-            </div>
-            <div className="settings-form">
-                <form>
-                    <label>
+   return (
+    <div className="settings-page">
+        <div className="split-left-settings">
+           
+            <img className="settingsPageCoverImg" src={settingsIcon}></img>
+        </div>
+
+        <div className="split-right-settings">
+            <div className="settings-container">
+                <div className="settings-Title">Settings</div>
+                    <div className="input-container-settings">
                         <input
-                            className="settings-input"
-                            type="text"
-                            name="name"
+                            className="userInput"
                             placeholder="Name"
-                        ></input>
-                    </label>
-                    <label>
-                        <input
-                            className="settings-input"
                             type="text"
-                            name="email"
+                        ></input>
+                        <input
+                            className="userInput"
                             placeholder="Email"
-                        ></input>
-                    </label>
-                    <label>
-                        <input
-                            className="settings-input"
                             type="text"
+                        ></input>
+                        <input
+                            className="userInput"
+                            type={"password"}
                             name="password"
                             placeholder="Password"
                         ></input>
-                    </label>
-                    <button
-                        type="update"
-                        value="Update"
-                        className="settings-button update"
-                        onClick={update()}
-                    >
-                        Update
-                    </button>
-                    <button
-                        type="delete"
-                        value="Delete"
-                        className="settings-button delete"
-                        onClick={deleteAcc()}
-                    >
-                        Delete Account
-                    </button>
-                </form>
+                     </div>
+             <div>
+                <TextButton
+                    id="update"
+                    customStyle={{
+                        width: "15vw",
+                        height: "5vh",
+                        backgroundColor: "rgba(200, 150, 249, 0.3)",
+                        borderColor: "rgba(200, 150, 249, 0.3)",
+                    }}
+                    handleClick={update}
+                />
+                <TextButton
+                    id="Delete Account"
+                    customStyle={{
+                        width: "15vw",
+                        height: "5vh",
+                        backgroundColor: "rgba(255, 47, 34, 0.3)",
+                        borderColor: "rgba(200, 150, 249, 0.3)",
+                    }}
+                    handleClick={deleteAcc}
+                />
+                </div>
             </div>
         </div>
-    );
+    </div>
+   );
 };
-
 export default Settings;
