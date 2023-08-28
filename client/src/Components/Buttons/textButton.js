@@ -2,7 +2,8 @@ import { useSelector } from "react-redux";
 import "../../css/text-button.css";
 
 const TextButton = ({ id, handleClick, type, customStyle }) => {
-  const label = useSelector((state) => state.textButton[id]);
+  
+  const label =  id.charAt(0).toUpperCase() + id.slice(1).toLowerCase()
   return (
     <div>
       <button
