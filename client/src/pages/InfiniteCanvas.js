@@ -4,17 +4,21 @@ import Hook from "../assets/Hook.svg";
 import StopWatch from "../assets/StopWatch.svg";
 import ACT from "../assets/ACT.svg";
 import ACTSidebar from "../Components/ACTSidebar/act-sidebar";
+import ACTQuestionsContainer from "../Components/ACTQuestions/act_questions_container";
+import TeamHeader from "../Components/TeamHeader/team_header";
 
 const InfiniteCanvas = () => {
   return (
     <div className="infiniteCanvas">
       <div className="topContainer">
         <div className="topLeft">
-          <div className="wrapContainer">
+          {/* <div className="wrapContainer">
             <div className="infiniteCanvasTeam">Teamoji</div>
             <img src={Line}></img>
             <div className="teamName">Team Name</div>
-          </div>
+
+          </div> */}
+          <TeamHeader />
 
           <div className="wrapContainer">
             <img src={Hook}></img>
