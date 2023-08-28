@@ -3,8 +3,8 @@
     position: fixed;
     top: 35vh; /* 150px -> 15vh */
     left: 4vh;
-    height: 30vh; /* 702px -> 70vh */
-    width: 4.5vh; /* 88px -> 10vh */
+    height: 25vh; /* 702px -> 70vh */
+    width: 3.5vh; /* 88px -> 10vh */
     border: 1px;
     background-color: #2D2D2D;
     box-shadow: 0.2vh 0 1vh rgb(0 0 0 / 30%); /* Adjusted for vh units */
@@ -12,7 +12,7 @@
     border-radius: 1vh; /* 10px -> 1vh */
 }
 .draggable-item {
-    margin-bottom: 70px;
+    margin-bottom: 50px;
     cursor: pointer;
 }
 
