@@ -14,7 +14,7 @@ import LocalChangeContext from "../contexts/LocalChangeContext";
 import ACTQuestionsContainer from "../Components/ACTQuestions/act_questions_container";
 
 const TeamSession = () => {
-  const apiUrl = "https://project-5389016526708021196.ts.r.appspot.com";
+  const apiUrl = process.env.REACT_APP_API_URL;
   const projectId = "1";
   const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
 
@@ -74,8 +74,8 @@ const TeamSession = () => {
                 }
             } else {
                 updatedNotes.push({ ...noteData, id: noteId });
-                console.log("local changes: ", localChanges);
-                console.log(noteId);
+                // console.log("local changes: ", localChanges);
+                // console.log(noteId);
             }
         });
           // Log the updated notes to the console

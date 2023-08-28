@@ -1,14 +1,14 @@
 import React from "react";
 import "../../css/act-sidebar.css";
 import SheetIcon from "../DraggableIcons/sheet_icon";
-import TextIcon from "../DraggableIcons/text_icon";
-import EditIcon from "../DraggableIcons/edit_icon";
+import EmojiIcon from "../DraggableIcons/emoji_icon";
 import BluePointerIcon from "../DraggableIcons/blue_pointer_icon";
+
 import Note from "../Note/Note";
 import axios from "axios";
 
 const ACTSidebar = ({ notes, setNotes }) => {
-  const apiUrl = "https://project-5389016526708021196.ts.r.appspot.com";
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleIconAdded = (x, y) => {
     setNotes([...notes, { x, y }]);
@@ -34,15 +34,11 @@ const ACTSidebar = ({ notes, setNotes }) => {
       <div className="draggable-container">
         {/* Add draggable components here */}
         <div className="draggable-item sheet" onClick={() => handleIconAdded(50, 50)}>
-          <SheetIcon />
-        </div>
-
-        <div className="draggable-item text">
-          <TextIcon />
+        <SheetIcon/>
         </div>
 
         <div className="draggable-item edit">
-          <EditIcon />
+          <EmojiIcon />
         </div>
 
         <div className="draggable-item move">
