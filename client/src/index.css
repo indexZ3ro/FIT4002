@@ -85,7 +85,7 @@ textarea:focus {
   box-sizing: border-box;
   position: absolute;
   top: 1.5%;
-  left: 30%;
+  left: 40%;
   border-radius: 5px;
   /* overflow: hidden;*/
   /* Add a relative position to act as a container for the line */
