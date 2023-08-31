@@ -58,3 +58,15 @@
     opacity: 0.11;
     font-size: 32px;
 }
+
+
+.infiniteCanvas {
+    background: #d1d1d1;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.infiniteCanvas.grabbing {
+    cursor: grabbing;
+}
