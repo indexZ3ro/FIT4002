@@ -30,7 +30,8 @@ const ACTQuestions = ({ id, text, type }) => {
         .put(apiUrl + `/api/questions/${id}`, {
             projectKey: 1,
             text: name,
-            type: type
+            type: type,
+            status: "active"
         }) 
         .then((response) => {
             console.log("Question updated successfully:", response.data);
