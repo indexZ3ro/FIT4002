@@ -27,11 +27,9 @@ const ACTQuestions = ({ id, text, type }) => {
     // Make the axios request to update the question on the server
     if (!isInitialMount && isUpdated) {
         axios
-        .put(apiUrl + `/api/questions/${id}`, {
+        .put(apiUrl + `/api/questionDesc/${selectedQuestion}`, {
             projectKey: 1,
-            text: name,
-            type: type,
-            status: "active"
+            text: name
         }) 
         .then((response) => {
             console.log("Question updated successfully:", response.data);
@@ -114,7 +112,7 @@ const ACTQuestions = ({ id, text, type }) => {
 
   return (
     <div className='act-questions-inner'>
-      <ACTQuestionsDropdown divRef={divRef} questionArray={questions} selectedQuestionId={id}/>
+      <ACTQuestionsDropdown divRef={divRef} questionArray={questions} selectedQuestionType={type}/>
       <div className='act-questions-label'>Question</div>
       <div ref={divRef} className='act-questions' contentEditable onInput={handleInput}></div>
     </div>

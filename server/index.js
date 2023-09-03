@@ -183,6 +183,8 @@ app.put("/api/questions/:questionId", (req, res) => {
           questionRef.child(key).update({ status: "inactive" });
         }
       });
+
+      // TODO: Ensure selected question loads for each user
       
       res.status(200).json({ message: "Status updated successfully" });
     })
@@ -194,37 +196,31 @@ app.put("/api/questions/:questionId", (req, res) => {
 
 
 // API route for updating a question
-// app.put("/api/questions/:questionId", (req, res) => {
-//   const { questionId } = req.params;
-//   const { projectKey, text, type, status } = req.body;
-//   const questionRef = admin.database().ref(`Projects/${projectKey}/questions`);
+app.put("/api/questionDesc/:questionId", (req, res) => {
+  const { questionId } = req.params;
+  const { projectKey, text } = req.body;
+  const questionRef = admin.database().ref(`Projects/${projectKey}/questions`);
 
-//   questionRef
-//     .once("value")
-//     .then((snapshot) => {
-//       const questionsData = snapshot.val();
-//   });
+  questionRef
+    .child(questionId)
+    .update({ text }) // Update the question data
+    .then(() => {
+      // Send a success response back to the client
+      res.status(200).json({ message: "Question updated successfully"});
 
-//   questionRef
-//     .child(questionId)
-//     .update({ text, type, status }) // Update the question data
-//     .then(() => {
-//       // Send a success response back to the client
-//       res.status(200).json({ message: "Question updated successfully"});
-
-//       // If you want to notify clients about the update, you can do it here
-//       // For example, you can use a WebSocket to send real-time updates to connected clients
-//       const updatedQuestionData = { id: questionId, text, type, status };
-//       wss.clients.forEach((client) => {
-//         client.send(JSON.stringify(updatedQuestionData));
-//       });
-//     })
-//     .catch((error) => {
-//       console.error("Error updating question:", error);
-//       res.status(500).json({ error: "Internal server error TEST" });
-//       console.log(error);
-//     });
-// });
+      // If you want to notify clients about the update, you can do it here
+      // For example, you can use a WebSocket to send real-time updates to connected clients
+      const updatedQuestionData = { id: questionId, text };
+      wss.clients.forEach((client) => {
+        client.send(JSON.stringify(updatedQuestionData));
+      });
+    })
+    .catch((error) => {
+      console.error("Error updating question:", error);
+      res.status(500).json({ error: "Internal server error" });
+      console.log(error);
+    });
+});
 
 // Create a web server to serve files and listen to WebSocket connections
 const server = http.createServer(app);

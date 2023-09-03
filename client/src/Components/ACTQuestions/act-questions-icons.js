@@ -20,14 +20,13 @@ const dropdownItems = [
   }
 ];
 
-const ACTQuestionsDropdown = ( {divRef, questionArray} ) => {
+const ACTQuestionsDropdown = ( {divRef, questionArray, selectedQuestionType} ) => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('1');
+  const [selectedValue, setSelectedValue] = useState(String(selectedQuestionType));
   const dropdownRef = useRef(null);
   const outsideClickRef = useRef(null);
   const projectId = "1";
-  const [questions, setQuestions] = useState([]);
   var displayText = "";
   var questionID = "";
 
@@ -42,7 +41,6 @@ const ACTQuestionsDropdown = ( {divRef, questionArray} ) => {
     // Get the Question
     axios.get(apiUrl + `/api/project/${projectId}/questions`)
     .then((response) => {
-        setQuestions(response.data);
         console.log(response.data);
         response.data.forEach(question => {
           if (String(question.type) == String(value)) {
@@ -78,11 +76,9 @@ const ACTQuestionsDropdown = ( {divRef, questionArray} ) => {
 
     if (isOpen) {
         document.addEventListener('mousedown', handleOutsideClick);
-      } else {
+    } else {
         document.removeEventListener('mousedown', handleOutsideClick);
-      }
-    
-
+    }
     return () => {
         document.removeEventListener('mousedown', handleOutsideClick);
     };
