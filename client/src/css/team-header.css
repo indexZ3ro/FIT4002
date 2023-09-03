@@ -16,4 +16,6 @@
     top: 1%;
     left: 7.5%;
     border-radius: 5px;
+    display: inline;
+    z-index: 100;
 }

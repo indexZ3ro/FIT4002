@@ -46,10 +46,12 @@ const ACTMatrix = ({ notes, setNotes }) => {
             const y = position.y * scale;
             canvasRef.current.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
         }
+
     }, [position, scale]);
 
     return (
-        <div className="outer-infinite"
+        <div
+            className={`outer-infinite ${isDragging ? 'grabbing' : ''}`}
             onWheel={handleWheel}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
@@ -59,10 +61,10 @@ const ACTMatrix = ({ notes, setNotes }) => {
                 className={`infiniteCanvas ${isDragging ? 'grabbing' : ''}`}
                 ref={canvasRef}
             >
-                <div>
-                    <div className="line-y"></div>
-                    <div className="line-x"></div>
-                </div>
+                {/* <div style={negativeLineYStyle} className="line-y"></div>
+                <div style={positiveLineXStyle} className="line-x"></div>
+                <div style={positiveLineYStyle} className="line-y"></div>
+                <div style={negativeLineXStyle} className="line-x"></div> */}
                 {/* stickynotes */}
                 {notes.map((note) => (
                     <Note

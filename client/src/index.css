@@ -88,9 +88,8 @@ textarea:focus {
   top: 1.5%;
   left: 40%;
   border-radius: 5px;
-  /* overflow: hidden;*/
-  /* Add a relative position to act as a container for the line */
-  position: relative;
+  position: absolute;
+  z-index: 100;
 }
 
 .act-questions-inner {
