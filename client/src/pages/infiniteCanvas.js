@@ -92,9 +92,10 @@ const InfiniteCanvas = () => {
       <TeamHeader />
       <ACTQuestionsContainer questions={questions} setQuestions={setQuestions}/>
       <Sidebar />
-      <ACTMatrix notes={notes} setNotes={setNotes}/>
-      {/* <Timer /> */}
       <ACTSidebar notes={notes} setNotes={setNotes}/>
+      <div>
+        <ACTMatrix notes={notes} setNotes={setNotes}/>
+      </div>
     </div>
   );
 };

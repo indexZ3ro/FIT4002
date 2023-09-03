@@ -49,27 +49,31 @@ const ACTMatrix = ({ notes, setNotes }) => {
     }, [position, scale]);
 
     return (
-        <div
-            className={`infiniteCanvas ${isDragging ? 'grabbing' : ''}`}
-            ref={canvasRef}
+        <div className="outer-infinite"
+            onWheel={handleWheel}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
-            onWheel={handleWheel}
         >
-            <div>
-                <div className="line-y"></div>
-                <div className="line-x"></div>
+            <div
+                className={`infiniteCanvas ${isDragging ? 'grabbing' : ''}`}
+                ref={canvasRef}
+            >
+                <div>
+                    <div className="line-y"></div>
+                    <div className="line-x"></div>
+                </div>
+                {/* stickynotes */}
+                {notes.map((note) => (
+                    <Note
+                        key={note.id}
+                        id={note.id}
+                        x={note.x}
+                        y={note.y}
+                        text={note.text}
+                        scale={scale} />
+                ))}
             </div>
-            {/* stickynotes */}
-            {notes.map((note) => (
-                <Note
-                    key={note.id}
-                    id={note.id}
-                    x={note.x}
-                    y={note.y}
-                    text={note.text} />
-            ))}
         </div>
     );
 };
