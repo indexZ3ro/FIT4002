@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/homepage.css";
 import TextButton from "../Components/Buttons/textButton";
 import stickyNote from "../assets/StickyNoteIcon.png";
@@ -7,10 +7,13 @@ import Sidebar from "../Components/Sidebar/Sidebar";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { showSideBar } from "../features/sidebarSlice";
+import Modal from "../Components/Modal/modal";
 
 const Homepage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
+  const [create, setCreate] = useState(true);
 
   const routePathToCreateTeamMatrix = () => {
     navigate("/CreateTeamMatrix");
@@ -22,7 +25,7 @@ const Homepage = () => {
 
   useEffect(() => {
     dispatch(showSideBar());
-  });
+  }, []);
 
   return (
     <div className="homepage">
@@ -33,7 +36,7 @@ const Homepage = () => {
           </div>
           <div className="homepage-content">
             <div className="homepage-content-text">
-              <h className="homepage-heading">Solo Matrix</h>
+              <div className="homepage-heading">Solo Matrix</div>
               <div className="homepage-subheading">
                 Create your own solo matrix or import a template...
               </div>
@@ -59,7 +62,7 @@ const Homepage = () => {
           </div>
           <div className="homepage-content">
             <div className="homepage-content-text">
-              <h className="homepage-heading">Team Matrix</h>
+              <div className="homepage-heading">Team Matrix</div>
               <div className="homepage-subheading">
                 Create your own team matrix to collaborate with team members or
                 import a template...
@@ -72,7 +75,10 @@ const Homepage = () => {
                   backgroundColor: "rgba(200, 150, 249, 0.3)",
                   borderColor: "rgba(200, 150, 249, 0.3)",
                 }}
-                handleClick={routePathToCreateTeamMatrix}
+                handleClick={() => {
+                  setShowModal(!showModal);
+                  setCreate(true);
+                }}
               />
               <TextButton
                 id="join"
@@ -80,11 +86,22 @@ const Homepage = () => {
                   backgroundColor: "rgba(152, 159, 206, 0.3)",
                   borderColor: "rgba(152, 159, 206, 0.3)",
                 }}
+                handleClick={() => {
+                  setShowModal(!showModal);
+                  setCreate(false);
+                }}
               />
             </div>
           </div>
         </div>
       </div>
+      <Modal
+        show={showModal}
+        handleClose={() => {
+          setShowModal(false);
+        }}
+        create={create}
+      ></Modal>
     </div>
   );
 };
