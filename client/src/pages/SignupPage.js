@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { hideSideBar } from "../features/sidebarSlice";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+
 import "../css/sign-up.css";
 import TextButton from "../Components/Buttons/textButton";
 import SignUpPageCover from "../assets/signUpPageCover.svg";
@@ -11,16 +14,39 @@ const SignUpPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   useEffect(() => {
     dispatch(hideSideBar());
   });
 
   const signUp = () => {
+    // onSubmit;
     navigate("/Home");
   };
 
   const logIn = () => {
     navigate("/LogIn");
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // console.log(user);
+        navigate("/Home");
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // ..
+      });
   };
 
   return (
@@ -37,7 +63,10 @@ const SignUpPage = () => {
           <input
             className="userInput text"
             placeholder="Email"
-            type="text"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           ></input>
           <input
             className="userInput text "
@@ -53,6 +82,9 @@ const SignUpPage = () => {
             className="userInput text"
             type="password"
             placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           ></input>
           <TextButton
             id="signUp"
@@ -61,7 +93,7 @@ const SignUpPage = () => {
               height: "5vh",
               background: "#EFDFFD",
             }}
-            handleClick={signUp}
+            handleClick={onSubmit}
           />
           <div className="signUpToLogin" onClick={logIn}>
             Already have an account?

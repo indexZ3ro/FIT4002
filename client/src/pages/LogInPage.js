@@ -4,12 +4,16 @@ import { useNavigate } from "react-router-dom";
 import "../css/login.css";
 import { useDispatch } from "react-redux";
 import { hideSideBar } from "../features/sidebarSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 import LogInCover from "../assets/logInCover.svg";
 
 const LogInPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     dispatch(hideSideBar());
@@ -21,6 +25,22 @@ const LogInPage = () => {
 
   const signUp = () => {
     navigate("/SignUp");
+  };
+
+  const onLogin = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        navigate("/Home");
+        // console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
   };
 
   return (
@@ -37,13 +57,17 @@ const LogInPage = () => {
             <input
               className="userInput"
               placeholder="Email"
-              type="text"
+              type="email"
+              required
+              onChange={(e) => setEmail(e.target.value)}
             ></input>
             <input
               className="userInput"
               type={"password"}
               name="password"
               placeholder="Password"
+              required
+              onChange={(e) => setPassword(e.target.value)}
             ></input>
 
             {/* <div className="rememberMeContainer">
@@ -58,7 +82,7 @@ const LogInPage = () => {
                 height: "5vh",
                 background: "#EFDFFD",
               }}
-              handleClick={logIn}
+              handleClick={onLogin}
             />
             <div className="loginToSignUp" onClick={signUp}>
               New Here?
