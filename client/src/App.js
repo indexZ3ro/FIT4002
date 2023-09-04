@@ -15,8 +15,9 @@ import "./App.css";
 import LocalChangeContext from "./contexts/LocalChangeContext";
 import QuestionContext from "./contexts/QuestionContext";
 import React, { useRef, useState } from "react";
-import HistoryPage from "./pages/HistoryPage";
+import HistoryPage from "./pages/history_page";
 import Settings from './pages/settings_page'
+import InfiniteCanvas from './pages/infiniteCanvas';
 
 function App() {
   const [localChanges, setLocalChanges] = useState([]);
@@ -37,8 +38,8 @@ function App() {
                   path="/CreateTeamMatrix"
                   element={<CreateTeamMatrix />}
                 />
-                <Route path="/SoloSession" element={<SoloSession />} />
-                <Route path="/TeamSession" element={<TeamSession />} />
+                <Route path="/SoloSession" element={<InfiniteCanvas />} />
+                <Route path="/TeamSession" element={<InfiniteCanvas />} />
                 <Route path="/HistoryPage" element={<HistoryPage />} />
                 <Route path="/Settings" element={<Settings />} />
               </Routes>

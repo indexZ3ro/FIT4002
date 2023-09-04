@@ -20,123 +20,50 @@ const dropdownItems = [
   }
 ];
 
-const ACTQuestionsDropdown = ( {divRef, questionArray} ) => {
+const ACTQuestionsDropdown = ( {divRef, questionArray, selectedQuestionType} ) => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('1');
+  const [selectedValue, setSelectedValue] = useState(String(selectedQuestionType));
   const dropdownRef = useRef(null);
   const outsideClickRef = useRef(null);
   const projectId = "1";
-  const [questions, setQuestions] = useState([]);
   var displayText = "";
   var questionID = "";
-  const [newQuestion, setNewQuestion] = useState(false);
-  const [isInitialMount, setIsInitialMount] = useState(true);
 
   const toggleDropdown = () => {
     setIsOpen(prevIsOpen => !prevIsOpen);
   };
 
-  useEffect(() => {
-    console.log(newQuestion);
-    if (newQuestion === true) {
-      const value = parseInt(selectedValue);
-
-      divRef.current.textContent = "";
-      axios
-      .post(apiUrl + `/api/questions/`, {
-          projectKey: 1,
-          text: "",
-          type: value,
-          status: "active"
-      })
-      .then((response) => {
-          console.log("Question created successfully:", response.data);
-      })
-      .catch((error) => {
-          console.error("Error creating question:", error);
-      });
-    }
-
-  }, [newQuestion]);
-
   const handleOptionClick = (value) => {
-    if (!isInitialMount) {
-      var localNew = true;
-      setSelectedValue(value);
-      setIsOpen(false);
-  
-      // Get the Question
-      axios.get(apiUrl + `/api/project/${projectId}/questions`)
-      .then((response) => {
-          setQuestions(response.data);
-          console.log(response.data);
-      })
-      .catch((error) => {
-          console.error("Error fetching questions:", error);
-      });
-  
-      questions.forEach(question => {
+    setSelectedValue(value);
+    setIsOpen(false);
+
+    // Get the Question
+    axios.get(apiUrl + `/api/project/${projectId}/questions`)
+    .then((response) => {
+        console.log(response.data);
+        response.data.forEach(question => {
           if (String(question.type) == String(value)) {
             displayText = question.text;
             questionID = question.id;
             divRef.current.textContent = displayText;
-            setNewQuestion(false);
-            localNew = false;
 
-            // Get the Question
-            axios.get(apiUrl + `/api/project/${projectId}/questions`)
-              .then((response) => {
-                setQuestions(response.data);
-                console.log(response.data);
-                const selectedQuestion = questions.find(question => question.status === "active");
-                console.log(selectedQuestion.id);
-                // Make old question inactive
-                axios
-                .put(apiUrl + `/api/questions/${selectedQuestion.id}`, {
-                    projectKey: projectId,
-                    text: selectedQuestion.text,
-                    type: selectedQuestion.type,
-                    status: "inactive"
-                })
-                .then((response) => {
-                  console.log(selectedQuestion.type);
-                  console.log("Question updated successfully:", response.data);
-
-                  var newSelectedQuestion = questions.find(question => question.id == questionID);
-                  // Set new question to be active
-                  axios
-                  .put(apiUrl + `/api/questions/${newSelectedQuestion.id}`, {
-                    projectKey: projectId,
-                    text: newSelectedQuestion.text,
-                    type: newSelectedQuestion.type,
-                    status: "active"
-                  }) 
-                  .then((response) => {
-                      console.log("Question updated successfully:", response.data);
-                  })
-                  .catch((error) => {
-                      console.error("Error updating question:", error);
-                  });
-                })
-                .catch((error) => {
-                    console.error("Error updating question:", error);
-                });
-              })
-              .catch((error) => {
-                console.error("Error fetching questions:", error);
-            });
+            axios
+            .put(apiUrl + `/api/questions/${questionID}`, {
+              projectKey: projectId,
+            })
+            .then((response) => {
+              console.log(response.data)
+            }).catch((error) => {
+              console.log("Error updating questions:", error);
+            })
             return;
           }
-      });
-
-      if (localNew === true) {
-        setNewQuestion(true);
-      }
-      
-    } else {
-      setIsInitialMount(false);
-    }
+        });   
+      })
+    .catch((error) => {
+        console.error("Error fetching questions:", error);
+    });
   }
 
   useEffect(() => {
@@ -149,11 +76,9 @@ const ACTQuestionsDropdown = ( {divRef, questionArray} ) => {
 
     if (isOpen) {
         document.addEventListener('mousedown', handleOutsideClick);
-      } else {
+    } else {
         document.removeEventListener('mousedown', handleOutsideClick);
-      }
-    
-
+    }
     return () => {
         document.removeEventListener('mousedown', handleOutsideClick);
     };

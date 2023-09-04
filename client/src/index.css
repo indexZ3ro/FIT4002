@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
 
 body {
+  overflow: hidden;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -83,13 +84,11 @@ textarea:focus {
   background-color: white;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
-  position: absolute;
   top: 1.5%;
   left: 40%;
   border-radius: 5px;
-  /* overflow: hidden;*/
-  /* Add a relative position to act as a container for the line */
-  position: relative;
+  position: absolute;
+  z-index: 100;
 }
 
 .act-questions-inner {

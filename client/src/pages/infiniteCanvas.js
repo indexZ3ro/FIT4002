@@ -13,7 +13,7 @@ import { onValue, ref } from "firebase/database";
 import LocalChangeContext from "../contexts/LocalChangeContext";
 import ACTQuestionsContainer from "../Components/ACTQuestions/act_questions_container";
 
-const TeamSession = () => {
+const InfiniteCanvas = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const projectId = "1";
   const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
@@ -27,7 +27,6 @@ const TeamSession = () => {
     axios.get(apiUrl + `/api/project/${projectId}/sticky-notes`)
       .then((response) => {
         setNotes(response.data);
-        console.error("apiURL is:" + apiUrl);
         console.log(response.data);
       })
       .catch((error) => {
@@ -93,11 +92,12 @@ const TeamSession = () => {
       <TeamHeader />
       <ACTQuestionsContainer questions={questions}/>
       <Sidebar />
-      <ACTMatrix notes={notes} setNotes={setNotes}/>
-      {/* <Timer /> */}
       <ACTSidebar notes={notes} setNotes={setNotes}/>
+      <div>
+        <ACTMatrix notes={notes} setNotes={setNotes}/>
+      </div>
     </div>
   );
 };
 
-export default TeamSession;
+export default InfiniteCanvas;

@@ -3,7 +3,7 @@ import Draggable from "react-draggable";
 import axios from "axios";
 import LocalChangeContext from "../../contexts/LocalChangeContext";
 
-const Note = ({ x, y, id, text }) => {
+const Note = ({ x, y, id, text, scale }) => {
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
     const apiUrl = process.env.REACT_APP_API_URL;
     const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
@@ -90,7 +90,7 @@ const Note = ({ x, y, id, text }) => {
     };
 
     return (
-        <Draggable onStop={handleDragStop}  position={{ x: position.x, y: position.y }}>
+        <Draggable scale={scale} onStop={handleDragStop}  position={{ x: position.x, y: position.y }}>
             <div
                 className="note-container"
             >
