@@ -17,6 +17,7 @@ import QuestionContext from "./contexts/QuestionContext";
 import React, { useRef, useState } from "react";
 import HistoryPage from "./pages/history_page";
 import Settings from './pages/settings_page'
+import InfiniteCanvas from './pages/infiniteCanvas';
 
 function App() {
   const [localChanges, setLocalChanges] = useState([]);
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/TeamSession" element={<TeamSession />} />
                 <Route path="/HistoryPage" element={<HistoryPage />} />
                 <Route path="/Settings" element={<Settings />} />
+                <Route path="/infinite" element={<InfiniteCanvas />} />
               </Routes>
             </div>
           </Router>

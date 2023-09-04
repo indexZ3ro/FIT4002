@@ -1,33 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap");
-.ACTMatrix {
-    background: #d1d1d1;
-    width: 80%; /* width: 1406px; */
-    height: 80%; /* height: 702px; */
-    background-image: url("../assets/paper-background.jpg");
-    position: absolute;
-    box-sizing: border-box;
-    border-radius: 0;
-    left: 150px;
-    top: 150px;
-}
-
-.line-x {
-    width: 90%; /* width: 1271px; */
-    height: 0;
-    border-bottom: 3px solid black;
-    position: absolute;
-    left: 65px;
-    top: 50%; /* top: 351px; */
-}
-
-.line-y {
-    width: 0;
-    height: 90%; /* height: 612px; */
-    border-right: 3px solid black;
-    position: absolute;
-    left: 50%; /* left: 703px; */
-    top: 45px;
-}
 
 .text-inside {
     opacity: 0.11;
@@ -57,4 +28,56 @@
     top: 330px;
     opacity: 0.11;
     font-size: 32px;
+}
+
+
+.infiniteCanvas {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Styles for axis lines */
+.line-x, .line-y {
+    position: absolute;
+    background-color: black;
+    z-index: -1;
+}
+
+.line-x {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+}
+
+.line-y {
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+}
+
+.grabbing {
+    cursor: grabbing;
+}
+
+.outer-infinite{
+    background: #FAF9F6;
+    position: absolute;
+    width: 100%; 
+    height: 100%; 
+    overflow: hidden; /* To hide the zoomed-out parts */
+}
+
+.outer-infinite {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(#D2D6DB 2px, transparent 1px);
+    background-size: 20px 20px; /* adjust size */
+    background-position: 0 0, 5px 5px; /* adjust position */
 }
