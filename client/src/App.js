@@ -38,11 +38,10 @@ function App() {
                   path="/CreateTeamMatrix"
                   element={<CreateTeamMatrix />}
                 />
-                <Route path="/SoloSession" element={<SoloSession />} />
-                <Route path="/TeamSession" element={<TeamSession />} />
+                <Route path="/SoloSession" element={<InfiniteCanvas />} />
+                <Route path="/TeamSession" element={<InfiniteCanvas />} />
                 <Route path="/HistoryPage" element={<HistoryPage />} />
                 <Route path="/Settings" element={<Settings />} />
-                <Route path="/infinite" element={<InfiniteCanvas />} />
               </Routes>
             </div>
           </Router>

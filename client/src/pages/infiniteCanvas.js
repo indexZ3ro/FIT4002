@@ -90,7 +90,7 @@ const InfiniteCanvas = () => {
   return (
     <div className="TeamSession">
       <TeamHeader />
-      <ACTQuestionsContainer questions={questions} setQuestions={setQuestions}/>
+      <ACTQuestionsContainer questions={questions}/>
       <Sidebar />
       <ACTSidebar notes={notes} setNotes={setNotes}/>
       <div>
