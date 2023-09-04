@@ -5,7 +5,11 @@ import "../css/login.css";
 import { useDispatch } from "react-redux";
 import { hideSideBar } from "../features/sidebarSlice";
 import { useEffect, useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "../firebase";
 import LogInCover from "../assets/logInCover.svg";
 
@@ -31,6 +35,8 @@ const LogInPage = () => {
   const navigateLanding = () => {
     navigate("/");
   };
+
+  const provider = new GoogleAuthProvider();
 
   const onLogin = (e) => {
     e.preventDefault();
@@ -58,6 +64,30 @@ const LogInPage = () => {
             setError("Password is weak");
             break;
         }
+      });
+  };
+
+  const googleSignIn = async (e) => {
+    await signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+        navigate("/Home");
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
       });
   };
 
@@ -105,6 +135,7 @@ const LogInPage = () => {
               }}
               handleClick={onLogin}
             />
+            <div onClick={googleSignIn}> Sign In with Google </div>
             <div className="loginToSignUp" onClick={signUp}>
               New Here?
             </div>
