@@ -16,6 +16,15 @@
     justify-content: space-between; /* Evenly space items vertically */
 }
 
+.emoji-container{
+    position: absolute;
+    top: 13vh; /* Position the emoji picker below the emoji icon */
+    left: 8vh;
+    width: 70%;
+    max-width: 100%; 
+
+}
+
 .sheet:hover {
     opacity: 0.5;
 }

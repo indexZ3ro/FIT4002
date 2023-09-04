@@ -34,6 +34,7 @@ const ACTSidebar = ({ notes, setNotes }) => {
   const [inputStr,setInputstr]= useState('');
 
   const onEmojiClick = (event,emojiObject) =>{
+
       setInputstr(prevInput => prevInput + emojiObject.emoji);
       setShowPicker(false);
   }
@@ -46,15 +47,20 @@ const ACTSidebar = ({ notes, setNotes }) => {
         <SheetIcon/>
         </div>
 
-        <div className="draggable-item edit" onClick={() => setShowPicker(val => !val)}>
-          <EmojiIcon/>
-          <div className = "emoji-picker">
-            {showPicker && <Picker
-              pickerStyle={{ width: '90%' }}
-              onEmojiClick={onEmojiClick} />}
-          </div>
+        <div className="draggable-item-emoji" onClick={() => setShowPicker(val => !val)}>
+            <EmojiIcon/>
+            <div className = "emoji-container" onClick={(e) => e.stopPropagation()}>
+              {showPicker && <Picker
+                pickerStyle={{
+                width: '150px',
+                fontSize: '12px', 
+                padding: '5px' }}
+                onEmojiClick={onEmojiClick} />
+                
+                }
+              
+            </div>
         </div>
-
         <div className="draggable-item move">
           <BluePointerIcon />
         </div>
