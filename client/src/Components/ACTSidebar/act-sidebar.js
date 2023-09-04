@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "../../css/act-sidebar.css";
 import SheetIcon from "../DraggableIcons/sheet_icon";
 import EmojiIcon from "../DraggableIcons/emoji_icon";
@@ -6,7 +6,7 @@ import BluePointerIcon from "../DraggableIcons/blue_pointer_icon";
 
 import Note from "../Note/Note";
 import axios from "axios";
-
+import Picker from "emoji-picker-react";
 const ACTSidebar = ({ notes, setNotes }) => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -29,6 +29,15 @@ const ACTSidebar = ({ notes, setNotes }) => {
     setNotes(notes.filter((_, i) => i !== index));
   }
 
+  
+  const [showPicker,setShowPicker] = useState(false);
+  const [inputStr,setInputstr]= useState('');
+
+  const onEmojiClick = (event,emojiObject) =>{
+      setInputstr(prevInput => prevInput + emojiObject.emoji);
+      setShowPicker(false);
+  }
+
   return (
     <div className="ACTSidebar">
       <div className="draggable-container">
@@ -37,8 +46,13 @@ const ACTSidebar = ({ notes, setNotes }) => {
         <SheetIcon/>
         </div>
 
-        <div className="draggable-item edit">
-          <EmojiIcon />
+        <div className="draggable-item edit" onClick={() => setShowPicker(val => !val)}>
+          <EmojiIcon/>
+          <div className = "emoji-picker">
+            {showPicker && <Picker
+              pickerStyle={{ width: '90%' }}
+              onEmojiClick={onEmojiClick} />}
+          </div>
         </div>
 
         <div className="draggable-item move">
