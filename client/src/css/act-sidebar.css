@@ -1,19 +1,19 @@
 .draggable-container {
-    padding: 1.4vh; /* 10px -> 1.4vh */
+    padding: 1.4vh;
     position: fixed;
-    top: 35vh; /* 150px -> 15vh */
+    top: 35vh; /* Adjusted for the new positioning */
     left: 4vh;
-    height: 30vh; /* 702px -> 70vh */
-    width: 4.5vh; /* 88px -> 10vh */
-    border: 1px;
+    height: 30vh; /* Adjusted for the new height */
+    width: 4.5vh; /* Adjusted for the new width */
+    border: 1px solid; /* Added "solid" for border style */
     background-color: #2D2D2D;
-    box-shadow: 0.2vh 0 1vh rgb(0 0 0 / 30%); /* Adjusted for vh units */
+    box-shadow: 0.2vh 0 1vh rgb(0 0 0 / 30%);
     z-index: 999;
-    border-radius: 1vh; /* 10px -> 1vh */
-}
-.draggable-item {
-    margin-bottom: 70px;
-    cursor: pointer;
+    border-radius: 1vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Evenly space items vertically */
 }
 
 .sheet:hover {
