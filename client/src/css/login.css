@@ -76,6 +76,10 @@ input:focus {
     margin-top: 6vh;
 }
 
+.logInPageTeam:hover{
+    cursor: pointer;
+}
+
 .loginTitle{
     font-size: 6vw;
     font-weight: 600;
