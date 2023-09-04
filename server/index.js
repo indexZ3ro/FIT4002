@@ -164,22 +164,53 @@ app.post("/api/questions", (req, res) => {
     });
 });
 
-// API route for updating a question
 app.put("/api/questions/:questionId", (req, res) => {
   const { questionId } = req.params;
-  const { projectKey, text, type, status } = req.body;
+  const { projectKey } = req.body;
+  const questionRef = admin.database().ref(`Projects/${projectKey}/questions`);
+
+  questionRef.once("value")
+    .then((snapshot) => {
+      const questionsData = snapshot.val();
+      
+      // Loop through the questions and update their status
+      Object.keys(questionsData).forEach((key) => {
+        if (key === questionId) {
+          // Update the selected question to "active"
+          questionRef.child(key).update({ status: "active" });
+        } else {
+          // Update all other questions to "inactive"
+          questionRef.child(key).update({ status: "inactive" });
+        }
+      });
+
+      // TODO: Ensure selected question loads for each user
+      
+      res.status(200).json({ message: "Status updated successfully" });
+    })
+    .catch((error) => {
+      console.error("Error updating status: ", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+
+// API route for updating a question
+app.put("/api/questionDesc/:questionId", (req, res) => {
+  const { questionId } = req.params;
+  const { projectKey, text } = req.body;
   const questionRef = admin.database().ref(`Projects/${projectKey}/questions`);
 
   questionRef
     .child(questionId)
-    .update({ text, type, status }) // Update the question data
+    .update({ text }) // Update the question data
     .then(() => {
       // Send a success response back to the client
       res.status(200).json({ message: "Question updated successfully"});
 
       // If you want to notify clients about the update, you can do it here
       // For example, you can use a WebSocket to send real-time updates to connected clients
-      const updatedQuestionData = { id: questionId, text, type, status };
+      const updatedQuestionData = { id: questionId, text };
       wss.clients.forEach((client) => {
         client.send(JSON.stringify(updatedQuestionData));
       });

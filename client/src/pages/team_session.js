@@ -91,7 +91,7 @@ const TeamSession = () => {
   return (
     <div className="TeamSession">
       <TeamHeader />
-      <ACTQuestionsContainer questions={questions} setQuestions={setQuestions}/>
+      <ACTQuestionsContainer questions={questions}/>
       <Sidebar />
       <ACTMatrix notes={notes} setNotes={setNotes}/>
       {/* <Timer /> */}
