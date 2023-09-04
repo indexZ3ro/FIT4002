@@ -16,6 +16,9 @@ const SignUpPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     dispatch(hideSideBar());
@@ -43,8 +46,27 @@ const SignUpPage = () => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+
+        switch (errorCode) {
+          case "auth/email-already-exists":
+            setError("Email already exists");
+            break;
+          case "auth/invalid-email":
+            setError("Invalid Email");
+            break;
+          case "auth/invalid-password":
+            setError(
+              "Invalid password. It must be a string with at least six characters."
+            );
+            break;
+          case "auth/missing-password":
+            setError("Password is missing");
+            break;
+          case "auth/weak-password":
+            setError("Password is weak");
+            break;
+        }
+
         // ..
       });
   };
@@ -72,11 +94,15 @@ const SignUpPage = () => {
             className="userInput text "
             type="text"
             placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           ></input>
           <input
             className="userInput text"
             placeholder="Name"
             type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           ></input>
           <input
             className="userInput text"
@@ -86,6 +112,7 @@ const SignUpPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           ></input>
+          <p className="error-message">{error}</p>
           <TextButton
             id="signUp"
             customStyle={{

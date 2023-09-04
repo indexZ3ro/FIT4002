@@ -14,6 +14,7 @@ const LogInPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     dispatch(hideSideBar());
@@ -27,6 +28,10 @@ const LogInPage = () => {
     navigate("/SignUp");
   };
 
+  const navigateLanding = () => {
+    navigate("/");
+  };
+
   const onLogin = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
@@ -38,15 +43,30 @@ const LogInPage = () => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+        console.log(errorCode);
+        switch (errorCode) {
+          case "auth/invalid-email":
+            setError("Invalid Email");
+            break;
+          case "auth/wrong-password":
+            setError("Wrong password.");
+            break;
+          case "auth/missing-password":
+            setError("Password is missing");
+            break;
+          case "auth/weak-password":
+            setError("Password is weak");
+            break;
+        }
       });
   };
 
   return (
     <div className="login-page">
       <div className="split-left-login">
-        <div className="logInPageTeam">Teamoji</div>
+        <div className="logInPageTeam" onClick={navigateLanding}>
+          Teamoji
+        </div>
         <img className="logInPageCoverImg" src={LogInCover}></img>
       </div>
 
@@ -69,6 +89,7 @@ const LogInPage = () => {
               required
               onChange={(e) => setPassword(e.target.value)}
             ></input>
+            <p className="error-message">{error}</p>
 
             {/* <div className="rememberMeContainer">
               <Checkbox label="Remember Me" checked={true} />
