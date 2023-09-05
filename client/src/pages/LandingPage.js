@@ -9,57 +9,66 @@ import "../css/landingPage.css";
 import LandingPageCover from "../assets/LandingPage.svg";
 
 const LandingPage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(hideSideBar());
-  });
+    useEffect(() => {
+        dispatch(hideSideBar());
+    });
 
-  const logIn = () => {
-    navigate("/LogIn");
-  };
+    const logIn = () => {
+        navigate("/LogIn");
+    };
 
-  const SignUp = () => {
-    navigate("/SignUp");
-  };
+    const SignUp = () => {
+        navigate("/SignUp");
+    };
 
-  return (
-    <div className="landingPage">
-      <div className="landingPageTop">
-        <div className="landingPageTeamTitleContainer textFont semiBold m">
-          Teamoji
-        </div>
+    return (
+        <div className="landingPage">
+            <div className="landingPageTop">
+                <div className="landingPageTeamTitleContainer textFont semiBold m">
+                    Teamoji
+                </div>
 
-        <div className="landingPageTopButton textFont s">About Us</div>
-        <div className="landingPageTopButton textFont s" onClick={logIn}>
-          Log In
+                {/* <div className="landingPageTopButton textFont s">About Us</div> */}
+                <h6 className="normal landingPageTopButton">About Us</h6>
+                <h6 className="normal landingPageTopButton" onClick={logIn}>
+                    Log In
+                </h6>
+                <h6 className="normal landingPageTopButton" onClick={SignUp}>
+                    Sign Up
+                </h6>
+            </div>
+            <div className="landingPageBottom">
+                <div className="landingPageBottomLeft">
+                    {/* <div className="landingPageBottomTitle textFont semiBold l">
+                        Find your goals and values
+                    </div> */}
+                    <h3 className="landing-page-title">
+                        Find your goals and values
+                    </h3>
+                    {/* <div className="landingPageSubtitle textFont xs"> </div>*/}
+                    <h6 className="normal landing-page-text">
+                        Authentically replicate the ACT Matrix process and allow
+                        individuals and teams to reflect on their visual map and
+                        progress in an ongoing manner.
+                    </h6>
+                    <TextButton
+                        id="Get Started"
+                        handleClick={SignUp}
+                        customStyle={{ background: "#EFDFFD" }}
+                    ></TextButton>
+                </div>
+                <div className="landingPageBottomRight">
+                    <img
+                        className="landingPageCover"
+                        src={LandingPageCover}
+                    ></img>
+                </div>
+            </div>
         </div>
-        <div className="landingPageTopButton textFont s" onClick={SignUp}>
-          Sign Up
-        </div>
-      </div>
-      <div className="landingPageBottom">
-        <div className="landingPageBottomLeft">
-          <div className="landingPageBottomTitle textFont semiBold l">
-            Find your goals and values
-          </div>
-          <div className="landingPageSubtitle textFont xs">
-            Authentically replicate the ACT Matrix process and allow individuals
-            and teams to reflect on their visual map and progress in an ongoing
-            manner.
-          </div>
-          <TextButton
-            id="getStarted"
-            customStyle={{ background: "#EFDFFD" }}
-          ></TextButton>
-        </div>
-        <div className="landingPageBottomRight">
-          <img className="landingPageCover" src={LandingPageCover}></img>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default LandingPage;
