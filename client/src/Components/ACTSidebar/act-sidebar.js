@@ -6,8 +6,11 @@ import BluePointerIcon from "../DraggableIcons/blue_pointer_icon";
 
 import Note from "../Note/Note";
 import axios from "axios";
-import Picker from "emoji-picker-react";
-const ACTSidebar = ({ notes, setNotes }) => {
+import EmojiPicker from "emoji-picker-react";
+import Emoji from "../Emoji/Emoji";
+
+
+const ACTSidebar = ({ notes, setNotes, emojis, setEmojis}) => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleIconAdded = (x, y) => {
@@ -25,23 +28,30 @@ const ACTSidebar = ({ notes, setNotes }) => {
       });
   };
 
+
   function handleRemove(index) {
     setNotes(notes.filter((_, i) => i !== index));
   }
 
   
   const [showPicker,setShowPicker] = useState(false);
-  const [inputStr,setInputstr]= useState('');
+  const [currentEmoji,setCurrentEmoji] = useState(null)
 
   const onEmojiClick = (event,emojiObject) =>{
-
-      setInputstr(prevInput => prevInput + emojiObject.emoji);
-      setShowPicker(false);
+    const url = emojiObject.srcElement.getAttribute("src")
+    setShowPicker(false);
+    const x =100
+    const y = 100
+    setEmojis([...emojis, { x, y , url}]);
+ 
   }
 
+ 
   return (
+ 
     <div className="ACTSidebar">
       <div className="draggable-container">
+    
         {/* Add draggable components here */}
         <div className="draggable-item sheet" onClick={() => handleIconAdded(50, 50)}>
         <SheetIcon/>
@@ -50,23 +60,24 @@ const ACTSidebar = ({ notes, setNotes }) => {
         <div className="draggable-item-emoji" onClick={() => setShowPicker(val => !val)}>
             <EmojiIcon/>
             <div className = "emoji-container" onClick={(e) => e.stopPropagation()}>
-              {showPicker && <Picker
+              {showPicker && <EmojiPicker
                 pickerStyle={{
                 width: '150px',
                 fontSize: '12px', 
                 padding: '5px' }}
-                onEmojiClick={onEmojiClick} />
-                
+                onEmojiClick={onEmojiClick}/>
                 }
               
             </div>
         </div>
         <div className="draggable-item move">
-          <BluePointerIcon />
+          <BluePointerIcon></BluePointerIcon>
         </div>
+        
       </div>
     </div>
   );
 };
 
 export default ACTSidebar;
+

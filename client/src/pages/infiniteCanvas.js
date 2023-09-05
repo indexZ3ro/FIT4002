@@ -21,6 +21,7 @@ const InfiniteCanvas = () => {
   // handle sticky notes state management here
   const [notes, setNotes] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [emojis,setEmojis] = useState([]);
 
   // Fetch all sticky notes from the database when the component mounts
   useEffect(() => {
@@ -92,9 +93,10 @@ const InfiniteCanvas = () => {
       <TeamHeader />
       <ACTQuestionsContainer questions={questions}/>
       <Sidebar />
-      <ACTSidebar notes={notes} setNotes={setNotes}/>
+      <ACTSidebar notes={notes} setNotes={setNotes} emojis ={emojis} setEmojis= {setEmojis}/>
+      
       <div>
-        <ACTMatrix notes={notes} setNotes={setNotes}/>
+        <ACTMatrix notes={notes} setNotes={setNotes} emojis ={emojis} setEmojis= {setEmojis}/>
       </div>
     </div>
   );

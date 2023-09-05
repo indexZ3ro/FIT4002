@@ -1,9 +1,10 @@
 import React, {useEffect, useState, useRef} from "react";
 import "../../css/act-matrix.css";
 import Note from "../Note/Note.js";
+import Emoji from "../Emoji/Emoji.js";
 
 
-const ACTMatrix = ({ notes, setNotes }) => {
+const ACTMatrix = ({ notes, setNotes, emojis, setEmojis }) => {
     const [isDragging, setIsDragging] = useState(false);
     const [scale, setScale] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -73,7 +74,15 @@ const ACTMatrix = ({ notes, setNotes }) => {
                         x={note.x}
                         y={note.y}
                         text={note.text}
-                        scale={scale} />
+                        scale={scale} 
+                    />
+                ))}
+                    {emojis.map((emoji) => (
+                    <Emoji
+                        x={emoji.x}
+                        y={emoji.y}
+                        url = {emoji.url}
+                    />
                 ))}
             </div>
         </div>
