@@ -61,10 +61,10 @@ const ACTMatrix = ({ notes, setNotes, projectId }) => {
                 className={`infiniteCanvas ${isDragging ? 'grabbing' : ''}`}
                 ref={canvasRef}
             >
-                {/* <div style={negativeLineYStyle} className="line-y"></div>
-                <div style={positiveLineXStyle} className="line-x"></div>
-                <div style={positiveLineYStyle} className="line-y"></div>
-                <div style={negativeLineXStyle} className="line-x"></div> */}
+                <div className="line-x"></div> {/* positive x */}
+                <div className="line-y"></div> {/* positive y */}
+                <div className="line-x" style={{ top: 'initial', bottom: '50%' }}></div> {/* negative x */}
+                <div className="line-y" style={{ left: 'initial', right: '50%' }}></div> {/* negative y */}
                 {/* stickynotes */}
                 {notes.map((note) => (
                     <Note
