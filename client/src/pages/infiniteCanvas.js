@@ -12,10 +12,11 @@ import { realtimeDb } from "../firebase";
 import { onValue, ref } from "firebase/database";
 import LocalChangeContext from "../contexts/LocalChangeContext";
 import ACTQuestionsContainer from "../Components/ACTQuestions/act_questions_container";
+import { useParams } from 'react-router-dom';
 
 const InfiniteCanvas = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
-  const projectId = "1";
+  const { projectId } = useParams();
   const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
 
   // handle sticky notes state management here
@@ -92,9 +93,9 @@ const InfiniteCanvas = () => {
       <TeamHeader />
       <ACTQuestionsContainer questions={questions}/>
       <Sidebar />
-      <ACTSidebar notes={notes} setNotes={setNotes}/>
+      <ACTSidebar notes={notes} setNotes={setNotes} projectId={projectId}/>
       <div>
-        <ACTMatrix notes={notes} setNotes={setNotes}/>
+        <ACTMatrix notes={notes} setNotes={setNotes} projectId={projectId}/>
       </div>
     </div>
   );

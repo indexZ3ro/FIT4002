@@ -7,7 +7,7 @@ import BluePointerIcon from "../DraggableIcons/blue_pointer_icon";
 import Note from "../Note/Note";
 import axios from "axios";
 
-const ACTSidebar = ({ notes, setNotes }) => {
+const ACTSidebar = ({ notes, setNotes, projectId }) => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleIconAdded = (x, y) => {
@@ -15,7 +15,7 @@ const ACTSidebar = ({ notes, setNotes }) => {
 
     // Make a POST request to create the new sticky note on the server
     axios
-      .post("https://project-5389016526708021196.ts.r.appspot.com" + "/api/sticky-notes", { projectKey: '1', x, y, text: null })
+      .post("https://project-5389016526708021196.ts.r.appspot.com" + "/api/sticky-notes", { projectKey: projectId, x, y, text: null })
       .then((response) => {
         console.log(response.data);
       })

@@ -9,14 +9,14 @@ const Sidebar = (props) => {
     return sideBarState ? (
         <Menu width={"250px"} styles={{ bmMenu: { overflow: "hidden" } }}>
             <Link to="/" className="menu-item">
-                Home Screen
+                Home
             </Link>
-            <Link to="/TeamSession" className="menu-item">
+            {/* <Link to="/TeamSession" className="menu-item">
                 Team Session
-            </Link>
-            <Link to="/SoloSession" className="menu-item">
+            </Link> */}
+            {/* <Link to="/SoloSession" className="menu-item">
                 Solo Session
-            </Link>
+            </Link> */}
             <Link to="/HistoryPage" className="menu-item">
                 History
             </Link>

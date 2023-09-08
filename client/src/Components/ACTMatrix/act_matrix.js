@@ -3,7 +3,7 @@ import "../../css/act-matrix.css";
 import Note from "../Note/Note.js";
 
 
-const ACTMatrix = ({ notes, setNotes }) => {
+const ACTMatrix = ({ notes, setNotes, projectId }) => {
     const [isDragging, setIsDragging] = useState(false);
     const [scale, setScale] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -73,7 +73,8 @@ const ACTMatrix = ({ notes, setNotes }) => {
                         x={note.x}
                         y={note.y}
                         text={note.text}
-                        scale={scale} />
+                        scale={scale}
+                        projectId={projectId} />
                 ))}
             </div>
         </div>
