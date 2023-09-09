@@ -15,7 +15,7 @@ const ACTSidebar = ({ notes, setNotes, projectId }) => {
 
     // Make a POST request to create the new sticky note on the server
     axios
-      .post("https://project-5389016526708021196.ts.r.appspot.com" + "/api/sticky-notes", { projectKey: projectId, x, y, text: null })
+      .post(apiUrl + "/api/sticky-notes", { projectKey: projectId, x, y, text: null })
       .then((response) => {
         console.log(response.data);
       })
