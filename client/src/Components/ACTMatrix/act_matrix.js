@@ -77,7 +77,6 @@ const ACTMatrix = ({ notes, setNotes }) => {
           />
         ))}
       </div>
-      <div className="centeredImageContainer"></div>
     </div>
   );
 };
