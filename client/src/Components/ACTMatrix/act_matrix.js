@@ -79,6 +79,8 @@ const ACTMatrix = ({ notes, setNotes, emojis, setEmojis }) => {
                 ))}
                     {emojis.map((emoji) => (
                     <Emoji
+                        key={emoji.id}
+                        id={emoji.id}
                         x={emoji.x}
                         y={emoji.y}
                         url = {emoji.url}

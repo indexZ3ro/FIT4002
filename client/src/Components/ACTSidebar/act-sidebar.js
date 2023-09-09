@@ -18,7 +18,7 @@ const ACTSidebar = ({ notes, setNotes, emojis, setEmojis}) => {
 
     // Make a POST request to create the new sticky note on the server
     axios
-      .post("https://project-5389016526708021196.ts.r.appspot.com" + "/api/sticky-notes", { projectKey: '1', x, y, text: null })
+      .post(apiUrl + "/api/sticky-notes", { projectKey: '1', x, y, text: null })
       .then((response) => {
         console.log(response.data);
       })
@@ -27,6 +27,7 @@ const ACTSidebar = ({ notes, setNotes, emojis, setEmojis}) => {
         console.error("Error creating sticky note:", error);
       });
   };
+
 
 
   function handleRemove(index) {
@@ -42,8 +43,20 @@ const ACTSidebar = ({ notes, setNotes, emojis, setEmojis}) => {
     setShowPicker(false);
     const x =100
     const y = 100
-    setEmojis([...emojis, { x, y , url}]);
- 
+
+    
+    // Make a POST request to create the new sticky note on the server
+    axios
+      .post(apiUrl + "/api/emoji", { projectKey: '1', x, y, url: url })
+      .then((response) => {
+        console.log(response.data);
+        setEmojis([...emojis, { x, y , url,id:response.data.id}]);
+      })
+      .catch((error) => {
+        console.log("Backend URL:", process.env.REACT_APP_BACKEND_URL);
+        console.error("Error creating emoji note:", error);
+      });
+
   }
 
  
@@ -59,7 +72,7 @@ const ACTSidebar = ({ notes, setNotes, emojis, setEmojis}) => {
 
         <div className="draggable-item-emoji" onClick={() => setShowPicker(val => !val)}>
             <EmojiIcon/>
-            <div className = "emoji-container" onClick={(e) => e.stopPropagation()}>
+            <div className = "emoji-container" onClick={(e) => {e.stopPropagation();}}>
               {showPicker && <EmojiPicker
                 pickerStyle={{
                 width: '150px',
