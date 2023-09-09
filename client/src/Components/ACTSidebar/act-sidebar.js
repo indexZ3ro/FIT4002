@@ -10,12 +10,18 @@ import axios from "axios";
 const ACTSidebar = ({ notes, setNotes }) => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
-  const handleIconAdded = (x, y) => {
+  function handleIconAdded(event) {
+    const x = event.clientX;
+    const y = event.clientY;
     setNotes([...notes, { x, y }]);
 
     // Make a POST request to create the new sticky note on the server
     axios
-      .post("https://project-5389016526708021196.ts.r.appspot.com" + "/api/sticky-notes", { projectKey: '1', x, y, text: null })
+      .post(
+        "https://project-5389016526708021196.ts.r.appspot.com" +
+          "/api/sticky-notes",
+        { projectKey: "1", x, y, text: null }
+      )
       .then((response) => {
         console.log(response.data);
       })
@@ -23,7 +29,7 @@ const ACTSidebar = ({ notes, setNotes }) => {
         console.log("Backend URL:", process.env.REACT_APP_BACKEND_URL);
         console.error("Error creating sticky note:", error);
       });
-  };
+  }
 
   function handleRemove(index) {
     setNotes(notes.filter((_, i) => i !== index));
@@ -33,8 +39,12 @@ const ACTSidebar = ({ notes, setNotes }) => {
     <div className="ACTSidebar">
       <div className="draggable-container">
         {/* Add draggable components here */}
-        <div className="draggable-item sheet" onClick={() => handleIconAdded(50, 50)}>
-        <SheetIcon/>
+        <div
+          className="draggable-item sheet"
+          onClick={() => handleIconAdded(50, 50)}
+          onDragEnd={() => handleIconAdded(event)}
+        >
+          <SheetIcon />
         </div>
 
         <div className="draggable-item edit">
