@@ -1,76 +1,55 @@
-.timer-container {
+.timerContainer{
     display: flex;
-    justify-content: right;
+    flex-direction: row;
 }
 
-.timer {
-    display: flex;
-    flex-direction: column;
-    align-items: right;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background-color: #fff;
-    box-shadow: 0 3px 15px rgba(0 0 0 / 20%);
-    overflow: hidden;
-}
-
-.timer-progress {
-    transform: rotate(-90deg);
-    width: 100%;
-    height: 100%;
-}
-
-.timer-progress-bar {
-    fill: none;
-    stroke: #f37021;
-    stroke-width: 10;
-    stroke-linecap: round;
-    transition: stroke-dasharray 0.5s ease-in-out;
-}
-
-.timer-display {
-    font-size: 28px;
-    font-weight: bold;
-    margin-top: 20px;
-    color: #f37021;
-}
-
-.timer-controls {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-}
-
-.timer-controls label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #f37021;
-}
-
-.timer-controls input {
-    font-size: 14px;
-    padding: 5px;
-    border: none;
-    border-radius: 5px;
-    background-color: #eee;
-    margin-left: 5px;
-    width: 50px;
-}
-
-.timer-controls button {
-    font-size: 14px;
-    font-weight: bold;
-    padding: 6px 10px;
-    border: none;
-    border-radius: 50%;
-    margin-top: 10px;
+.timerContainer:hover{
     cursor: pointer;
-    background-color: #f37021;
-    color: #fff;
-    transition: background-color 0.2s ease-in-out;
 }
 
-.timer-controls button:hover {
-    background-color: #c75100;
+.timerIcon{
+    width: 24px;
+    height: 24px;
+}
+
+.timer{
+    color: #000;
+    text-align: center;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.9px;
+}
+
+.timerModal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    
+}
+
+.timerWrap{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.timerInput{
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.9px;
+}
+
+.timerButton{
+    width: 5vw;
+    height: 5vh;
 }

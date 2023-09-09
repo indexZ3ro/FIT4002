@@ -81,3 +81,13 @@
     background-size: 20px 20px; /* adjust size */
     background-position: 0 0, 5px 5px; /* adjust position */
 }
+
+
+.actImage{
+    position: absolute;
+    width: 1100px;
+    height: 700px;
+    top: 10%;
+    left: 10%;
+}
+

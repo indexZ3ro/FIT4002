@@ -1,111 +1,123 @@
-import React, { useState, useEffect, useRef } from 'react'
-import '../../css/Timer.css'
+import React, { Component } from "react";
+import StopWatch from "../../assets/stopwatch.svg";
+import "../../css/Timer.css";
+import TextButton from "../Buttons/textButton";
 
-function Timer () {
-  const [timeLeft, setTimeLeft] = useState(0)
-  const [duration, setDuration] = useState(30)
-  const [running, setRunning] = useState(false)
-  const intervalRef = useRef(null)
+class Timer extends Component {
+  constructor(props) {
+    super(props);
 
-  const handleStartClick = () => {
-    if (!running) {
-      setRunning(true)
-      intervalRef.current = setInterval(() => {
-        setTimeLeft((prevTime) => prevTime - 1)
-      }, 1000)
+    this.state = {
+      minutes: 0,
+      seconds: 0,
+      isRunning: false,
+      isModalOpen: false,
+    };
+
+    this.timerInterval = null;
+  }
+
+  componentWillUnmount() {
+    this.stopTimer();
+  }
+
+  startTimer = () => {
+    if (!this.state.isRunning) {
+      this.setState({ isRunning: true }, () => {
+        this.timerInterval = setInterval(this.tick, 1000);
+      });
     }
-  }
+    this.setState({ isModalOpen: false });
+  };
 
-  const handlePauseClick = () => {
-    clearInterval(intervalRef.current)
-    setRunning(false)
-  }
-
-  const handleStopClick = () => {
-    clearInterval(intervalRef.current)
-    setTimeLeft(duration)
-    setRunning(false)
-  }
-
-  const handleResetClick = () => {
-    clearInterval(intervalRef.current)
-    setTimeLeft(duration)
-    setRunning(false)
-  }
-
-  const handleDurationChange = (e) => {
-    const newDuration = parseInt(e.target.value)
-    setDuration(newDuration)
-    setTimeLeft(newDuration)
-  }
-
-  useEffect(() => {
-    if (timeLeft === 0 && running) {
-      clearInterval(intervalRef.current)
-      setRunning(false)
+  stopTimer = () => {
+    if (this.state.isRunning) {
+      clearInterval(this.timerInterval);
+      this.setState({ isRunning: false });
     }
-  }, [timeLeft, running])
+  };
 
-  const calculateTimeFraction = () => {
-    return timeLeft / duration
-  }
+  resetTimer = () => {
+    this.stopTimer();
+    this.setState({ minutes: 0, seconds: 0 });
+  };
 
-  const circleDasharray = () => {
-    const perimeter = 2 * Math.PI * 40
-    return `${perimeter * calculateTimeFraction()} ${perimeter}`
-  }
+  tick = () => {
+    if (this.state.seconds > 0) {
+      this.setState((prevState) => ({ seconds: prevState.seconds - 1 }));
+    } else if (this.state.minutes > 0) {
+      this.setState((prevState) => ({
+        minutes: prevState.minutes - 1,
+        seconds: 59,
+      }));
+    } else {
+      this.stopTimer();
+    }
+  };
 
-  const formatTimeLeft = () => {
-    const minutes = Math.floor(timeLeft / 60)
-    const seconds = timeLeft % 60
-    return `${minutes.toString().padStart(2, '0')}:${seconds
-            .toString()
-            .padStart(2, '0')}`
-  }
+  handleTimeChange = (event) => {
+    const inputTime = event.target.value.replace(/\D/g, ""); // Remove non-digit characters
+    let newMinutes = 0;
+    let newSeconds = parseInt(inputTime, 10);
 
-  return (
-    <div className='timer-container'>
-      <div className='timer'>
-        <svg className='timer-progress' viewBox='0 0 80 80'>
-          <circle
-            className='timer-progress-bar'
-            cx='40'
-            cy='40'
-            r='40'
-            style={{ strokeDasharray: circleDasharray() }}
-          />
-        </svg>
-        <div className='timer-display'>{formatTimeLeft()}</div>
-        <div className='timer-controls'>
-          <label>
-            Duration (in seconds):
-            <input
-              type='number'
-              value={duration}
-              onChange={handleDurationChange}
-            />
-          </label>
-          {running
-            ? (
-              <button onClick={handlePauseClick}>Pause</button>
-              )
-            : (
-              <>
-                {timeLeft === duration
-                  ? null
-                  : (
-                    <button onClick={handleResetClick}>
-                      Reset
-                    </button>
-                    )}
-                <button onClick={handleStartClick}>Start</button>
-              </>
-              )}
-          <button onClick={handleStopClick}>Stop</button>
+    if (inputTime.length >= 2) {
+      newMinutes = parseInt(inputTime.slice(0, -2), 10);
+      newSeconds = parseInt(inputTime.slice(-2), 10);
+    }
+
+    this.setState({ minutes: newMinutes, seconds: newSeconds });
+  };
+
+  openModal = () => {
+    this.setState({ isModalOpen: true });
+  };
+
+  closeModal = () => {
+    this.setState({ isModalOpen: false });
+  };
+
+  render() {
+    const { minutes, seconds, isRunning, isModalOpen } = this.state;
+    const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
+      seconds
+    ).padStart(2, "0")}`;
+
+    return (
+      <div className="timerContainer">
+        <img src={StopWatch} className="timerIcon"></img>
+        <div onClick={this.openModal} className="timer">
+          {formattedTime}
         </div>
+
+        {isModalOpen && (
+          <div className="timerModal">
+            <div className="timerWrap">
+              <input
+                type="text"
+                placeholder="mm:ss"
+                value={formattedTime}
+                onChange={this.handleTimeChange}
+                className="timerInput"
+              />
+              <button
+                onClick={this.startTimer}
+                disabled={isRunning}
+                className="timerButton"
+              >
+                Start
+              </button>
+              <button onClick={this.closeModal} className="timerButton">
+                Close
+              </button>
+              <button onClick={this.resetTimer} className="timerButton">
+                Reset
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
-  )
+    );
+  }
 }
 
-export default Timer
+export default Timer;
