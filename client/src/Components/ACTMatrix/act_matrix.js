@@ -56,11 +56,11 @@ const ACTMatrix = ({ notes, setNotes }) => {
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
     >
-      <img className="actImage" src={ACT}></img>
       <div
         className={`infiniteCanvas ${isDragging ? "grabbing" : ""}`}
         ref={canvasRef}
       >
+        <img className="actImage" src={ACT}></img>
         {/* <div style={negativeLineYStyle} className="line-y"></div>
                 <div style={positiveLineXStyle} className="line-x"></div>
                 <div style={positiveLineYStyle} className="line-y"></div>
