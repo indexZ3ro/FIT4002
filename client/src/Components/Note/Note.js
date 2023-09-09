@@ -88,6 +88,9 @@ const Note = ({ x, y, id, text, scale }) => {
                 console.error("Error deleting sticky note:", error);
             });
     };
+    const preventDefault = (event) => {
+        event.preventDefault();
+      };
 
     return (
         <Draggable scale={scale} onStop={handleDragStop}  position={{ x: position.x, y: position.y }}>
@@ -98,6 +101,7 @@ const Note = ({ x, y, id, text, scale }) => {
                 <textarea
                     ref={textareaRef}
                     className="note-text"
+                    onDragOver={preventDefault}
                     value={noteText}
                     onChange={handleNoteTextChange}
                     onClick={handleTextareaClick}

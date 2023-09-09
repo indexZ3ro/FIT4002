@@ -2,12 +2,13 @@ import React from "react";
 import "../../css/act-sidebar.css";
 import Draggable from "react-draggable";
 const Emoji = ({x,y,url}) => {
-  console.log(url)
+
   return (
-       <Draggable>
+    
+       <Draggable >
           <div>
-          <img src={url} alt="Emoji" />
-          </div>
+          <img  src={url} alt="Emoji" />
+          </div>          
         </Draggable>
   );
 };
