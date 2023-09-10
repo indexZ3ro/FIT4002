@@ -33,6 +33,9 @@ const ACTSidebar = ({ notes, setNotes, emojis, setEmojis}) => {
   function handleRemove(index) {
     setNotes(notes.filter((_, i) => i !== index));
   }
+  function handleRemoveEmoji(index) {
+    setEmojis(emojis.filter((_, i) => i !== index));
+  }
 
   
   const [showPicker,setShowPicker] = useState(false);
@@ -45,7 +48,7 @@ const ACTSidebar = ({ notes, setNotes, emojis, setEmojis}) => {
     const y = 100
 
     
-    // Make a POST request to create the new sticky note on the server
+    // Make a POST request to create the new emoji on the server
     axios
       .post(apiUrl + "/api/emoji", { projectKey: '1', x, y, url: url })
       .then((response) => {

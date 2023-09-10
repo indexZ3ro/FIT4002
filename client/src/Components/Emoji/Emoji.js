@@ -28,7 +28,7 @@ const Emoji = ({id,x,y,url}) => {
   }, [url]);
 
   useEffect(()=> {
-       // Make the axios request to update the sticky note on the server
+       // Make the axios request to update the emoji  on the server
        if (!isInitialMount && isUpdated) {
         console.log({id})
         axios
@@ -51,6 +51,19 @@ const Emoji = ({id,x,y,url}) => {
       }
   }, [position, Emojiurl, id, isUpdated, isInitialMount]);
 
+  const handleDelete = () => {
+    // API request to delete the emoji from the server
+    axios.delete(`${apiUrl}/api/emoji/${id}`, {
+            data: {projectKey: 1 }
+        })
+        .then(response => {
+            console.log(id);
+            console.log("Emoji deleted successfully:", response.data);
+        })
+        .catch(error => {
+            console.error("Error deleting sticky note:", error);
+        });
+  };
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -68,7 +81,7 @@ const Emoji = ({id,x,y,url}) => {
       onMouseLeave={handleMouseLeave}
     >
       {isHovered && (
-        <button className="delete-button-emoji" >
+        <button onClick = {handleDelete} className="delete-button-emoji" >
           X
         </button>
       )}

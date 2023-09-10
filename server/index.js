@@ -267,6 +267,24 @@ app.put("/api/emoji/:emojiID", (req, res) => {
     });
 });
 
+// API route for deleting a sticky note
+app.delete("/api/emoji/:emojiId", (req, res) => {
+  const { emojiId } = req.params;
+  const { projectKey} = req.body;
+  const emojiRef = admin.database().ref(`Projects/${projectKey}/emoji/${emojiId}`);
+
+  emojiRef
+    .remove()
+    .then(() => {
+      res.status(200).json({ message: "Sticky note deleted successfully" });
+    })
+    .catch((error) => {
+      console.error("Error deleting sticky note:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+
 // Create a web server to serve files and listen to WebSocket connections
 const server = http.createServer(app);
 
