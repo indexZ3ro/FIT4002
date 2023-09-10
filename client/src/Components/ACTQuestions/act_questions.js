@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
-import '../../index.css';
+import "../../index.css";
 import { realtimeDb } from "../../firebase";
 import QuestionContext from "../../contexts/QuestionContext";
 import { onValue, ref } from "firebase/database";
-import ACTQuestionsDropdown from './act-questions-icons';
+import ACTQuestionsDropdown from "./act-questions-icons";
+import Line from "../../assets/Line.svg";
 
 const ACTQuestions = ({ id, text, type }) => {
-  
   const apiUrl = process.env.REACT_APP_API_URL;
 
-  const [name, setName] = useState(text || ''); // Renamed state variable from 'Question' to 'name'
+  const [name, setName] = useState(text || ""); // Renamed state variable from 'Question' to 'name'
   const divRef = useRef();
   const projectId = "1";
   const { localQuestions, setLocalQuestions } = useContext(QuestionContext);
@@ -18,7 +18,7 @@ const ACTQuestions = ({ id, text, type }) => {
   const [questions, setQuestions] = useState([]);
   const [isInitialMount, setIsInitialMount] = useState(true);
   const [selectedQuestion, setSelectedQuestion] = useState(id);
-  
+
   useEffect(() => {
     divRef.current.textContent = name;
   }, [name]);
@@ -26,38 +26,38 @@ const ACTQuestions = ({ id, text, type }) => {
   useEffect(() => {
     // Make the axios request to update the question on the server
     if (!isInitialMount && isUpdated) {
-        axios
+      axios
         .put(apiUrl + `/api/questionDesc/${selectedQuestion}`, {
-            projectKey: 1,
-            text: name
-        }) 
+          projectKey: 1,
+          text: name,
+        })
         .then((response) => {
-            console.log("Question updated successfully:", response.data);
-            setIsUpdated(false); // Reset the isUpdated flag after the update
+          console.log("Question updated successfully:", response.data);
+          setIsUpdated(false); // Reset the isUpdated flag after the update
         })
         .catch((error) => {
-            console.error("Error updating question:", error);
+          console.error("Error updating question:", error);
         });
     } else {
-        // Set the flag to false after the component has mounted
-        setIsInitialMount(false);
-      }
+      // Set the flag to false after the component has mounted
+      setIsInitialMount(false);
+    }
   }, [name]);
 
   // // Get the Questions
   useEffect(() => {
-    axios.get(apiUrl + `/api/project/${projectId}/questions`)
+    axios
+      .get(apiUrl + `/api/project/${projectId}/questions`)
       .then((response) => {
         setQuestions(response.data);
         console.log(response.data);
 
-        questions.forEach(question => {
+        questions.forEach((question) => {
           if (question.status == "active") {
             setSelectedQuestion(question.id);
             return;
           }
         });
-
       })
       .catch((error) => {
         console.error("Error fetching questions:", error);
@@ -73,12 +73,14 @@ const ACTQuestions = ({ id, text, type }) => {
   };
 
   return (
+
     <div className='act-questions-inner'>
       <ACTQuestionsDropdown divRef={divRef} questionArray={questions} selectedQuestionType={type}/>
       <div className='act-questions-label'>Question</div>
       <div ref={divRef} id={selectedQuestion} className='act-questions' contentEditable onInput={handleInput}></div>
+
     </div>
   );
-}
+};
 
 export default ACTQuestions;

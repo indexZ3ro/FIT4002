@@ -1,23 +1,43 @@
-import React, { useState, useEffect, useRef } from 'react'
-import '../../css/team-header.css'
+import React, { useState, useEffect, useRef } from "react";
+import "../../css/team-header.css";
+import Line from "../../assets/Line.svg";
 
 const TeamHeader = () => {
-  const [name, setName] = useState('Name')
-  const divRef = useRef()
-
-  useEffect(() => {
-    divRef.current.textContent = name
-  }, [name])
+  const [name, setName] = useState("");
 
   const handleInput = (e) => {
-    setName(e.target.textContent)
-  }
+    setName(e.target.value);
+    console.log(e);
+  };
+
+  const handleBlur = (e) => {
+    sessionStorage.setItem("teamName", name);
+  };
+
+  useEffect(() => {
+    // change to API get when it is working
+    const getTeamName = sessionStorage.getItem("teamName");
+    if (getTeamName) {
+      setName(getTeamName);
+      console.log("get success");
+    }
+  }, []);
 
   return (
-    <div className='team-header-container'>
-      <div ref={divRef} className='team-header' contentEditable onInput={handleInput} />
-    </div>
-  )
-}
+    <div className="wrapContainer">
+      <div className="teamHeader">Teamoji</div>
+      <img src={Line}></img>
 
-export default TeamHeader
+      <input
+        type="text"
+        value={name}
+        className="teamName"
+        placeholder="Team Name"
+        onChange={handleInput}
+        onBlur={handleBlur}
+      ></input>
+    </div>
+  );
+};
+
+export default TeamHeader;

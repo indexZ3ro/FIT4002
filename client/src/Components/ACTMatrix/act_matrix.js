@@ -1,6 +1,7 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../../css/act-matrix.css";
 import Note from "../Note/Note.js";
+import ACT from "../../assets/ACT.svg";
 
 
 const ACTMatrix = ({ notes, setNotes, projectId }) => {
@@ -17,37 +18,45 @@ const ACTMatrix = ({ notes, setNotes, projectId }) => {
         setScale(newScale);
     };
 
-    const handleMouseDown = (e) => {
-        if (e.button === 1) {
-            e.preventDefault();
-            setIsDragging(true);
-            setLastMousePosition({ x: e.clientX, y: e.clientY });
-        }
-    };
 
-    const handleMouseUp = (e) => {
-        if (e.button === 1) {
-            setIsDragging(false);
-        }
-    };
+  const handleWheel = (e) => {
+    e.preventDefault();
+    let newScale = scale + e.deltaY * -0.001;
+    newScale = Math.min(Math.max(0.125, newScale), 4);
+    setScale(newScale);
+  };
 
-    const handleMouseMove = (e) => {
-        if (isDragging) {
-            const dx = (e.clientX - lastMousePosition.x) / scale;
-            const dy = (e.clientY - lastMousePosition.y) / scale;
-            setPosition({ x: position.x + dx, y: position.y + dy });
-            setLastMousePosition({ x: e.clientX, y: e.clientY });
-        }
-    };
+  const handleMouseDown = (e) => {
+    if (e.button === 1) {
+      e.preventDefault();
+      setIsDragging(true);
+      setLastMousePosition({ x: e.clientX, y: e.clientY });
+    }
+  };
 
-    useEffect(() => {
-        if (canvasRef.current) {
-            const x = position.x * scale;
-            const y = position.y * scale;
-            canvasRef.current.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
-        }
+  const handleMouseUp = (e) => {
+    if (e.button === 1) {
+      setIsDragging(false);
+    }
+  };
 
-    }, [position, scale]);
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      const dx = (e.clientX - lastMousePosition.x) / scale;
+      const dy = (e.clientY - lastMousePosition.y) / scale;
+      setPosition({ x: position.x + dx, y: position.y + dy });
+      setLastMousePosition({ x: e.clientX, y: e.clientY });
+    }
+  };
+
+  useEffect(() => {
+    if (canvasRef.current) {
+      const x = position.x * scale;
+      const y = position.y * scale;
+      canvasRef.current.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+    }
+  }, [position, scale]);
+
 
     return (
         <div
@@ -79,6 +88,7 @@ const ACTMatrix = ({ notes, setNotes, projectId }) => {
             </div>
         </div>
     );
+
 };
 
 export default ACTMatrix;

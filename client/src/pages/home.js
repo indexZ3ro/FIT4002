@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { showSideBar } from "../features/sidebarSlice";
 import Modal from "../Components/Modal/modal";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase";
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -25,6 +27,22 @@ const Homepage = () => {
 
   useEffect(() => {
     dispatch(showSideBar());
+  }, []);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid;
+        // ...
+        // console.log("uid", uid);
+      } else {
+        // User is signed out
+        // ...
+        console.log("user is logged out");
+      }
+    });
   }, []);
 
   return (
