@@ -11,6 +11,7 @@ const Emoji = ({id,x,y,url}) => {
 
   const [Emojiurl, setEmojiURL] = useState(url || "");
   const [position, setPosition] = useState({ x, y });
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleDragStop = (e, ui) => {
     setPosition({ x: ui.lastX, y: ui.lastY });
@@ -50,13 +51,30 @@ const Emoji = ({id,x,y,url}) => {
       }
   }, [position, Emojiurl, id, isUpdated, isInitialMount]);
 
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+
   return (
-    
-       <Draggable onStop = {handleDragStop} position={{ x: position.x, y: position.y }}>
-          <div>
-          <img  value = {url} src={url} alt="Emoji" />
-          </div>          
-        </Draggable>
+    <Draggable onStop={handleDragStop} position={{ x: position.x, y: position.y }}>
+    <div
+      className="emoji-container"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {isHovered && (
+        <button className="delete-button-emoji" >
+          X
+        </button>
+      )}
+      <img value={url} src={url} alt="Emoji" />
+    </div>
+  </Draggable>
   );
 };
 
