@@ -1,16 +1,31 @@
-import React from "react";
+import React, {useState} from "react";
 import "../../css/modal.css";
 import TextButton from "../Buttons/textButton";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
+import axios from 'axios';
+
 
 const Modal = ({ handleClose, show, create }) => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const showHideClassName = show ? "modal display-block" : "modal display-none";
   const navigate = useNavigate();
+  const [projectName, setProjectName] = useState('');
 
-  const routePathToCreateTeamMatrix = () => {
-    navigate("/TeamSession");
-  };
+  const routePathToCreateTeamMatrix =() => {
+    const teamDetails = {
+      projectName: projectName
+    };
+    axios.post(apiUrl + '/api/createProject', teamDetails)
+    .then(response => {
+      const projectKey = response.data.projectKey;
+      // Navigate to TeamSession with projectID as parameter
+      navigate(`/TeamSession/${projectKey}`);
+    })
+    .catch(error => {
+      console.error("Error creating project:", error);
+    });
+  }
 
   return create ? (
     <div className={showHideClassName}>
@@ -22,8 +37,10 @@ const Modal = ({ handleClose, show, create }) => {
         <div className="modal-input-container">
           <input
             className="userInput"
-            placeholder="Team Name"
+            placeholder="Project Name"
             type="text"
+            value={projectName}
+            onChange={e => setProjectName(e.target.value)} 
           ></input>
           <input
             className="userInput"
