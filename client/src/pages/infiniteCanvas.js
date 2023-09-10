@@ -13,10 +13,11 @@ import { onValue, ref } from "firebase/database";
 import LocalChangeContext from "../contexts/LocalChangeContext";
 import ACTQuestionsContainer from "../Components/ACTQuestions/act_questions_container";
 import ACT from "../assets/ACT.svg";
+import { useParams } from 'react-router-dom';
 
 const InfiniteCanvas = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
-  const projectId = "1";
+  const { projectId } = useParams();
   const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
 
   // handle sticky notes state management here
@@ -91,28 +92,15 @@ const InfiniteCanvas = () => {
   }, [projectId, localChanges]);
 
   return (
-    <div className="session">
-      <div className="topContainer">
-        <div className="topLeft">
-          <TeamHeader />
-          {/* <div className="wrapContainer"> */}
-          <ACTQuestionsContainer questions={questions} />
-          {/* </div> */}
-        </div>
 
-        <div className="topRight">
-          <div className="timerContainer">
-            <div className="wrapContainer">
-              {/* <img src={StopWatch}></img> */}
-              {/* <div className="timer">5:30</div> */}
-              <Timer />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="bodyContainer">
-        <ACTMatrix notes={notes} setNotes={setNotes} />
-        <ACTSidebar notes={notes} setNotes={setNotes} />
+    <div className="TeamSession">
+      <TeamHeader />
+      <ACTQuestionsContainer questions={questions}/>
+      <Sidebar />
+      <ACTSidebar notes={notes} setNotes={setNotes} projectId={projectId}/>
+      <div>
+        <ACTMatrix notes={notes} setNotes={setNotes} projectId={projectId}/>
+
       </div>
     </div>
   );

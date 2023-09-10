@@ -8,6 +8,7 @@ import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = (props) => {
+
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
@@ -45,6 +46,7 @@ const Sidebar = (props) => {
   ) : (
     <div></div>
   );
+
 };
 
 export default Sidebar;

@@ -222,6 +222,29 @@ app.put("/api/questionDesc/:questionId", (req, res) => {
     });
 });
 
+// create a new project and return it
+app.post("/api/createProject", (req, res) => {
+  const { projectName } = req.body;
+  const projectsRef = admin.database().ref('Projects');
+
+  const newProjectRef = projectsRef.push();
+
+  newProjectRef
+    .set({
+      name: projectName,
+      questions: {} 
+    })
+    .then(() => {
+      res.status(200).json({
+        projectKey: newProjectRef.key
+      });
+    })
+    .catch((error) => {
+      console.error("Error creating new project:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
 // Create a web server to serve files and listen to WebSocket connections
 const server = http.createServer(app);
 

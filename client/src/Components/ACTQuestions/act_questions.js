@@ -64,65 +64,21 @@ const ACTQuestions = ({ id, text, type }) => {
       });
   }, [projectId, name]);
 
-  //   useEffect(() => {
-  //     const questionsRef = ref(realtimeDb, `Projects/${projectId}/questions`);
-
-  //     const unsubscribe = onValue(questionsRef, (snapshot) => {
-  //         const updatedQuestions = [];
-  //         snapshot.forEach((childSnapshot) => {
-  //           const questionId = childSnapshot.key;
-  //           const questionData = childSnapshot.val();
-  //           if (localQuestions.some(change => change.id === questionId)) {
-  //               // If the question ID is in localQuestions, then retain the current question data
-  //               // Find the current question data
-  //               const currentQuestion = questions.find(question => question.id === questionId);
-  //               if (currentQuestion) {
-  //                 updatedQuestions.push(currentQuestion);
-  //                 const currentTime = Date.now();
-
-  //                 setLocalQuestions(prevChanges =>
-  //                   prevChanges.filter(change =>{
-  //                     const timeDifference = currentTime - change.timestamp;
-  //                     return !(change.id === questionId && timeDifference > 5000);
-  //                   })
-  //                 );
-  //               }
-  //           } else {
-  //               updatedQuestions.push({ ...questionData, id: questionId });
-  //               console.log("local changes: ", localQuestions);
-  //               console.log(questionId);
-  //           }
-  //       });
-  //         // Log the updated questions to the console
-  //         console.log("Updated questions:", updatedQuestions);
-  //         setLocalQuestions(updatedQuestions);
-  //     });
-
-  //     return () => {
-  //         unsubscribe();
-  //     };
-  // }, [projectId, localQuestions]);
-
   const handleInput = (e) => {
+    if (divRef.current.id != selectedQuestion) {
+      setSelectedQuestion(divRef.current.id);
+    }
     setName(e.target.textContent);
     setIsUpdated(true);
   };
 
   return (
-    <div className="act-questions-inner">
-      <ACTQuestionsDropdown
-        divRef={divRef}
-        questionArray={questions}
-        selectedQuestionType={type}
-      />
-      <div className="act-questions-label">Question</div>
-      <img src={Line}></img>
-      <div
-        ref={divRef}
-        className="act-questions"
-        contentEditable
-        onInput={handleInput}
-      ></div>
+
+    <div className='act-questions-inner'>
+      <ACTQuestionsDropdown divRef={divRef} questionArray={questions} selectedQuestionType={type}/>
+      <div className='act-questions-label'>Question</div>
+      <div ref={divRef} id={selectedQuestion} className='act-questions' contentEditable onInput={handleInput}></div>
+
     </div>
   );
 };
