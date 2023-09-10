@@ -18,15 +18,7 @@ const ACTMatrix = ({ notes, setNotes, projectId }) => {
         setScale(newScale);
     };
 
-
-  const handleWheel = (e) => {
-    e.preventDefault();
-    let newScale = scale + e.deltaY * -0.001;
-    newScale = Math.min(Math.max(0.125, newScale), 4);
-    setScale(newScale);
-  };
-
-  const handleMouseDown = (e) => {
+    const handleMouseDown = (e) => {
     if (e.button === 1) {
       e.preventDefault();
       setIsDragging(true);
