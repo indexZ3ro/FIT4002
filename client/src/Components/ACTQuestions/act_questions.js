@@ -7,12 +7,11 @@ import { onValue, ref } from "firebase/database";
 import ACTQuestionsDropdown from "./act-questions-icons";
 import Line from "../../assets/Line.svg";
 
-const ACTQuestions = ({ id, text, type }) => {
+const ACTQuestions = ({ id, text, type, projectId }) => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const [name, setName] = useState(text || ""); // Renamed state variable from 'Question' to 'name'
   const divRef = useRef();
-  const projectId = "1";
   const { localQuestions, setLocalQuestions } = useContext(QuestionContext);
   const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
   const [questions, setQuestions] = useState([]);
@@ -28,7 +27,7 @@ const ACTQuestions = ({ id, text, type }) => {
     if (!isInitialMount && isUpdated) {
       axios
         .put(apiUrl + `/api/questionDesc/${selectedQuestion}`, {
-          projectKey: 1,
+          projectKey: projectId,
           text: name,
         })
         .then((response) => {
@@ -75,7 +74,7 @@ const ACTQuestions = ({ id, text, type }) => {
   return (
 
     <div className='act-questions-inner'>
-      <ACTQuestionsDropdown divRef={divRef} questionArray={questions} selectedQuestionType={type}/>
+      <ACTQuestionsDropdown divRef={divRef} questionArray={questions} selectedQuestionType={type} projectId={projectId}/>
       <div className='act-questions-label'>Question</div>
       <div ref={divRef} id={selectedQuestion} className='act-questions' contentEditable onInput={handleInput}></div>
 

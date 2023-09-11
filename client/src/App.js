@@ -38,8 +38,7 @@ function App() {
                   path="/CreateTeamMatrix"
                   element={<CreateTeamMatrix />}
                 />
-                <Route path="/SoloSession/:projectId" element={<InfiniteCanvas />} />
-                <Route path="/TeamSession/:projectId" element={<InfiniteCanvas />} />
+                <Route path="/ACTMatrixSession/:projectId" element={<InfiniteCanvas />} />
                 <Route path="/HistoryPage" element={<HistoryPage />} />
                 <Route path="/Settings" element={<Settings />} />
               </Routes>
