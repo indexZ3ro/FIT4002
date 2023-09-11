@@ -23,11 +23,11 @@ const LandingPage = () => {
     const SignUp = () => {
         navigate("/SignUp");
     };
-
+  
     const aboutUs = () => {
         navigate("/AboutUs");
     };
-
+  
     return (
         <div className="landingPage">
             <div className="landingPageTop">
@@ -35,37 +35,33 @@ const LandingPage = () => {
                     Teamoji
                 </div>
 
-                <div
-                    className="landingPageTopButton textFont s"
-                    onClick={aboutUs}
-                >
-                    About Us
-                </div>
-                <div
-                    className="landingPageTopButton textFont s"
-                    onClick={logIn}
-                >
+
+                {/* <div className="landingPageTopButton textFont s">About Us</div> */}
+                <h6 className="normal landingPageTopButton" onClick={aboutUs} >About Us</h6>
+                <h6 className="normal landingPageTopButton" onClick={logIn}>
                     Log In
-                </div>
-                <div
-                    className="landingPageTopButton textFont s"
-                    onClick={SignUp}
-                >
+                </h6>
+                <h6 className="normal landingPageTopButton" onClick={SignUp}>
                     Sign Up
-                </div>
+                </h6>
             </div>
             <div className="landingPageBottom">
                 <div className="landingPageBottomLeft">
-                    <div className="landingPageBottomTitle textFont semiBold l">
+                    {/* <div className="landingPageBottomTitle textFont semiBold l">
                         Find your goals and values
-                    </div>
-                    <div className="landingPageSubtitle textFont xs">
+                    </div> */}
+                    <h3 className="landing-page-title">
+                        Find your goals and values
+                    </h3>
+                    {/* <div className="landingPageSubtitle textFont xs"> </div>*/}
+                    <h6 className="normal landing-page-text">
                         Authentically replicate the ACT Matrix process and allow
                         individuals and teams to reflect on their visual map and
                         progress in an ongoing manner.
-                    </div>
+                    </h6>
                     <TextButton
-                        id="getStarted"
+                        id="Get Started"
+                        handleClick={SignUp}
                         customStyle={{ background: "#EFDFFD" }}
                     ></TextButton>
                 </div>

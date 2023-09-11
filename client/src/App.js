@@ -21,55 +21,36 @@ import AboutUs from "./pages/about_us";
 import InfiniteCanvas from "./pages/infiniteCanvas";
 
 function App() {
-    const [localChanges, setLocalChanges] = useState([]);
-    const [localQuestions, setLocalQuestions] = useState([]);
-    return (
-        <Provider store={store}>
-            <LocalChangeContext.Provider
-                value={{ localChanges, setLocalChanges }}
-            >
-                <QuestionContext.Provider
-                    value={{ localQuestions, setLocalQuestions }}
-                >
-                    <Router>
-                        <div className="App">
-                            <Sidebar />
-                            <Routes>
-                                <Route path="/" element={<LandingPage />} />
-                                <Route path="/LogIn" element={<LogInPage />} />
-                                <Route path="/Home" element={<Homepage />} />
-                                <Route
-                                    path="/Signup"
-                                    element={<SignUpPage />}
-                                />
-                                <Route path="/AboutUs" element={<AboutUs />} />
-                                <Route
-                                    path="/CreateTeamMatrix"
-                                    element={<CreateTeamMatrix />}
-                                />
-                                <Route
-                                    path="/SoloSession"
-                                    element={<InfiniteCanvas />}
-                                />
-                                <Route
-                                    path="/TeamSession"
-                                    element={<InfiniteCanvas />}
-                                />
-                                <Route
-                                    path="/HistoryPage"
-                                    element={<HistoryPage />}
-                                />
-                                <Route
-                                    path="/Settings"
-                                    element={<Settings />}
-                                />
-                            </Routes>
-                        </div>
-                    </Router>
-                </QuestionContext.Provider>
-            </LocalChangeContext.Provider>
-        </Provider>
-    );
+  const [localChanges, setLocalChanges] = useState([]);
+  const [localQuestions, setLocalQuestions] = useState([]);
+  return (
+    <Provider store={store}>
+      <LocalChangeContext.Provider value={{ localChanges, setLocalChanges }}>
+        <QuestionContext.Provider value={{ localQuestions, setLocalQuestions }}>
+          <Router>
+            <div className="App">
+              <Sidebar />
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/LogIn" element={<LogInPage />} />
+                <Route path="/Home" element={<Homepage />} />
+                <Route path="/Signup" element={<SignUpPage />} />
+                <Route path="/AboutUs" element={<AboutUs />} />
+                <Route
+                  path="/CreateTeamMatrix"
+                  element={<CreateTeamMatrix />}
+                />
+                <Route path="/SoloSession/:projectId" element={<InfiniteCanvas />} />
+                <Route path="/TeamSession/:projectId" element={<InfiniteCanvas />} />
+                <Route path="/HistoryPage" element={<HistoryPage />} />
+                <Route path="/Settings" element={<Settings />} />
+              </Routes>
+            </div>
+          </Router>
+        </QuestionContext.Provider>
+      </LocalChangeContext.Provider>
+    </Provider>
+  );
 }
 
 export default App;
