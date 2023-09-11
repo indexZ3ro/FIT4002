@@ -10,19 +10,29 @@ import { showSideBar } from "../features/sidebarSlice";
 import Modal from "../Components/Modal/modal";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
+import axios from 'axios';
 
 const Homepage = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [create, setCreate] = useState(true);
 
-  const routePathToCreateTeamMatrix = () => {
-    navigate("/CreateTeamMatrix");
-  };
-
   const createSoloSession = () => {
-    navigate("/SoloSession");
+    const projectName = "";
+    const soloDetails = {
+      projectName: projectName
+    };
+    axios.post(apiUrl + '/api/createProject', soloDetails)
+    .then(response => {
+      const projectKey = response.data.projectKey;
+      // Navigate to TeamSession with projectID as parameter
+      navigate(`/ACTMatrixSession/${projectKey}`);
+    })
+    .catch(error => {
+      console.error("Error creating project:", error);
+    });
   };
 
   useEffect(() => {
@@ -40,6 +50,7 @@ const Homepage = () => {
       } else {
         // User is signed out
         // ...
+        navigate("/");
         console.log("user is logged out");
       }
     });

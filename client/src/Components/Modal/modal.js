@@ -20,7 +20,7 @@ const Modal = ({ handleClose, show, create }) => {
     .then(response => {
       const projectKey = response.data.projectKey;
       // Navigate to TeamSession with projectID as parameter
-      navigate(`/TeamSession/${projectKey}`);
+      navigate(`/ACTMatrixSession/${projectKey}`);
     })
     .catch(error => {
       console.error("Error creating project:", error);
