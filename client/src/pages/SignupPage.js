@@ -11,8 +11,8 @@ import TextButton from "../Components/Buttons/textButton";
 import SignUpPageCover from "../assets/signUpPageCover.svg";
 
 const SignUpPage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,9 +29,10 @@ const SignUpPage = () => {
     navigate("/Home");
   };
 
-  const logIn = () => {
-    navigate("/LogIn");
-  };
+
+    const logIn = () => {
+        navigate("/LogIn");
+    };
 
   const onSubmit = async (e) => {
     e.preventDefault();

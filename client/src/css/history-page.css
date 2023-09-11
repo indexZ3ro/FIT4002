@@ -64,8 +64,8 @@
 }
 
 .history-delete-matrix {
-    width: auto;
-    height: auto;
+    height: 3vh;
+    width: 3vh;
 }
 
 .history-delete-matrix:hover {
@@ -113,4 +113,10 @@
 .history-matrix-score,
 .history-result-emoji {
     margin-left: auto;
+}
+
+.history-result-emoji {
+    object-fit: cover;
+    height: 3vh;
+    width: 3vh;
 }

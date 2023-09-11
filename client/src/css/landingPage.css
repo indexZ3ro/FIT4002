@@ -1,49 +1,49 @@
-.landingPage{
+.landingPage {
     display: flex;
     flex-direction: column;
     width: 100vw;
     height: 100vh;
 }
 
-.landingPageTop{
+.landingPageTop {
     display: flex;
     flex-direction: row;
     height: 10%;
     margin: 2vw;
 }
 
-.landingPageTeamTitleContainer{
+.landingPageTeamTitleContainer {
     width: 70%;
     margin-left: 4vw;
     margin-top: 5vh;
 }
 
-.landingPageTopButton{
+.landingPageTopButton {
     width: 10%;
+    height: 30%;
+    font-size: 1.1vw;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: bottom;
     margin-top: 5vh;
     margin-right: 5vw;
-    
 }
 
-.landingPageTopButton.textFont.s:hover{
+.landingPageTopButton:hover {
     cursor: pointer;
     border-radius: 40px;
-    
+
     border: none;
-    background-color: #EFDFFD
+    background-color: #efdffd;
 }
 
-
-.landingPageBottom{
+.landingPageBottom {
     display: flex;
     flex-direction: row;
     height: 70%;
 }
 
-.landingPageBottomLeft{
+.landingPageBottomLeft {
     width: 40%;
     display: flex;
     flex-direction: column;
@@ -51,7 +51,7 @@
     margin-left: 5vw;
 }
 
-.landingPageBottomRight{
+.landingPageBottomRight {
     width: 60%;
     display: flex;
     flex-direction: column;
@@ -59,35 +59,43 @@
     justify-content: center;
 }
 
-.landingPageCover{
+.landingPageCover {
     margin-top: 10vh;
     width: 50vw;
 }
 
-.landingPageSubtitle{
+.landing-page-title {
+    margin-bottom: 2vh;
+    margin-top: 0;
+}
+.landing-page-text {
+    margin: 0;
+}
+
+.landingPageSubtitle {
     margin-top: 3vh;
 }
 
-.textFont{
-    font-family: 'Poppins', sans-serif;
+.textFont {
+    font-family: "Poppins", sans-serif;
 }
 
-.semiBold{
+.semiBold {
     font-weight: 600;
 }
 
-.l{
+.l {
     font-size: 65px;
 }
 
-.m{
+.m {
     font-size: 24px;
 }
 
-.s{
+.s {
     font-size: 18px;
 }
 
-.xs{
+.xs {
     font-size: 16px;
 }
