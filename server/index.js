@@ -229,10 +229,38 @@ app.post("/api/createProject", (req, res) => {
 
   const newProjectRef = projectsRef.push();
 
+  const question1Id = admin.database().ref().push().key;
+  const question2Id = admin.database().ref().push().key;
+  const question3Id = admin.database().ref().push().key;
+  const question4Id = admin.database().ref().push().key;
+
+  const questions = {
+    [question1Id]: {
+      status: "active",
+      text: "",
+      type: 1
+    },
+    [question2Id]: {
+      status: "inactive",
+      text: "",
+      type: 2
+    },
+    [question3Id]: {
+      status: "inactive",
+      text: "",
+      type: 3
+    },
+    [question4Id]: {
+      status: "inactive",
+      text: "",
+      type: 4
+    }
+  }
+
   newProjectRef
     .set({
       name: projectName,
-      questions: {} 
+      questions: questions 
     })
     .then(() => {
       res.status(200).json({

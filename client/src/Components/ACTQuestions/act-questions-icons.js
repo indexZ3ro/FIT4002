@@ -20,15 +20,15 @@ const dropdownItems = [
   }
 ];
 
-const ACTQuestionsDropdown = ( {divRef, questionArray, selectedQuestionType, questionDivID} ) => {
+const ACTQuestionsDropdown = ( {divRef, questionArray, selectedQuestionType, projectId} ) => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(String(selectedQuestionType));
   const dropdownRef = useRef(null);
   const outsideClickRef = useRef(null);
-  const projectId = "1";
   var displayText = "";
   var questionID = "";
+  console.log("TEST")
 
   const toggleDropdown = () => {
     setIsOpen(prevIsOpen => !prevIsOpen);

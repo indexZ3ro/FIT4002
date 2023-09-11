@@ -8,7 +8,7 @@ const CreateTeamMatrix = () => {
   const navigate = useNavigate();
 
   const createTeamMatrix = () => {
-    navigate("/TeamSession");
+    navigate("/ACTMatrixSession");
   };
 
   return (

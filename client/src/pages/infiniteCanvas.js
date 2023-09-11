@@ -5,7 +5,6 @@ import "../css/session.css";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import TeamHeader from "../Components/TeamHeader/team_header";
 import ACTMatrix from "../Components/ACTMatrix/act_matrix";
-import ACTQuestions from "../Components/ACTQuestions/act_questions";
 import Timer from "../Components/Timer/Timer";
 import ACTSidebar from "../Components/ACTSidebar/act-sidebar";
 import { realtimeDb } from "../firebase";
@@ -135,15 +134,30 @@ const InfiniteCanvas = () => {
 
 
   return (
+    
+    <div className="session">
+      <div className="topContainer">
+        <div className="topLeft">
+          <TeamHeader />
+          {/* <div className="wrapContainer"> */}
+          <ACTQuestionsContainer questions={questions} projectId={projectId}/>
+          {/* </div> */}
+        </div>
 
-    <div className="TeamSession">
-      <TeamHeader />
-      <ACTQuestionsContainer questions={questions}/>
-      <Sidebar />
-      <ACTSidebar notes={notes} setNotes={setNotes} emojis ={emojis} setEmojis= {setEmojis} projectId={projectId}/>
-      
-      <div>
-        <ACTMatrix notes={notes} setNotes={setNotes} projectId={projectId} emojis ={emojis} setEmojis= {setEmojis}/>
+
+        <div className="topRight">
+          <div className="timerContainer">
+            <div className="wrapContainer">
+              {/* <img src={StopWatch}></img> */}
+              {/* <div className="timer">5:30</div> */}
+              <Timer />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="bodyContainer">
+        <ACTMatrix notes={notes} setNotes={setNotes} emojis ={emojis} setEmojis= {setEmojis} projectId={projectId}/>
+        <ACTSidebar notes={notes} setNotes={setNotes} projectId={projectId} emojis ={emojis} setEmojis= {setEmojis}/>
 
       </div>
     </div>

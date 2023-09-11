@@ -2,7 +2,7 @@ import React from "react";
 import "../../index.css";
 import ACTQuestions from "./act_questions";
 
-const ACTQuestionsContainer = ({ questions }) => {
+const ACTQuestionsContainer = ({ questions, projectId }) => {
   const selectedQuestion = questions.find(
     (question) => question.status === "active"
   );
@@ -14,6 +14,7 @@ const ACTQuestionsContainer = ({ questions }) => {
           id={selectedQuestion.id}
           text={selectedQuestion.text}
           type={selectedQuestion.type}
+          projectId={projectId}
         />
       )}
     </div>

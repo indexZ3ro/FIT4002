@@ -73,6 +73,8 @@ textarea:focus {
     font-size: 15px;
     font-weight: 300;
     letter-spacing: -0.72px;
+    min-width: 150px;
+    max-width: 750px;
 }
   
 .act-questions-label {
