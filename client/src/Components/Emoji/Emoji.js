@@ -3,7 +3,7 @@ import "../../css/act-sidebar.css";
 import Draggable from "react-draggable";
 import axios from "axios";
 import LocalChangeContext from "../../contexts/LocalChangeContext";
-const Emoji = ({id,x,y,url}) => {
+const Emoji = ({id,x,y,url,projectId}) => {
   const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
   const apiUrl = process.env.REACT_APP_API_URL;
   const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
@@ -33,7 +33,7 @@ const Emoji = ({id,x,y,url}) => {
         console.log({id})
         axios
         .put(apiUrl + `/api/emoji/${id}`, {
-            projectKey: 1,
+            projectKey: projectId,
             x: position.x,
             y: position.y,
             url: Emojiurl,
@@ -54,7 +54,7 @@ const Emoji = ({id,x,y,url}) => {
   const handleDelete = () => {
     // API request to delete the emoji from the server
     axios.delete(`${apiUrl}/api/emoji/${id}`, {
-            data: {projectKey: 1 }
+            data: {projectKey: projectId }
         })
         .then(response => {
             console.log(id);

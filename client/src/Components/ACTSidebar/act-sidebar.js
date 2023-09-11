@@ -49,7 +49,7 @@ const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis}) => {
     
     // Make a POST request to create the new emoji on the server
     axios
-      .post(apiUrl + "/api/emoji", { projectKey: '1', x, y, url: url })
+      .post(apiUrl + "/api/emoji", { projectKey: projectId, x, y, url: url })
       .then((response) => {
         console.log(response.data);
         setEmojis([...emojis, { x, y , url,id:response.data.id}]);

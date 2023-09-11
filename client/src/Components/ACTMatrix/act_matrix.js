@@ -86,6 +86,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                         x={emoji.x}
                         y={emoji.y}
                         url = {emoji.url}
+                        projectId={projectId} 
                     />
                 ))}
             </div>
