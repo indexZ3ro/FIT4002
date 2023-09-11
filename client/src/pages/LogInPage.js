@@ -14,23 +14,26 @@ import { auth } from "../firebase";
 import LogInCover from "../assets/logInCover.svg";
 
 const LogInPage = () => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    dispatch(hideSideBar());
-  });
 
-  const logIn = () => {
-    navigate("/Home");
-  };
+    useEffect(() => {
+        dispatch(hideSideBar());
+    });
 
-  const signUp = () => {
-    navigate("/SignUp");
-  };
+    const logIn = () => {
+        navigate("/Home");
+    };
+
+    const signUp = () => {
+        navigate("/SignUp");
+    };
+
 
   const navigateLanding = () => {
     navigate("/");
@@ -121,7 +124,7 @@ const LogInPage = () => {
             ></input>
             <p className="error-message">{error}</p>
 
-            {/* <div className="rememberMeContainer">
+                        {/* <div className="rememberMeContainer">
               <Checkbox label="Remember Me" checked={true} />
             </div> */}
           </div>
@@ -139,11 +142,8 @@ const LogInPage = () => {
             <div className="loginToSignUp" onClick={signUp}>
               New Here?
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default LogInPage;

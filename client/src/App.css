@@ -1,40 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono&display=swap");
 
 /* Text */
 .title {
-  font-size: 6vw;
-  color: #FFF;
+    font-size: 6vw;
+    color: #fff;
 }
 
-.subtitle{
-  font-style: normal;
-  font-weight: 400;
-  font-size: 2vw;
-  color: #FFF;
+.subtitle {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2vw;
+    color: #fff;
 }
 
 /* Edge */
 .edge-wrapper {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  align-items: flex-end;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-end;
 }
 
-.homepage-title{
-  position: absolute;
-  top: 1vh;
-  left: 40vw;
-  text-align: center;
+.homepage-title {
+    position: absolute;
+    top: 1vh;
+    left: 40vw;
+    text-align: center;
 }
 
-.team-matrix-title{
-  position: absolute;
-  top: 1vh;
-  left: 40vw;
-  text-align: center;
+.team-matrix-title {
+    position: absolute;
+    top: 1vh;
+    left: 40vw;
+    text-align: center;
 }
+
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Public+Sans:wght@200&display=swap");
 
 .error-message{
   font-size: 1vw;
@@ -42,44 +46,51 @@
 }
 
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Public+Sans:wght@200&display=swap');
 
-
-body, body * {
-  font-family: 'Poppins', sans-serif;
+body,
+body * {
+    font-family: "Poppins", sans-serif;
 }
 
 .semiBold {
-  font-weight: 600;
+    font-weight: 600;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', sans-serif;
-  color: black;
-  /* font-weight: 600; */
+.normal {
+    font-weight: 400;
 }
 
-h1{
-  font-size: 6vw;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Poppins", sans-serif;
+    color: black;
+    /* font-weight: 600; */
+}
+
+h1 {
+    font-size: 6vw;
 }
 
 h2 {
-  font-size: 5vw; /* adjust this value as needed */
+    font-size: 5vw; /* adjust this value as needed */
 }
 
 h3 {
-  font-size: 4vw; /* adjust this value as needed */
+    font-size: 4vw; /* adjust this value as needed */
 }
 
 h4 {
-  font-size: 3vw; /* adjust this value as needed */
+    font-size: 3vw; /* adjust this value as needed */
 }
 
 h5 {
-  font-size: 2vw; /* adjust this value as needed */
+    font-size: 2vw; /* adjust this value as needed */
 }
 
 h6 {
-  font-size: 1vw; /* adjust this value as needed */
+    font-size: 1vw; /* adjust this value as needed */
 }
