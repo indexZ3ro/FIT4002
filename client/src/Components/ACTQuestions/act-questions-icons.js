@@ -20,7 +20,7 @@ const dropdownItems = [
   }
 ];
 
-const ACTQuestionsDropdown = ( {divRef, questionArray, selectedQuestionType} ) => {
+const ACTQuestionsDropdown = ( {divRef, questionArray, selectedQuestionType, questionDivID} ) => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(String(selectedQuestionType));
@@ -47,6 +47,7 @@ const ACTQuestionsDropdown = ( {divRef, questionArray, selectedQuestionType} ) =
             displayText = question.text;
             questionID = question.id;
             divRef.current.textContent = displayText;
+            divRef.current.id = question.id;
 
             axios
             .put(apiUrl + `/api/questions/${questionID}`, {

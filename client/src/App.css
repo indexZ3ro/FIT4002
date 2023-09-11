@@ -36,8 +36,16 @@
     text-align: center;
 }
 
+
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Public+Sans:wght@200&display=swap");
+
+.error-message{
+  font-size: 1vw;
+  color: red
+}
+
+
 
 body,
 body * {

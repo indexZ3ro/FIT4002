@@ -3,7 +3,7 @@ import Draggable from "react-draggable";
 import axios from "axios";
 import LocalChangeContext from "../../contexts/LocalChangeContext";
 
-const Note = ({ x, y, id, text, scale }) => {
+const Note = ({ x, y, id, text, scale, projectId }) => {
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
     const apiUrl = process.env.REACT_APP_API_URL;
     const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
@@ -57,7 +57,7 @@ const Note = ({ x, y, id, text, scale }) => {
         if (!isInitialMount && isUpdated) {
             axios
             .put(apiUrl + `/api/sticky-notes/${id}`, {
-                projectKey: 1,
+                projectKey: projectId,
                 x: position.x,
                 y: position.y,
                 text: noteText,
@@ -78,7 +78,7 @@ const Note = ({ x, y, id, text, scale }) => {
     const handleDelete = () => {
         // API request to delete the sticky note from the server
         axios.delete(`${apiUrl}/api/sticky-notes/${id}`, {
-                data: {projectKey: 1 }
+                data: {projectKey: projectId }
             })
             .then(response => {
                 console.log(id);

@@ -31,6 +31,7 @@ const LandingPage = () => {
                     Teamoji
                 </div>
 
+
                 {/* <div className="landingPageTopButton textFont s">About Us</div> */}
                 <h6 className="normal landingPageTopButton">About Us</h6>
                 <h6 className="normal landingPageTopButton" onClick={logIn}>
