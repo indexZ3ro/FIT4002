@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import "../css/history-page.css";
+import delete_emoji from "../assets/delete.svg";
 
 export const HistoryTile = (props) => {
     const historyOpenMatrix = () => {
@@ -17,7 +18,7 @@ export const HistoryTile = (props) => {
                 <h6>{props.date}</h6>
                 <img
                     className="history-delete-matrix"
-                    src="https://img.icons8.com/material-outlined/24/FA5252/trash--v1.png"
+                    src={delete_emoji}
                     alt="trash--v1"
                     onClick={historyDeleteMatrix()}
                 />
@@ -43,8 +44,6 @@ export const HistoryTile = (props) => {
                     </h6>
                     <img
                         className="history-result-emoji"
-                        width="24"
-                        height="24"
                         src={props.emoji}
                         alt={props.emoji_alt}
                     />
