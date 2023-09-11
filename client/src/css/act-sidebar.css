@@ -16,7 +16,7 @@
     justify-content: space-between; /* Evenly space items vertically */
 }
 
-.emoji-container{
+.emoji-container-picker{
     position: absolute;
     top: 13vh; /* Position the emoji picker below the emoji icon */
     left: 8vh;

@@ -74,7 +74,7 @@ const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis}) => {
 
         <div className="draggable-item-emoji" onClick={() => setShowPicker(val => !val)}>
             <EmojiIcon/>
-            <div className = "emoji-container" onClick={(e) => {e.stopPropagation();}}>
+            <div className = "emoji-container-picker" onClick={(e) => {e.stopPropagation();}}>
               {showPicker && <EmojiPicker
                 pickerStyle={{
                 width: '150px',
