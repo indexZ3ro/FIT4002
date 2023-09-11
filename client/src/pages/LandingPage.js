@@ -23,7 +23,11 @@ const LandingPage = () => {
     const SignUp = () => {
         navigate("/SignUp");
     };
-
+  
+    const aboutUs = () => {
+        navigate("/AboutUs");
+    };
+  
     return (
         <div className="landingPage">
             <div className="landingPageTop">
@@ -33,7 +37,7 @@ const LandingPage = () => {
 
 
                 {/* <div className="landingPageTopButton textFont s">About Us</div> */}
-                <h6 className="normal landingPageTopButton">About Us</h6>
+                <h6 className="normal landingPageTopButton" onClick={aboutUs} >About Us</h6>
                 <h6 className="normal landingPageTopButton" onClick={logIn}>
                     Log In
                 </h6>

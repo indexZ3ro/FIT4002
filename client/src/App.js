@@ -16,8 +16,9 @@ import LocalChangeContext from "./contexts/LocalChangeContext";
 import QuestionContext from "./contexts/QuestionContext";
 import React, { useRef, useState } from "react";
 import HistoryPage from "./pages/history_page";
-import Settings from './pages/settings_page'
-import InfiniteCanvas from './pages/infiniteCanvas';
+import Settings from "./pages/settings_page";
+import AboutUs from "./pages/about_us";
+import InfiniteCanvas from "./pages/infiniteCanvas";
 
 function App() {
   const [localChanges, setLocalChanges] = useState([]);
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/LogIn" element={<LogInPage />} />
                 <Route path="/Home" element={<Homepage />} />
                 <Route path="/Signup" element={<SignUpPage />} />
+                <Route path="/AboutUs" element={<AboutUs />} />
                 <Route
                   path="/CreateTeamMatrix"
                   element={<CreateTeamMatrix />}
