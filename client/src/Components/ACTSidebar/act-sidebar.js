@@ -9,8 +9,7 @@ import axios from "axios";
 import EmojiPicker from "emoji-picker-react";
 import Emoji from "../Emoji/Emoji";
 
-
-const ACTSidebar = ({ notes, setNotes, emojis, setEmojis}) => {
+const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis}) => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleIconAdded = (x, y) => {
@@ -18,7 +17,7 @@ const ACTSidebar = ({ notes, setNotes, emojis, setEmojis}) => {
 
     // Make a POST request to create the new sticky note on the server
     axios
-      .post(apiUrl + "/api/sticky-notes", { projectKey: '1', x, y, text: null })
+      .post(apiUrl + "/api/sticky-notes", { projectKey: projectId, x, y, text: null })
       .then((response) => {
         console.log(response.data);
       })

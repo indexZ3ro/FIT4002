@@ -3,8 +3,8 @@
     position: fixed;
     top: 35vh; /* Adjusted for the new positioning */
     left: 4vh;
-    height: 30vh; /* Adjusted for the new height */
-    width: 4.5vh; /* Adjusted for the new width */
+    height: 20vh; /* Adjusted for the new height */
+    width: 3vh; /* Adjusted for the new width */
     border: 1px solid; /* Added "solid" for border style */
     background-color: #2D2D2D;
     box-shadow: 0.2vh 0 1vh rgb(0 0 0 / 30%);

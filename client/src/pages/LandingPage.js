@@ -52,6 +52,7 @@ const LandingPage = () => {
           <TextButton
             id="getStarted"
             customStyle={{ background: "#EFDFFD" }}
+            handleClick={SignUp}
           ></TextButton>
         </div>
         <div className="landingPageBottomRight">
