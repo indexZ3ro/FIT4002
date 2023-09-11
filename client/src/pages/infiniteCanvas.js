@@ -22,6 +22,7 @@ const InfiniteCanvas = () => {
   // handle sticky notes state management here
   const [notes, setNotes] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [emojis,setEmojis] = useState([]);
 
   // Fetch all sticky notes from the database when the component mounts
   useEffect(() => {
@@ -50,7 +51,7 @@ const InfiniteCanvas = () => {
       });
   }, [projectId, setQuestions]);
 
-  // Firebase Realtime Database listener for updates
+  // Firebase Realtime Database listener for updates Sticky Notes
   useEffect(() => {
     const notesRef = ref(realtimeDb, `Projects/${projectId}/stickyNotes`);
 
@@ -90,6 +91,48 @@ const InfiniteCanvas = () => {
     };
   }, [projectId, localChanges]);
 
+
+  //Firebase Realtime Database listener for updates Emojis
+  useEffect(() => {
+    const emojiRef = ref(realtimeDb, `Projects/${projectId}/emoji`);
+
+    const unsubscribe = onValue(emojiRef, (snapshot) => {
+        const updatedEmoji = [];
+        snapshot.forEach((childSnapshot) => {
+          const emojiId = childSnapshot.key;
+          const emojiData = childSnapshot.val();
+          if (localChanges.some(change => change.id === emojiId)) {
+              // If the emoji ID is in localChanges, then retain the current note data
+              // Find the current note data
+              const currenEmoji = emojis.find(emoji => emoji.id === emojiId);
+              if (currenEmoji) {
+                updatedEmoji.push(currenEmoji);
+                const currentTime = Date.now();
+                
+                setLocalChanges(prevChanges =>
+                  prevChanges.filter(change =>{
+                    const timeDifference = currentTime - change.timestamp;
+                    return !(change.id === emojiId && timeDifference > 5000);
+                  })
+                );
+              }
+          } else {
+            updatedEmoji.push({ ...emojiData, id: emojiId });
+              // console.log("local changes: ", localChanges);
+              // console.log(noteId);
+          }
+      });
+        // Log the updated notes to the console
+        console.log("Updated Emoji:", updatedEmoji);
+        setEmojis(updatedEmoji);
+    });
+
+    return () => {
+        unsubscribe();
+    };
+}, [projectId, localChanges]);
+
+
   return (
     
     <div className="session">
@@ -100,6 +143,7 @@ const InfiniteCanvas = () => {
           <ACTQuestionsContainer questions={questions} projectId={projectId}/>
           {/* </div> */}
         </div>
+
 
         <div className="topRight">
           <div className="timerContainer">
@@ -112,8 +156,9 @@ const InfiniteCanvas = () => {
         </div>
       </div>
       <div className="bodyContainer">
-        <ACTMatrix notes={notes} setNotes={setNotes} projectId={projectId}/>
-        <ACTSidebar notes={notes} setNotes={setNotes} projectId={projectId}/>
+        <ACTMatrix notes={notes} setNotes={setNotes} emojis ={emojis} setEmojis= {setEmojis} projectId={projectId}/>
+        <ACTSidebar notes={notes} setNotes={setNotes} projectId={projectId} emojis ={emojis} setEmojis= {setEmojis}/>
+
       </div>
     </div>
   );

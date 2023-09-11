@@ -273,6 +273,69 @@ app.post("/api/createProject", (req, res) => {
     });
 });
 
+// API route for post a Emoji
+app.post("/api/emoji", (req, res) => {
+  const projectKey = req.body.projectKey;
+  const { x, y, url } = req.body;
+  const emojiRef = admin.database().ref(`Projects/${projectKey}/emoji`);
+
+  const newEmojiRef = emojiRef.push();
+  const newEmojiId = newEmojiRef.key; // Get the newly generated ID
+  newEmojiRef
+    .set({ url, x, y })
+    .then(() => {
+      res.status(201).json({ message: "Emoji created successfully", id: newEmojiId });
+    })
+    .catch((error) => {
+      console.error("Error creating sticky note:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+// API route for updating an existing emoji
+app.put("/api/emoji/:emojiID", (req, res) => {
+  const { emojiID } = req.params;
+  const { projectKey, x, y, url } = req.body;
+  const emojiRef = admin.database().ref(`Projects/${projectKey}/emoji`);
+
+  emojiRef
+    .child(emojiID)
+    .update({ x, y, url }) // Update the sticky note data
+    .then(() => {
+      // Send a success response back to the client
+      res.status(200).json({ message: "Emoji updated successfully", x:x });
+
+      // If you want to notify clients about the update, you can do it here
+      // For example, you can use a WebSocket to send real-time updates to connected clients
+      const updatedEmojiData = { id: emojiID, x, y, url };
+      wss.clients.forEach((client) => {
+        client.send(JSON.stringify(updatedEmojiData));
+      });
+    })
+    .catch((error) => {
+      console.error("Error updating emoji note:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+// API route for deleting a sticky note
+app.delete("/api/emoji/:emojiId", (req, res) => {
+  const { emojiId } = req.params;
+  const { projectKey} = req.body;
+  const emojiRef = admin.database().ref(`Projects/${projectKey}/emoji/${emojiId}`);
+
+  emojiRef
+    .remove()
+    .then(() => {
+      res.status(200).json({ message: "Sticky note deleted successfully" });
+    })
+    .catch((error) => {
+      console.error("Error deleting sticky note:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+
 // Create a web server to serve files and listen to WebSocket connections
 const server = http.createServer(app);
 
