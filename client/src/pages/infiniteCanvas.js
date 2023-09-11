@@ -91,15 +91,29 @@ const InfiniteCanvas = () => {
   }, [projectId, localChanges]);
 
   return (
+    
+    <div className="session">
+      <div className="topContainer">
+        <div className="topLeft">
+          <TeamHeader />
+          {/* <div className="wrapContainer"> */}
+          <ACTQuestionsContainer questions={questions} projectId={projectId}/>
+          {/* </div> */}
+        </div>
 
-    <div className="TeamSession">
-      <TeamHeader />
-      <ACTQuestionsContainer questions={questions} projectId={projectId}/>
-      <Sidebar />
-      <ACTSidebar notes={notes} setNotes={setNotes} projectId={projectId}/>
-      <div>
+        <div className="topRight">
+          <div className="timerContainer">
+            <div className="wrapContainer">
+              {/* <img src={StopWatch}></img> */}
+              {/* <div className="timer">5:30</div> */}
+              <Timer />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="bodyContainer">
         <ACTMatrix notes={notes} setNotes={setNotes} projectId={projectId}/>
-
+        <ACTSidebar notes={notes} setNotes={setNotes} projectId={projectId}/>
       </div>
     </div>
   );
