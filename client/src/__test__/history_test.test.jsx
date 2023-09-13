@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import HistoryTile from '../components/history_tile.js';
+import HistoryTile from '../Components/history_tile';
 import happy_emoji from "../assets/happy-emoji.svg";
 import sad_emoji from "../assets/sad-emoji.svg";
 import neutral_emoji from "../assets/neutral-emoji.svg";
