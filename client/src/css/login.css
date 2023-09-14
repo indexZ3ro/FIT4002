@@ -101,6 +101,7 @@ input:focus {
     margin-top: 2vh;
     margin-bottom: 2vh;
     padding: 0;
+    font-size: 1vw;
 }
 .google-icon-btn {
     width: 3vw;
