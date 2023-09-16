@@ -224,7 +224,7 @@ app.put("/api/questionDesc/:questionId", (req, res) => {
 
 // create a new project and return it
 app.post("/api/createProject", (req, res) => {
-  const { projectName } = req.body;
+  const { projectName, userID } = req.body;
   const projectsRef = admin.database().ref('Projects');
 
   const newProjectRef = projectsRef.push();
@@ -257,10 +257,18 @@ app.post("/api/createProject", (req, res) => {
     }
   }
 
+  const usersArr = {
+    [userID]: {
+      colour: "green"
+    }
+  }
+
   newProjectRef
     .set({
       name: projectName,
-      questions: questions 
+      questions: questions,
+      admin: userID,
+      users: usersArr
     })
     .then(() => {
       res.status(200).json({
@@ -271,6 +279,41 @@ app.post("/api/createProject", (req, res) => {
       console.error("Error creating new project:", error);
       res.status(500).json({ error: "Internal server error" });
     });
+});
+
+app.post("/api/addUserToMatrix", (req, res) => {
+  const { projectKey, userID } = req.body;
+  const userRef = admin.database().ref(`Projects/${projectKey}/users`);
+
+  userRef
+    .child(userID)
+    .once('value')
+    .then(snapshot => {
+      if (snapshot.exists()) {
+        // If the User exists in the Matrix, return success
+        res.status(200).json({ message: "User exists in Matrix"});
+      } else {
+        // To add user to the Matrix (No form of validation on if they should be added)
+        const userNode = {
+          [userID]: {
+            colour: "blue"
+          }
+        }
+      
+        userRef.update(userNode).then(() => {
+          res.status(201).json({ message: "User added successfully" });
+        })
+        .catch((error) => {
+          console.error("Error adding user:", error);
+          res.status(500).json({ error: "Internal server error" });
+        });
+      }
+    })
+    .catch(error => {
+      console.error("Error finding user:", error);
+      res.status(500).json({ error: "Internal server error" });
+  });
+
 });
 
 // API route for post a Emoji

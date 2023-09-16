@@ -18,6 +18,7 @@ const Homepage = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [create, setCreate] = useState(true);
+  const [uid, setUid] = useState();
 
   const createSoloSession = () => {
     const projectName = "";
@@ -45,6 +46,7 @@ const Homepage = () => {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
+        setUid(uid);
         // ...
         // console.log("uid", uid);
       } else {
@@ -130,6 +132,7 @@ const Homepage = () => {
           setShowModal(false);
         }}
         create={create}
+        userID={uid}
       ></Modal>
     </div>
   );
