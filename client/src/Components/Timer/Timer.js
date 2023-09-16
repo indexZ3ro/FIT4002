@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import StopWatch from "../../assets/stopwatch.svg";
 import "../../css/Timer.css";
-import TextButton from "../Buttons/textButton";
 
 class Timer extends Component {
   constructor(props) {
@@ -12,6 +11,7 @@ class Timer extends Component {
       seconds: 0,
       isRunning: false,
       isModalOpen: false,
+      timerFinished: false,
     };
 
     this.timerInterval = null;
@@ -51,8 +51,21 @@ class Timer extends Component {
         seconds: 59,
       }));
     } else {
+      // Timer has finished
       this.stopTimer();
+      this.setState({ timerFinished: true }); // Set a flag for timer finished
     }
+  };
+
+  onAnimationEnd = () => {
+    // This function will be called when the animation ends
+    this.setState({ timerFinished: true }, () => {
+      // Set a timeout to reset the timerFinished state after a delay
+      setTimeout(() => {
+        this.setState({ timerFinished: false });
+        console.log("state removed");
+      }, 100);
+    });
   };
 
   handleTimeChange = (event) => {
@@ -77,15 +90,23 @@ class Timer extends Component {
   };
 
   render() {
-    const { minutes, seconds, isRunning, isModalOpen } = this.state;
+    const { minutes, seconds, isRunning, isModalOpen, timerFinished } =
+      this.state;
     const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
       seconds
     ).padStart(2, "0")}`;
 
     return (
-      <div className="timerContainer">
+      <div
+        className={`timerContainer ${timerFinished ? "timerFinished" : ""}`}
+        onAnimationEnd={this.onAnimationEnd}
+      >
         <img src={StopWatch} className="timerIcon"></img>
-        <div onClick={this.openModal} className="timer">
+        <div
+          onClick={this.openModal}
+          className="timer"
+          onAnimationEnd={this.onAnimationEnd}
+        >
           {formattedTime}
         </div>
 
