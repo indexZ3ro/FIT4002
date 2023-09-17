@@ -11,31 +11,33 @@ import axios from 'axios';
 const HistoryPage = () => {
     const apiUrl = process.env.REACT_APP_API_URL;
     const [historyMatrix, setHistoryMatrix] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    // TODO: Load in saved matrix data from database
+    // Load in saved matrix data from database
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 axios.get(apiUrl + `/api/getMatrixHistory/${user.uid}`)
                 .then((response) => {
-                    console.log(response.data);
+                    
+                    setHistoryMatrix(prevHistoryMatrix => [
+                        ...prevHistoryMatrix,
+                        ...response.data
+                    ]);
+                    setLoading(false);
 
-                    response.data.forEach((item, index) => {
-                        const updatedArray = [...historyMatrix, item];
-                        setHistoryMatrix(updatedArray);
-                    }); 
                 })
                 .catch((error) => {
-                console.log("Error geting user history:", error);
+                    console.log("Error getting user history:", error);
+                    setLoading(false);
                 });
             } else {
                 // User is signed out
                 // ...
                 navigate("/");
-                console.log("user is logged out");
-              }
+                console.log("User is logged out");
+            }
         })
-        
     }, []);
 
 
@@ -71,13 +73,20 @@ const HistoryPage = () => {
         },
     ];
 
+    if (loading) {
+        return <div>Loading...</div>;  // Style the Loading Better
+    }
+    
     return (
         <div className="history-page">
             <h4 className="history-title">History</h4>
             <div className="history-tiles" id="history-tiles">
                 {historyMatrix.map((matrix) => {
+                    console.log(matrix);
                     return (
                         <HistoryTile
+                            id={matrix.projectKey}
+                            key={matrix.projectKey}
                             name={matrix.projectName}
                             // date={matrix.date}
                             lead={matrix.adminUserName}
