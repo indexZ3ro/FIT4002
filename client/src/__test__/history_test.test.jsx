@@ -36,7 +36,7 @@ const mock_data = [
     }
 ]
 
-test("Example 1 renders successfully", () => {
+test("History renders successfully", () => {
     render(mock_data.map((matrix) => {
         return (
             <HistoryTile

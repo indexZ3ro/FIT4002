@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import axios from 'axios';
 
-
 const Modal = ({ handleClose, show, create }) => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const showHideClassName = show ? "modal display-block" : "modal display-none";
