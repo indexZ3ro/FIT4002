@@ -28,7 +28,6 @@ const ACTQuestionsDropdown = ( {divRef, questionArray, selectedQuestionType, pro
   const outsideClickRef = useRef(null);
   var displayText = "";
   var questionID = "";
-  console.log("TEST")
 
   const toggleDropdown = () => {
     setIsOpen(prevIsOpen => !prevIsOpen);
