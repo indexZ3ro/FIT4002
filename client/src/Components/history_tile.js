@@ -8,7 +8,6 @@ export const HistoryTile = (props) => {
     const navigate = useNavigate();
 
     const historyOpenMatrix = () => {
-        // TO DO
         console.log("opened matrix");
         navigate(`/ACTMatrixSession/${projectID}`);
     };
