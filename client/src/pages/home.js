@@ -24,7 +24,9 @@ const Homepage = () => {
   const createSoloSession = () => {
     const projectName = "";
     const soloDetails = {
-      projectName: projectName
+      projectName: projectName,
+      userID: uid,
+      userName: userName
     };
     axios.post(apiUrl + '/api/createProject', soloDetails)
     .then(response => {

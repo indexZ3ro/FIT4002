@@ -20,10 +20,7 @@ const HistoryPage = () => {
                 axios.get(apiUrl + `/api/getMatrixHistory/${user.uid}`)
                 .then((response) => {
                     
-                    setHistoryMatrix(prevHistoryMatrix => [
-                        ...prevHistoryMatrix,
-                        ...response.data
-                    ]);
+                    setHistoryMatrix(response.data);
                     setLoading(false);
 
                 })
@@ -85,7 +82,6 @@ const HistoryPage = () => {
                     return (
                         <HistoryTile
                             id={matrix.projectKey}
-                            key={matrix.projectKey}
                             name={matrix.projectName}
                             // date={matrix.date}
                             lead={matrix.adminUserName}
