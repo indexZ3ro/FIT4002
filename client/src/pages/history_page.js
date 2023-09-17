@@ -82,7 +82,6 @@ const HistoryPage = () => {
             <h4 className="history-title">History</h4>
             <div className="history-tiles" id="history-tiles">
                 {historyMatrix.map((matrix) => {
-                    console.log(matrix);
                     return (
                         <HistoryTile
                             id={matrix.projectKey}

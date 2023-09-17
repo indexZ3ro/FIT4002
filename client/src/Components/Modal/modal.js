@@ -11,6 +11,7 @@ const Modal = ({ handleClose, show, create, userID, userName }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
   const navigate = useNavigate();
   const [projectName, setProjectName] = useState('');
+  const [accessCode, setAccessCode] = useState('');
 
   const routePathToCreateTeamMatrix =() => {
     const teamDetails = {
@@ -27,6 +28,29 @@ const Modal = ({ handleClose, show, create, userID, userName }) => {
     .catch(error => {
       console.error("Error creating project:", error);
     });
+  }
+
+  const joinTeamMatrix = () => {
+    const joinDetails = {
+      userID: userID,
+      accessCode: accessCode
+    }
+
+    axios.post(apiUrl + '/api/joinMatrix', joinDetails)
+    .then(response => {
+      const responseStatus = response.data.status;
+      if (responseStatus) {
+        const responseKey = response.data.projectKey;
+        console.log(responseKey);
+        navigate(`/ACTMatrixSession/${responseKey}`);
+      } else {
+        console.log("fail");
+      }
+       
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }
 
   return create ? (
@@ -68,19 +92,14 @@ const Modal = ({ handleClose, show, create, userID, userName }) => {
         </div>
         <div className="modal-title">Join Team Matrix</div>
         <div className="modal-input-container">
-          <input className="userInput" placeholder="Code" type="text"></input>
-          <input
-            className="userInput"
-            type={"password"}
-            placeholder="password"
-          ></input>
+          <input className="userInput" placeholder="Matrix Code" type="number" value={accessCode} onChange={e => setAccessCode(e.target.value)}></input>
           <TextButton
             id="join"
             customStyle={{
               backgroundColor: "rgba(200, 150, 249, 0.3)",
               borderColor: "rgba(200, 150, 249, 0.3)",
             }}
-            handleClick={routePathToCreateTeamMatrix}
+            handleClick={joinTeamMatrix}
           />
         </div>
       </section>

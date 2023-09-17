@@ -6,6 +6,7 @@ import Emoji from "../Emoji/Emoji.js";
 import { auth } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -14,6 +15,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [lastMousePosition, setLastMousePosition] = useState(null);
     const canvasRef = useRef(null);
+    const navigate = useNavigate();
 
     const handleWheel = (e) => {
         e.preventDefault();
@@ -58,12 +60,12 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
-        axios.post(apiUrl + `/api/addUserToMatrix`, {
-          projectKey: projectId,
-          userID: user.uid
-        })
+        axios.get(apiUrl + `/api/checkUserAccess/${projectId}/${user.uid}`)
         .then((response) => {
-          console.log(response.data);
+          // If the user should not have access, remove them from the matrix.
+          if (!response.data.status) {
+            navigate("/Home");
+          }
         })
         .catch((error) => {
           console.log("Error adding user to Matrix:", error);

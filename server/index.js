@@ -235,6 +235,11 @@ app.post("/api/createProject", (req, res) => {
   const question3Id = admin.database().ref().push().key;
   const question4Id = admin.database().ref().push().key;
 
+  const min = 100000; // Minimum 6-digit number
+  const max = 999999;
+
+  const projectAccessCode = Math.floor(Math.random() * (max - min + 1)) + min;
+
   const questions = {
     [question1Id]: {
       status: "active",
@@ -266,6 +271,7 @@ app.post("/api/createProject", (req, res) => {
 
   newProjectRef
     .set({
+      accessCode: projectAccessCode,
       name: projectName,
       questions: questions,
       admin: {
@@ -282,6 +288,29 @@ app.post("/api/createProject", (req, res) => {
     .catch((error) => {
       console.error("Error creating new project:", error);
       res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+app.get("/api/getAccessCode/:projectKey/:userID", (req, res) => {
+  const { projectKey, userID } = req.params;
+  const projectRef = admin.database().ref(`Projects/${projectKey}`);
+
+  // Fetch the access code from the database
+  projectRef
+    .once("value")
+    .then((snapshot) => {
+      const adminRef = snapshot.val().admin;
+      const adminID = adminRef.userID;
+      if (adminID == userID) {
+        const accessCode = snapshot ? snapshot.val().accessCode || false : false;
+        res.json(accessCode);
+      } else {
+        res.json(false);
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching access code:", error);
+      res.status(500).json({ error: "Failed to fetch access code" });
     });
 });
 
@@ -319,6 +348,90 @@ app.post("/api/addUserToMatrix", (req, res) => {
   });
 
 });
+
+app.get("/api/checkUserAccess/:projectKey/:userID", (req, res) => {
+  const { projectKey, userID } = req.params;
+  const userRef = admin.database().ref(`Projects/${projectKey}/users`);
+
+  userRef
+    .child(userID)
+    .once('value')
+    .then(snapshot => {
+      if (snapshot.exists()) {
+        // If the User exists in the Matrix, return success
+        res.status(200).json({ message: "User exists in Matrix", status: true});
+      } else {
+        res.status(200).json({ message: "User does not exist", status: false})
+      }
+    })
+    .catch(error => {
+      console.error("Error checking user:", error);
+      res.status(500).json({ error: "Internal server error" });
+  });
+
+})
+
+app.post("/api/joinMatrix", async (req, res) => {
+  try {
+    const { userID, accessCode } = req.body;
+    const projectRef = admin.database().ref(`Projects/`);
+    const projectSnapshot = await projectRef.once("value");
+    const promises = [];
+    let projectKey = null;
+
+    projectSnapshot.forEach((projectChildSnapshot) => {
+      const accessCodeCheck = projectChildSnapshot.val().accessCode;
+
+      if (accessCodeCheck == accessCode) {
+        projectKey = projectChildSnapshot.key;
+        console.log(projectKey);
+        const userRef = admin.database().ref(`Projects/${projectKey}/users`);
+
+        const userPromise = userRef.child(userID).once('value');
+        promises.push(userPromise);
+      }
+    });
+
+    // Wait for all promises to settle
+    const userSnapshots = await Promise.all(promises);
+
+    if (promises.length === 0) {
+      res.status(200).json({ message: "Incorrect Code", status: false });
+      return;
+    }
+
+    let userExists = false;
+
+    userSnapshots.forEach((userSnapshot) => {
+      if (userSnapshot.exists()) {
+        userExists = true;
+      }
+    });
+
+    if (userExists) {
+      res.status(200).json({ message: "User exists in Matrix", status: true, projectKey: projectKey });
+    } else {
+      // Add user to matrix
+      const userNode = {
+        [userID]: {
+          colour: "blue"
+        }
+      }
+
+      if (projectKey !== null) {
+        const projectUsersRef = admin.database().ref(`Projects/${projectKey}/users`);
+
+        await projectUsersRef.update(userNode);
+        res.status(201).json({ message: "User joined successfully", status: true, projectKey: projectKey });
+      }
+      
+    }
+  } catch (error) {
+    console.error("Error joining matrix:", error);
+    res.status(500).json({ error: "Failed to join matrix" });
+  }
+});
+
 
 app.get("/api/getMatrixHistory/:userID", async (req, res) => {
   try {
