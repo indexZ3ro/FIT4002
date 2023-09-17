@@ -10,6 +10,7 @@ const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
 const serviceAccount = require("../project-5389016526708021196-firebase-adminsdk-hitz3-cab5dbb661.json");
 const { stat } = require("fs");
+const { isSet } = require("util/types");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -224,7 +225,7 @@ app.put("/api/questionDesc/:questionId", (req, res) => {
 
 // create a new project and return it
 app.post("/api/createProject", (req, res) => {
-  const { projectName, userID } = req.body;
+  const { projectName, userID, userName } = req.body;
   const projectsRef = admin.database().ref('Projects');
 
   const newProjectRef = projectsRef.push();
@@ -267,7 +268,10 @@ app.post("/api/createProject", (req, res) => {
     .set({
       name: projectName,
       questions: questions,
-      admin: userID,
+      admin: {
+        userID: userID,
+        userName: userName
+      },
       users: usersArr
     })
     .then(() => {
@@ -315,6 +319,61 @@ app.post("/api/addUserToMatrix", (req, res) => {
   });
 
 });
+
+app.get("/api/getMatrixHistory/:userID", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    const projectRef = admin.database().ref(`Projects/`);
+    const snapshot = await projectRef.once("value");
+    const promises = []; // Array to store promises
+
+    snapshot.forEach(projectSnapshot => {
+      const projectKey = projectSnapshot.key;
+      const usersRef = projectRef.child(`${projectKey}/users`);
+
+      if (projectSnapshot.exists()) {
+        const promise = usersRef.once('value')
+          .then(userSnapshot => {
+            if (userSnapshot.exists() && userSnapshot.hasChild(userID)) {
+              const projectName = projectSnapshot.val().name; // Corrected property name
+              const adminUser = projectSnapshot.val().admin;
+              const adminUserName = adminUser ? adminUser.userName || '' : '';
+
+              const project = {
+                projectKey: projectKey,
+                projectName: projectName,
+                adminUser: adminUser.userID,
+                adminUserName: adminUserName
+              };
+
+              return project;
+            }
+            return null;
+          })
+          .catch(error => {
+            console.error('Error checking user key:', error);
+            return null;
+          });
+
+        promises.push(promise);
+      }
+    });
+
+    // Wait for all promises to settle
+    const resolvedProjects = await Promise.all(promises);
+
+    // Filter out null values
+    const filteredProjects = resolvedProjects.filter(project => project !== null);
+
+    res.json(filteredProjects);
+  } catch (error) {
+    console.error("Error fetching history:", error);
+    res.status(500).json({ error: "Failed to fetch history" });
+  }
+});
+
+
+
 
 // API route for post a Emoji
 app.post("/api/emoji", (req, res) => {

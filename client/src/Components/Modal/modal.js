@@ -6,7 +6,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import axios from 'axios';
 
 
-const Modal = ({ handleClose, show, create, userID }) => {
+const Modal = ({ handleClose, show, create, userID, userName }) => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const showHideClassName = show ? "modal display-block" : "modal display-none";
   const navigate = useNavigate();
@@ -15,7 +15,8 @@ const Modal = ({ handleClose, show, create, userID }) => {
   const routePathToCreateTeamMatrix =() => {
     const teamDetails = {
       projectName: projectName,
-      userID: userID
+      userID: userID,
+      userName: userName
     };
     axios.post(apiUrl + '/api/createProject', teamDetails)
     .then(response => {

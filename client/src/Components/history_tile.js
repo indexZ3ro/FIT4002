@@ -9,7 +9,7 @@ export const HistoryTile = (props) => {
     };
     const historyDeleteMatrix = () => {
         // TO DO
-        console.log("deleted matrix");
+        // console.log("deleted matrix");
     };
     return (
         <button className="history-tile" onClick={historyOpenMatrix()}>
