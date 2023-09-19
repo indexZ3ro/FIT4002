@@ -53,3 +53,60 @@
     width: 5vw;
     height: 5vh;
 }
+
+
+/* Timer Finished Animation */
+@keyframes shakeAndColorChange {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    50% {
+      transform: translateX(5px);
+    }
+    75% {
+      transform: translateX(-5px);
+    }
+    100% {
+      transform: translateX(5px);
+    }
+  }
+
+  @keyframes textChange {
+    0% {
+      color: initial; /* Start with initial text color */
+    }
+    100% {
+      color: red; /* End with red text color */
+    }
+  }
+
+  @keyframes textBlink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+  
+  .timerContainer.timerFinished .timerIcon{
+    animation-name: shakeAndColorChange, textChange;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.1s;
+    animation-fill-mode: both;
+  }
+
+  .timerContainer.timerFinished .timer {
+    animation-name: shakeAndColorChange, textBlink;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 3;
+    animation-delay: 0.1s;
+    animation-fill-mode: both;
+    color: red; /* Ensure text is red after animation */
+}

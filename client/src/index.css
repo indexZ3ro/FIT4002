@@ -75,6 +75,8 @@ textarea:focus {
     letter-spacing: -0.72px;
     min-width: 150px;
     max-width: 750px;
+    height: -webkit-fill-available;
+    overflow-y: scroll ;
 }
   
 .act-questions-label {
