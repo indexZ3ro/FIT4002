@@ -13,6 +13,8 @@ import LocalChangeContext from "../contexts/LocalChangeContext";
 import ACTQuestionsContainer from "../Components/ACTQuestions/act_questions_container";
 import ACT from "../assets/ACT.svg";
 import { useParams } from 'react-router-dom';
+import { auth } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 const InfiniteCanvas = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -23,6 +25,7 @@ const InfiniteCanvas = () => {
   const [notes, setNotes] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [emojis,setEmojis] = useState([]);
+  const [accessCode, setAccessCode] = useState('');
 
   // Fetch all sticky notes from the database when the component mounts
   useEffect(() => {
@@ -37,6 +40,32 @@ const InfiniteCanvas = () => {
         console.error("Error fetching sticky notes:", error);
       });
   }, [projectId, setNotes]);
+
+  // Get access code for Admin user
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userID = user.uid;
+        axios
+          .get(apiUrl + `/api/getAccessCode/${projectId}/${userID}`)
+          .then((response) => {
+            if (response.data !== false) {
+              setAccessCode(response.data);
+            }
+            
+          })
+          .catch((error) => {
+            console.error("apiURL is:" + apiUrl);
+            console.error("Error fetching sticky notes:", error);
+          });
+        } else {
+          // User is signed out
+          // ...
+          navigate("/");
+          console.log("User is logged out");
+      }
+    })
+  }, [])
 
   // Get the Question
   useEffect(() => {
@@ -138,7 +167,7 @@ const InfiniteCanvas = () => {
     <div className="session">
       <div className="topContainer">
         <div className="topLeft">
-          <TeamHeader />
+          <TeamHeader accessCode = {accessCode}/>
           {/* <div className="wrapContainer"> */}
           <ACTQuestionsContainer questions={questions} projectId={projectId}/>
           {/* </div> */}
