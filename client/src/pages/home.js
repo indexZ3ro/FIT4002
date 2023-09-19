@@ -18,11 +18,15 @@ const Homepage = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [create, setCreate] = useState(true);
+  const [uid, setUid] = useState();
+  const [userName, setUserName] = useState();
 
   const createSoloSession = () => {
     const projectName = "";
     const soloDetails = {
-      projectName: projectName
+      projectName: projectName,
+      userID: uid,
+      userName: userName
     };
     axios.post(apiUrl + '/api/createProject', soloDetails)
     .then(response => {
@@ -45,6 +49,9 @@ const Homepage = () => {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
+        const username = user.displayName;
+        setUid(uid);
+        setUserName(username);
         // ...
         // console.log("uid", uid);
       } else {
@@ -129,6 +136,8 @@ const Homepage = () => {
           setShowModal(false);
         }}
         create={create}
+        userID={uid}
+        userName={userName}
       ></Modal>
     </div>
   );

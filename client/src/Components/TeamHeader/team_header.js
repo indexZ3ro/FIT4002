@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "../../css/team-header.css";
 import Line from "../../assets/Line.svg";
 
-const TeamHeader = () => {
+const TeamHeader = ( {accessCode} ) => {
   const [name, setName] = useState("");
 
   const handleInput = (e) => {
@@ -36,7 +36,11 @@ const TeamHeader = () => {
         onChange={handleInput}
         onBlur={handleBlur}
       ></input>
+      <div>
+        {accessCode}
+      </div>
     </div>
+    
   );
 };
 
