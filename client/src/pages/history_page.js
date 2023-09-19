@@ -1,12 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/history-page.css";
 import HistoryTile from "../Components/history_tile";
 import happy_emoji from "../assets/happy-emoji.svg";
 import sad_emoji from "../assets/sad-emoji.svg";
 import neutral_emoji from "../assets/neutral-emoji.svg";
+import { auth } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import axios from 'axios';
 
 const HistoryPage = () => {
-    // TODO: Load in saved matrix data from database
+    const apiUrl = process.env.REACT_APP_API_URL;
+    const [historyMatrix, setHistoryMatrix] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    // Load in saved matrix data from database
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                axios.get(apiUrl + `/api/getMatrixHistory/${user.uid}`)
+                .then((response) => {
+                    
+                    setHistoryMatrix(response.data);
+                    setLoading(false);
+
+                })
+                .catch((error) => {
+                    console.log("Error getting user history:", error);
+                    setLoading(false);
+                });
+            } else {
+                // User is signed out
+                // ...
+                navigate("/");
+                console.log("User is logged out");
+            }
+        })
+    }, []);
+
+
     const matrix_data = [
         {
             name: "Hat",
@@ -39,20 +70,25 @@ const HistoryPage = () => {
         },
     ];
 
+    if (loading) {
+        return <div>Loading...</div>;  // Style the Loading Better
+    }
+    
     return (
         <div className="history-page">
             <h4 className="history-title">History</h4>
             <div className="history-tiles" id="history-tiles">
-                {matrix_data.map((matrix) => {
+                {historyMatrix.map((matrix) => {
                     return (
                         <HistoryTile
-                            name={matrix.name}
-                            date={matrix.date}
-                            lead={matrix.lead}
-                            score={matrix.score}
-                            emoji={matrix.emoji}
-                            emoji_alt={matrix.emoji_alt}
-                            direction={matrix.direction}
+                            id={matrix.projectKey}
+                            name={matrix.projectName}
+                            // date={matrix.date}
+                            lead={matrix.adminUserName}
+                            // score={matrix.score}
+                            // emoji={matrix.emoji}
+                            // emoji_alt={matrix.emoji_alt}
+                            // direction={matrix.direction}
                         />
                     );
                 })}
