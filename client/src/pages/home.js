@@ -67,7 +67,7 @@ const Homepage = () => {
             <div className="homepage-content-text">
               <div className="homepage-heading">Solo Matrix</div>
               <div className="homepage-subheading">
-                Create your own solo matrix or import a template...
+                Create your own solo matrix
               </div>
             </div>
             <div className="homepage-content-button">
@@ -93,8 +93,7 @@ const Homepage = () => {
             <div className="homepage-content-text">
               <div className="homepage-heading">Team Matrix</div>
               <div className="homepage-subheading">
-                Create your own team matrix to collaborate with team members or
-                import a template...
+                Create your own team matrix to collaborate with team members or join an active session
               </div>
             </div>
             <div className="homepage-content-button">

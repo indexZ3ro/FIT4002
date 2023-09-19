@@ -344,7 +344,7 @@ const wss = new WebSocket.Server({ server });
 
 // Realtime Database event listeners
 const db = admin.database();
-const notesRef = db.ref("project/stickyNotes"); // Replace "stickyNotes" with your desired database path
+const notesRef = db.ref("project/stickyNotes");
 
 // Send data to clients when data changes in the Realtime Database
 notesRef.on("value", (snapshot) => {
