@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../../css/act-matrix.css";
-import Note from "../Note/Note.js";
+import Note from "../Note/Note.jsx";
 import ACT from "../../assets/ACT.svg";
-import Emoji from "../Emoji/Emoji.js";
+import Emoji from "../Emoji/Emoji.jsx";
 import { auth } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import axios from 'axios';
