@@ -34,7 +34,7 @@ const Sidebar = (props) => {
       <Link to="/HistoryPage" className="menu-item" onClick={closeMenuOnClick}>
         History
       </Link>
-      <Link to="/Settings" className="menu-item" monClick={closeMenuOnClick}>
+      <Link to="/Settings" className="menu-item" onClick={closeMenuOnClick}>
         Settings
       </Link>
       <Link className="menu-item" onClick={handleLogout}>
