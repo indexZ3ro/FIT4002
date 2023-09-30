@@ -23,11 +23,11 @@ const LandingPage = () => {
     const SignUp = () => {
         navigate("/SignUp");
     };
-  
+
     const aboutUs = () => {
         navigate("/AboutUs");
     };
-  
+
     return (
         <div className="landingPage">
             <div className="landingPageTop">
@@ -35,15 +35,22 @@ const LandingPage = () => {
                     Teamoji
                 </div>
 
-
                 {/* <div className="landingPageTopButton textFont s">About Us</div> */}
-                <h6 className="normal landingPageTopButton" onClick={aboutUs} >About Us</h6>
-                <h6 className="normal landingPageTopButton" onClick={logIn}>
+                <button
+                    className="normal landingPageTopButton"
+                    onClick={aboutUs}
+                >
+                    About Us
+                </button>
+                <button className="normal landingPageTopButton" onClick={logIn}>
                     Log In
-                </h6>
-                <h6 className="normal landingPageTopButton" onClick={SignUp}>
+                </button>
+                <button
+                    className="normal landingPageTopButton"
+                    onClick={SignUp}
+                >
                     Sign Up
-                </h6>
+                </button>
             </div>
             <div className="landingPageBottom">
                 <div className="landingPageBottomLeft">
