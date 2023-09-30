@@ -10,7 +10,7 @@ import { showSideBar } from "../features/sidebarSlice";
 import Modal from "../Components/Modal/modal";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
-import axios from 'axios';
+import axios from "axios";
 
 const Homepage = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -26,17 +26,18 @@ const Homepage = () => {
     const soloDetails = {
       projectName: projectName,
       userID: uid,
-      userName: userName
+      userName: userName,
     };
-    axios.post(apiUrl + '/api/createProject', soloDetails)
-    .then(response => {
-      const projectKey = response.data.projectKey;
-      // Navigate to TeamSession with projectID as parameter
-      navigate(`/ACTMatrixSession/${projectKey}`);
-    })
-    .catch(error => {
-      console.error("Error creating project:", error);
-    });
+    axios
+      .post(apiUrl + "/api/createProject", soloDetails)
+      .then((response) => {
+        const projectKey = response.data.projectKey;
+        // Navigate to TeamSession with projectID as parameter
+        navigate(`/ACTMatrixSession/${projectKey}`);
+      })
+      .catch((error) => {
+        console.error("Error creating project:", error);
+      });
   };
 
   useEffect(() => {
@@ -100,7 +101,8 @@ const Homepage = () => {
             <div className="homepage-content-text">
               <div className="homepage-heading">Team Matrix</div>
               <div className="homepage-subheading">
-                Create your own team matrix to collaborate with team members or join an active session
+                Create your own team matrix to collaborate with team members or
+                join an active session
               </div>
             </div>
             <div className="homepage-content-button">
