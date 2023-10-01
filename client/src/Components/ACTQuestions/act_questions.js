@@ -75,7 +75,6 @@ const ACTQuestions = ({ id, text, type, projectId }) => {
 
     <div className='act-questions-inner'>
       <ACTQuestionsDropdown divRef={divRef} questionArray={questions} selectedQuestionType={type} projectId={projectId}/>
-      <div className='act-questions-label'>Question</div>
       <div ref={divRef} id={selectedQuestion} className='act-questions' contentEditable onInput={handleInput}></div>
 
     </div>
