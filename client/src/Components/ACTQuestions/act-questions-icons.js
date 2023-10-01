@@ -4,15 +4,15 @@ import axios from "axios";
 const dropdownItems = [
   {
     value: '1',
-    imageSource: require('../../assets/Hook.png'),
-  },
-  {
-    value: '2',
     imageSource: require('../../assets/Heart.png'),
   },
   {
-    value: '3',
+    value: '2',
     imageSource: require('../../assets/Camera.png'),
+  },
+  {
+    value: '3',
+    imageSource: require('../../assets/Hook.png'),
   },
   {
     value: '4',
