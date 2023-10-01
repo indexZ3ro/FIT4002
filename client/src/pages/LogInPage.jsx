@@ -12,6 +12,8 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase";
 import LogInCover from "../assets/logInCover.svg";
+import google_normal from "../assets/google-normal-btn.svg";
+import google_hover from "../assets/google-focus-btn.svg";
 
 const LogInPage = () => {
     const dispatch = useDispatch();
@@ -137,7 +139,17 @@ const LogInPage = () => {
                             }}
                             handleClick={onLogin}
                         />
-                        <div onClick={googleSignIn}> Sign In with Google </div>
+                        <div
+                            className="google-container"
+                            onClick={googleSignIn}
+                        >
+                            {" "}
+                            <img
+                                className="google-icon-btn"
+                                src={google_normal}
+                            ></img>
+                            Sign In with Google{" "}
+                        </div>
                         <div className="loginToSignUp" onClick={signUp}>
                             New Here?
                         </div>
