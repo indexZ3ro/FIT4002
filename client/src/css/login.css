@@ -1,11 +1,11 @@
-.login-page{
+.login-page {
     display: flex;
     flex-direction: row;
     height: 100vh;
     width: 100vw;
 }
-  
-.login-container{
+
+.login-container {
     display: flex;
     height: 60%;
     flex-direction: column;
@@ -13,41 +13,39 @@
 }
 
 /* Split Screen */
-.split-left-login{
+.split-left-login {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
     width: 50%;
 }
-  
-.split-right-login{
+
+.split-right-login {
     display: flex;
     align-items: center;
     width: 50vw;
     margin-left: 5vw;
 }
 
-
-.input-container{
+.input-container {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
 }
 
-
 /* Input */
-.userInput{
+.userInput {
     width: 40vw;
     height: 6vh;
     margin-top: 10px;
     margin-bottom: 10px;
     outline: none;
-    border: 1px solid #D5D8DE;
+    border: 1px solid #d5d8de;
     border-radius: 5px;
 }
 
-.user-input::placeholder{
+.user-input::placeholder {
     font-size: 1vw;
     color: #323941;
 }
@@ -57,7 +55,7 @@ input:focus {
     outline: none;
 }
 
-.logInPageCoverImg{
+.logInPageCoverImg {
     height: 90%;
     width: 40vw;
     display: flex;
@@ -68,7 +66,7 @@ input:focus {
 
 /* Text */
 
-.logInPageTeam{
+.logInPageTeam {
     font-size: 24px;
     font-weight: 600;
     height: 10%;
@@ -76,22 +74,42 @@ input:focus {
     margin-top: 6vh;
 }
 
-.logInPageTeam:hover{
+.logInPageTeam:hover {
     cursor: pointer;
 }
 
-.loginTitle{
+.loginTitle {
     font-size: 6vw;
     font-weight: 600;
 }
-  
-.loginToSignUp{
+
+.loginToSignUp {
     text-decoration: underline;
     font-size: 1vw;
     margin-top: 1vh;
     font-weight: 600;
 }
 
-.loginToSignUp:hover{
+.loginToSignUp:hover {
+    cursor: pointer;
+}
+
+.google-container {
+    display: flex;
+    align-items: center;
+    height: 3vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    padding: 0;
+    font-size: 1vw;
+}
+.google-icon-btn {
+    width: 3vw;
+    height: 3vw;
+    margin-right: 1vh;
+}
+
+.google-icon-btn:hover {
+    background-color: #4284f2;
     cursor: pointer;
 }

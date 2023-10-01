@@ -14,11 +14,15 @@ const { isSet } = require("util/types");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://project-5389016526708021196-default-rtdb.firebaseio.com",
+  databaseURL:
+    "https://project-5389016526708021196-default-rtdb.firebaseio.com",
 });
 
 const app = express();
-const allowedOrigins = ["http://localhost:3000", "https://teamoji-matrix.web.app"]; // Add your frontend application's URL here
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://teamoji-matrix.web.app",
+]; // Add your frontend application's URL here
 
 // CORS configuration
 app.use(
@@ -74,7 +78,9 @@ app.post("/api/sticky-notes", (req, res) => {
   newNoteRef
     .set({ text, x, y })
     .then(() => {
-      res.status(201).json({ message: "Sticky note created successfully", id: newNoteId });
+      res
+        .status(201)
+        .json({ message: "Sticky note created successfully", id: newNoteId });
     })
     .catch((error) => {
       console.error("Error creating sticky note:", error);
@@ -93,7 +99,9 @@ app.put("/api/sticky-notes/:noteId", (req, res) => {
     .update({ x, y, text }) // Update the sticky note data
     .then(() => {
       // Send a success response back to the client
-      res.status(200).json({ message: "Sticky note updated successfully", x:x });
+      res
+        .status(200)
+        .json({ message: "Sticky note updated successfully", x: x });
 
       // If you want to notify clients about the update, you can do it here
       // For example, you can use a WebSocket to send real-time updates to connected clients
@@ -111,8 +119,10 @@ app.put("/api/sticky-notes/:noteId", (req, res) => {
 // API route for deleting a sticky note
 app.delete("/api/sticky-notes/:noteId", (req, res) => {
   const { noteId } = req.params;
-  const { projectKey} = req.body;
-  const notesRef = admin.database().ref(`Projects/${projectKey}/stickyNotes/${noteId}`);
+  const { projectKey } = req.body;
+  const notesRef = admin
+    .database()
+    .ref(`Projects/${projectKey}/stickyNotes/${noteId}`);
 
   notesRef
     .remove()
@@ -157,7 +167,9 @@ app.post("/api/questions", (req, res) => {
   newQuestionRef
     .set({ text, type, status })
     .then(() => {
-      res.status(201).json({ message: "Question created successfully", id: newQuestionId });
+      res
+        .status(201)
+        .json({ message: "Question created successfully", id: newQuestionId });
     })
     .catch((error) => {
       console.error("Error creating question:", error);
@@ -170,10 +182,11 @@ app.put("/api/questions/:questionId", (req, res) => {
   const { projectKey } = req.body;
   const questionRef = admin.database().ref(`Projects/${projectKey}/questions`);
 
-  questionRef.once("value")
+  questionRef
+    .once("value")
     .then((snapshot) => {
       const questionsData = snapshot.val();
-      
+
       // Loop through the questions and update their status
       Object.keys(questionsData).forEach((key) => {
         if (key === questionId) {
@@ -186,7 +199,7 @@ app.put("/api/questions/:questionId", (req, res) => {
       });
 
       // TODO: Ensure selected question loads for each user
-      
+
       res.status(200).json({ message: "Status updated successfully" });
     })
     .catch((error) => {
@@ -194,7 +207,6 @@ app.put("/api/questions/:questionId", (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     });
 });
-
 
 // API route for updating a question
 app.put("/api/questionDesc/:questionId", (req, res) => {
@@ -207,7 +219,7 @@ app.put("/api/questionDesc/:questionId", (req, res) => {
     .update({ text }) // Update the question data
     .then(() => {
       // Send a success response back to the client
-      res.status(200).json({ message: "Question updated successfully"});
+      res.status(200).json({ message: "Question updated successfully" });
 
       // If you want to notify clients about the update, you can do it here
       // For example, you can use a WebSocket to send real-time updates to connected clients
@@ -226,7 +238,7 @@ app.put("/api/questionDesc/:questionId", (req, res) => {
 // create a new project and return it
 app.post("/api/createProject", (req, res) => {
   const { projectName, userID, userName } = req.body;
-  const projectsRef = admin.database().ref('Projects');
+  const projectsRef = admin.database().ref("Projects");
 
   const newProjectRef = projectsRef.push();
 
@@ -244,30 +256,30 @@ app.post("/api/createProject", (req, res) => {
     [question1Id]: {
       status: "active",
       text: "",
-      type: 1
+      type: 1,
     },
     [question2Id]: {
       status: "inactive",
       text: "",
-      type: 2
+      type: 2,
     },
     [question3Id]: {
       status: "inactive",
       text: "",
-      type: 3
+      type: 3,
     },
     [question4Id]: {
       status: "inactive",
       text: "",
-      type: 4
-    }
-  }
+      type: 4,
+    },
+  };
 
   const usersArr = {
     [userID]: {
-      colour: "green"
-    }
-  }
+      colour: "green",
+    },
+  };
 
   newProjectRef
     .set({
@@ -276,13 +288,13 @@ app.post("/api/createProject", (req, res) => {
       questions: questions,
       admin: {
         userID: userID,
-        userName: userName
+        userName: userName,
       },
-      users: usersArr
+      users: usersArr,
     })
     .then(() => {
       res.status(200).json({
-        projectKey: newProjectRef.key
+        projectKey: newProjectRef.key,
       });
     })
     .catch((error) => {
@@ -302,7 +314,9 @@ app.get("/api/getAccessCode/:projectKey/:userID", (req, res) => {
       const adminRef = snapshot.val().admin;
       const adminID = adminRef.userID;
       if (adminID == userID) {
-        const accessCode = snapshot ? snapshot.val().accessCode || false : false;
+        const accessCode = snapshot
+          ? snapshot.val().accessCode || false
+          : false;
         res.json(accessCode);
       } else {
         res.json(false);
@@ -320,33 +334,34 @@ app.post("/api/addUserToMatrix", (req, res) => {
 
   userRef
     .child(userID)
-    .once('value')
-    .then(snapshot => {
+    .once("value")
+    .then((snapshot) => {
       if (snapshot.exists()) {
         // If the User exists in the Matrix, return success
-        res.status(200).json({ message: "User exists in Matrix"});
+        res.status(200).json({ message: "User exists in Matrix" });
       } else {
         // To add user to the Matrix (No form of validation on if they should be added)
         const userNode = {
           [userID]: {
-            colour: "blue"
-          }
-        }
-      
-        userRef.update(userNode).then(() => {
-          res.status(201).json({ message: "User added successfully" });
-        })
-        .catch((error) => {
-          console.error("Error adding user:", error);
-          res.status(500).json({ error: "Internal server error" });
-        });
+            colour: "blue",
+          },
+        };
+
+        userRef
+          .update(userNode)
+          .then(() => {
+            res.status(201).json({ message: "User added successfully" });
+          })
+          .catch((error) => {
+            console.error("Error adding user:", error);
+            res.status(500).json({ error: "Internal server error" });
+          });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("Error finding user:", error);
       res.status(500).json({ error: "Internal server error" });
-  });
-
+    });
 });
 
 app.get("/api/checkUserAccess/:projectKey/:userID", (req, res) => {
@@ -355,21 +370,22 @@ app.get("/api/checkUserAccess/:projectKey/:userID", (req, res) => {
 
   userRef
     .child(userID)
-    .once('value')
-    .then(snapshot => {
+    .once("value")
+    .then((snapshot) => {
       if (snapshot.exists()) {
         // If the User exists in the Matrix, return success
-        res.status(200).json({ message: "User exists in Matrix", status: true});
+        res
+          .status(200)
+          .json({ message: "User exists in Matrix", status: true });
       } else {
-        res.status(200).json({ message: "User does not exist", status: false})
+        res.status(200).json({ message: "User does not exist", status: false });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("Error checking user:", error);
       res.status(500).json({ error: "Internal server error" });
-  });
-
-})
+    });
+});
 
 app.post("/api/joinMatrix", async (req, res) => {
   try {
@@ -387,7 +403,7 @@ app.post("/api/joinMatrix", async (req, res) => {
         console.log(projectKey);
         const userRef = admin.database().ref(`Projects/${projectKey}/users`);
 
-        const userPromise = userRef.child(userID).once('value');
+        const userPromise = userRef.child(userID).once("value");
         promises.push(userPromise);
       }
     });
@@ -409,29 +425,37 @@ app.post("/api/joinMatrix", async (req, res) => {
     });
 
     if (userExists) {
-      res.status(200).json({ message: "User exists in Matrix", status: true, projectKey: projectKey });
+      res.status(200).json({
+        message: "User exists in Matrix",
+        status: true,
+        projectKey: projectKey,
+      });
     } else {
       // Add user to matrix
       const userNode = {
         [userID]: {
-          colour: "blue"
-        }
-      }
+          colour: "blue",
+        },
+      };
 
       if (projectKey !== null) {
-        const projectUsersRef = admin.database().ref(`Projects/${projectKey}/users`);
+        const projectUsersRef = admin
+          .database()
+          .ref(`Projects/${projectKey}/users`);
 
         await projectUsersRef.update(userNode);
-        res.status(201).json({ message: "User joined successfully", status: true, projectKey: projectKey });
+        res.status(201).json({
+          message: "User joined successfully",
+          status: true,
+          projectKey: projectKey,
+        });
       }
-      
     }
   } catch (error) {
     console.error("Error joining matrix:", error);
     res.status(500).json({ error: "Failed to join matrix" });
   }
 });
-
 
 app.get("/api/getMatrixHistory/:userID", async (req, res) => {
   try {
@@ -440,31 +464,32 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
     const snapshot = await projectRef.once("value");
     const promises = []; // Array to store promises
 
-    snapshot.forEach(projectSnapshot => {
+    snapshot.forEach((projectSnapshot) => {
       const projectKey = projectSnapshot.key;
       const usersRef = projectRef.child(`${projectKey}/users`);
 
       if (projectSnapshot.exists()) {
-        const promise = usersRef.once('value')
-          .then(userSnapshot => {
+        const promise = usersRef
+          .once("value")
+          .then((userSnapshot) => {
             if (userSnapshot.exists() && userSnapshot.hasChild(userID)) {
               const projectName = projectSnapshot.val().name; // Corrected property name
               const adminUser = projectSnapshot.val().admin;
-              const adminUserName = adminUser ? adminUser.userName || '' : '';
+              const adminUserName = adminUser ? adminUser.userName || "" : "";
 
               const project = {
                 projectKey: projectKey,
                 projectName: projectName,
                 adminUser: adminUser.userID,
-                adminUserName: adminUserName
+                adminUserName: adminUserName,
               };
 
               return project;
             }
             return null;
           })
-          .catch(error => {
-            console.error('Error checking user key:', error);
+          .catch((error) => {
+            console.error("Error checking user key:", error);
             return null;
           });
 
@@ -476,7 +501,9 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
     const resolvedProjects = await Promise.all(promises);
 
     // Filter out null values
-    const filteredProjects = resolvedProjects.filter(project => project !== null);
+    const filteredProjects = resolvedProjects.filter(
+      (project) => project !== null
+    );
 
     res.json(filteredProjects);
   } catch (error) {
@@ -484,9 +511,6 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch history" });
   }
 });
-
-
-
 
 // API route for post a Emoji
 app.post("/api/emoji", (req, res) => {
@@ -499,7 +523,9 @@ app.post("/api/emoji", (req, res) => {
   newEmojiRef
     .set({ url, x, y })
     .then(() => {
-      res.status(201).json({ message: "Emoji created successfully", id: newEmojiId });
+      res
+        .status(201)
+        .json({ message: "Emoji created successfully", id: newEmojiId });
     })
     .catch((error) => {
       console.error("Error creating sticky note:", error);
@@ -518,7 +544,7 @@ app.put("/api/emoji/:emojiID", (req, res) => {
     .update({ x, y, url }) // Update the sticky note data
     .then(() => {
       // Send a success response back to the client
-      res.status(200).json({ message: "Emoji updated successfully", x:x });
+      res.status(200).json({ message: "Emoji updated successfully", x: x });
 
       // If you want to notify clients about the update, you can do it here
       // For example, you can use a WebSocket to send real-time updates to connected clients
@@ -536,8 +562,10 @@ app.put("/api/emoji/:emojiID", (req, res) => {
 // API route for deleting a sticky note
 app.delete("/api/emoji/:emojiId", (req, res) => {
   const { emojiId } = req.params;
-  const { projectKey} = req.body;
-  const emojiRef = admin.database().ref(`Projects/${projectKey}/emoji/${emojiId}`);
+  const { projectKey } = req.body;
+  const emojiRef = admin
+    .database()
+    .ref(`Projects/${projectKey}/emoji/${emojiId}`);
 
   emojiRef
     .remove()
@@ -549,7 +577,6 @@ app.delete("/api/emoji/:emojiId", (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     });
 });
-
 
 // Create a web server to serve files and listen to WebSocket connections
 const server = http.createServer(app);
@@ -564,7 +591,10 @@ const notesRef = db.ref("project/stickyNotes");
 // Send data to clients when data changes in the Realtime Database
 notesRef.on("value", (snapshot) => {
   const notesData = snapshot.val();
-  const dataToSend = Object.entries(notesData || {}).map(([key, value]) => ({ ...value, id: key }));
+  const dataToSend = Object.entries(notesData || {}).map(([key, value]) => ({
+    ...value,
+    id: key,
+  }));
   wss.clients.forEach((client) => {
     client.send(JSON.stringify(dataToSend));
   });
