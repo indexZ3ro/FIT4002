@@ -3,14 +3,19 @@ import "../../css/act-matrix.css";
 import Note from "../Note/Note.js";
 import ACT from "../../assets/ACT.svg";
 import Emoji from "../Emoji/Emoji.js";
-
+import { auth } from "../../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const [isDragging, setIsDragging] = useState(false);
     const [scale, setScale] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [lastMousePosition, setLastMousePosition] = useState(null);
     const canvasRef = useRef(null);
+    const navigate = useNavigate();
 
     const handleWheel = (e) => {
         e.preventDefault();
@@ -49,6 +54,31 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
       canvasRef.current.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
     }
   }, [position, scale]);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        axios.get(apiUrl + `/api/checkUserAccess/${projectId}/${user.uid}`)
+        .then((response) => {
+          // If the user should not have access, remove them from the matrix.
+          if (!response.data.status) {
+            navigate("/Home");
+          }
+        })
+        .catch((error) => {
+          console.log("Error adding user to Matrix:", error);
+        });
+
+      } else {
+        // User is signed out
+        // ...
+        navigate("/");
+        console.log("user is logged out");
+      }
+    });
+  }, []);
 
 
     return (

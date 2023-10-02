@@ -6,15 +6,18 @@ import { AiOutlineClose } from "react-icons/ai";
 import axios from 'axios';
 
 
-const Modal = ({ handleClose, show, create }) => {
+const Modal = ({ handleClose, show, create, userID, userName }) => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const showHideClassName = show ? "modal display-block" : "modal display-none";
   const navigate = useNavigate();
   const [projectName, setProjectName] = useState('');
+  const [accessCode, setAccessCode] = useState('');
 
   const routePathToCreateTeamMatrix =() => {
     const teamDetails = {
-      projectName: projectName
+      projectName: projectName,
+      userID: userID,
+      userName: userName
     };
     axios.post(apiUrl + '/api/createProject', teamDetails)
     .then(response => {
@@ -25,6 +28,29 @@ const Modal = ({ handleClose, show, create }) => {
     .catch(error => {
       console.error("Error creating project:", error);
     });
+  }
+
+  const joinTeamMatrix = () => {
+    const joinDetails = {
+      userID: userID,
+      accessCode: accessCode
+    }
+
+    axios.post(apiUrl + '/api/joinMatrix', joinDetails)
+    .then(response => {
+      const responseStatus = response.data.status;
+      if (responseStatus) {
+        const responseKey = response.data.projectKey;
+        console.log(responseKey);
+        navigate(`/ACTMatrixSession/${responseKey}`);
+      } else {
+        console.log("fail");
+      }
+       
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }
 
   return create ? (
@@ -66,19 +92,14 @@ const Modal = ({ handleClose, show, create }) => {
         </div>
         <div className="modal-title">Join Team Matrix</div>
         <div className="modal-input-container">
-          <input className="userInput" placeholder="Code" type="text"></input>
-          <input
-            className="userInput"
-            type={"password"}
-            placeholder="password"
-          ></input>
+          <input className="userInput" placeholder="Matrix Code" type="number" value={accessCode} onChange={e => setAccessCode(e.target.value)}></input>
           <TextButton
             id="join"
             customStyle={{
               backgroundColor: "rgba(200, 150, 249, 0.3)",
               borderColor: "rgba(200, 150, 249, 0.3)",
             }}
-            handleClick={routePathToCreateTeamMatrix}
+            handleClick={joinTeamMatrix}
           />
         </div>
       </section>

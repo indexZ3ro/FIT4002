@@ -1,18 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/history-page.css";
 import delete_emoji from "../assets/delete.svg";
+import { useNavigate } from "react-router-dom";
 
 export const HistoryTile = (props) => {
+    const [projectID, setProjectID] = useState(props.id);
+    const navigate = useNavigate();
+
     const historyOpenMatrix = () => {
-        // TO DO
         console.log("opened matrix");
+        navigate(`/ACTMatrixSession/${projectID}`);
     };
     const historyDeleteMatrix = () => {
         // TO DO
-        console.log("deleted matrix");
+        // console.log("deleted matrix");
     };
     return (
-        <button className="history-tile" onClick={historyOpenMatrix()}>
+        <button className="history-tile" onClick={historyOpenMatrix}>
             <div className="history-tile-header">
                 <h6>{props.name}</h6>
                 <h6>{props.date}</h6>
@@ -20,7 +24,7 @@ export const HistoryTile = (props) => {
                     className="history-delete-matrix"
                     src={delete_emoji}
                     alt="trash--v1"
-                    onClick={historyDeleteMatrix()}
+                    onClick={historyDeleteMatrix}
                 />
             </div>
             <div className="history-tile-preview"></div>

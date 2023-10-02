@@ -10,7 +10,7 @@ import { showSideBar } from "../features/sidebarSlice";
 import Modal from "../Components/Modal/modal";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
-import axios from 'axios';
+import axios from "axios";
 
 const Homepage = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -18,21 +18,26 @@ const Homepage = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [create, setCreate] = useState(true);
+  const [uid, setUid] = useState();
+  const [userName, setUserName] = useState();
 
   const createSoloSession = () => {
     const projectName = "";
     const soloDetails = {
-      projectName: projectName
+      projectName: projectName,
+      userID: uid,
+      userName: userName,
     };
-    axios.post(apiUrl + '/api/createProject', soloDetails)
-    .then(response => {
-      const projectKey = response.data.projectKey;
-      // Navigate to TeamSession with projectID as parameter
-      navigate(`/ACTMatrixSession/${projectKey}`);
-    })
-    .catch(error => {
-      console.error("Error creating project:", error);
-    });
+    axios
+      .post(apiUrl + "/api/createProject", soloDetails)
+      .then((response) => {
+        const projectKey = response.data.projectKey;
+        // Navigate to TeamSession with projectID as parameter
+        navigate(`/ACTMatrixSession/${projectKey}`);
+      })
+      .catch((error) => {
+        console.error("Error creating project:", error);
+      });
   };
 
   useEffect(() => {
@@ -45,6 +50,9 @@ const Homepage = () => {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
+        const username = user.displayName;
+        setUid(uid);
+        setUserName(username);
         // ...
         // console.log("uid", uid);
       } else {
@@ -67,7 +75,7 @@ const Homepage = () => {
             <div className="homepage-content-text">
               <div className="homepage-heading">Solo Matrix</div>
               <div className="homepage-subheading">
-                Create your own solo matrix or import a template...
+                Create your own solo matrix
               </div>
             </div>
             <div className="homepage-content-button">
@@ -94,7 +102,7 @@ const Homepage = () => {
               <div className="homepage-heading">Team Matrix</div>
               <div className="homepage-subheading">
                 Create your own team matrix to collaborate with team members or
-                import a template...
+                join an active session
               </div>
             </div>
             <div className="homepage-content-button">
@@ -130,6 +138,8 @@ const Homepage = () => {
           setShowModal(false);
         }}
         create={create}
+        userID={uid}
+        userName={userName}
       ></Modal>
     </div>
   );
