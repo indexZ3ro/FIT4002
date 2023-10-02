@@ -95,8 +95,33 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
             >
                 <div className="line-x"></div> {/* positive x */}
                 <div className="line-y"></div> {/* positive y */}
-                <div className="line-x" style={{ top: 'initial', bottom: '50%' }}></div> {/* negative x */}
-                <div className="line-y" style={{ left: 'initial', right: '50%' }}></div> {/* negative y */}
+                <div className="grid-container">
+                  <div className="quadrant">
+                    <img
+                      class = "act-image top-left"
+                      src={require('../../assets/Hook.png')}
+                    />
+                  </div>
+                  <div className="quadrant">
+                    <img
+                      class = "act-image top-right"
+                      src={ require('../../assets/Heart.png')}
+                    />
+                  </div>
+                  <div className="quadrant">
+                    <img
+                      class = "act-image bottom-left"
+                      src={ require('../../assets/Camera.png')}
+                    />
+                  </div>
+                  <div className="quadrant">
+                    <img
+                      class = "act-image bottom-right"
+                      src={ require('../../assets/Camera.png')}
+                    />
+                  </div>
+                </div>
+                
                 {/* stickynotes */}
                 {notes.map((note) => (
                     <Note

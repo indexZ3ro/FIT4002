@@ -227,3 +227,41 @@ textarea:focus {
 .delete-button-emoji:hover {
   opacity: 1;
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  height: 100%;
+  width: 100%;
+}
+
+.quadrant {
+  position: relative;
+}
+
+.act-image{
+  position: absolute;
+  width: 100px;
+  height: auto;
+}
+
+.top-left {
+  bottom: 140%;
+  right: 170%;
+}
+
+.top-right {
+  bottom: 140%;
+  left: 170%
+}
+
+.bottom-left {
+  top: 140%;
+  right: 170%
+}
+
+.bottom-right {
+  top: 140%;
+  left: 170%;
+}
