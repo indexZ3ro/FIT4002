@@ -7,15 +7,15 @@ import camera from "../../assets/Camera.png";
 const dropdownItems = [
     {
         value: "1",
-        imageSource: hook,
-    },
-    {
-        value: "2",
         imageSource: heart,
     },
     {
-        value: "3",
+        value: "2",
         imageSource: camera,
+    },
+    {
+        value: "3",
+        imageSource: hook,
     },
     {
         value: "4",
