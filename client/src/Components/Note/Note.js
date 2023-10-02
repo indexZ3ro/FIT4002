@@ -3,7 +3,7 @@ import Draggable from "react-draggable";
 import axios from "axios";
 import LocalChangeContext from "../../contexts/LocalChangeContext";
 import {Rnd} from "react-rnd";
-const Note = ({ x, y, id, text, scale, projectId }) => {
+const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId }) => {
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
     const apiUrl = process.env.REACT_APP_API_URL;
     const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
@@ -13,7 +13,7 @@ const Note = ({ x, y, id, text, scale, projectId }) => {
     const textareaRef = useRef(null);
     const [position, setPosition] = useState({ x, y });
     const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
-
+    const [size, setSize] = useState({ width, height }); 
     const handleNoteTextChange = (e) => {
         setNoteText(e.target.value);
         setIsUpdated(true);
@@ -62,6 +62,12 @@ const Note = ({ x, y, id, text, scale, projectId }) => {
         console.log(x, y);
     }, [x, y]);
 
+    useEffect(() => {
+        setSize({ width, height });
+        console.log(x, y);
+    }, [width, height]);
+
+
     useEffect(() => { 
         // Make the axios request to update the sticky note on the server
         if (!isInitialMount && isUpdated) {
@@ -70,6 +76,8 @@ const Note = ({ x, y, id, text, scale, projectId }) => {
                 projectKey: projectId,
                 x: position.x,
                 y: position.y,
+                width: size.width,
+                height: size.height,
                 text: noteText,
             })
             .then((response) => {
@@ -83,7 +91,7 @@ const Note = ({ x, y, id, text, scale, projectId }) => {
             // Set the flag to false after the component has mounted
             setIsInitialMount(false);
           }
-      }, [position, noteText, id, isUpdated, isInitialMount]);
+      }, [position, size, noteText, id, isUpdated, isInitialMount]);
 
     const handleDelete = () => {
         // API request to delete the sticky note from the server
@@ -106,10 +114,7 @@ const Note = ({ x, y, id, text, scale, projectId }) => {
 
     return (
         <Rnd
-            default={{
-                width: '150px',
-                height: '150px'
-            }}
+
             disableDragging={!isDraggingEnabled}
             maxWidth={400}
             maxHeight={400}
@@ -117,8 +122,10 @@ const Note = ({ x, y, id, text, scale, projectId }) => {
             minHeight={150}
             scale = {scale}
             position={{ x: position.x, y: position.y }}
+            size={{ width: size.width,  height: size.height }}
             onDragStop={handleDragStop}
             onResizeStop={(e, direction, ref, delta, position) => {
+                setSize({ width: ref.style.width, height: ref.style.height });
                 setPosition(position);
                 setIsUpdated(true);
             }} >

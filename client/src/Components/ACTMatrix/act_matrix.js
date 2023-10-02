@@ -13,6 +13,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
     const [isDragging, setIsDragging] = useState(false);
     const [scale, setScale] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
+
     const [lastMousePosition, setLastMousePosition] = useState(null);
     const canvasRef = useRef(null);
     const navigate = useNavigate();
@@ -104,6 +105,8 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                         id={note.id}
                         x={note.x}
                         y={note.y}
+                        width = {note.width}
+                        height = {note.height}
                         text={note.text}
                         scale={scale}
                         projectId={projectId} 
