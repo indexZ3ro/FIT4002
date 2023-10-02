@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import Draggable from "react-draggable";
 import axios from "axios";
 import LocalChangeContext from "../../contexts/LocalChangeContext";
-
+import {Rnd} from "react-rnd";
 const Note = ({ x, y, id, text, scale, projectId }) => {
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -12,6 +12,7 @@ const Note = ({ x, y, id, text, scale, projectId }) => {
     const [noteText, setNoteText] = useState(text || "");
     const textareaRef = useRef(null);
     const [position, setPosition] = useState({ x, y });
+    const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
 
     const handleNoteTextChange = (e) => {
         setNoteText(e.target.value);
@@ -28,6 +29,7 @@ const Note = ({ x, y, id, text, scale, projectId }) => {
         e.stopPropagation();
         textareaRef.current.selectionStart = 0;
         textareaRef.current.selectionEnd = noteText.length;
+    
     };
     const calculateFontSize = () => {
         const textLength = noteText.length;
@@ -36,13 +38,21 @@ const Note = ({ x, y, id, text, scale, projectId }) => {
         const fontSize = maxFontSize - (textLength * (maxFontSize - minFontSize)) / 50;
         return `${Math.max(fontSize, minFontSize)}px`;
     };
+          
+    const handleTextareaFocus = () => {
+        setIsDraggingEnabled(false);
+    };
+    
+    const handleTextareaBlur = () => {
+        setIsDraggingEnabled(true);
+    };
 
     // Define a function to update the position state
     const handleDragStop = (e, ui) => {
         setPosition({ x: ui.lastX, y: ui.lastY });
         setIsUpdated(true);
     };
-
+  
     useEffect(() => {
         setNoteText(text || "");
     }, [text]);
@@ -52,7 +62,7 @@ const Note = ({ x, y, id, text, scale, projectId }) => {
         console.log(x, y);
     }, [x, y]);
 
-    useEffect(() => {
+    useEffect(() => { 
         // Make the axios request to update the sticky note on the server
         if (!isInitialMount && isUpdated) {
             axios
@@ -77,6 +87,7 @@ const Note = ({ x, y, id, text, scale, projectId }) => {
 
     const handleDelete = () => {
         // API request to delete the sticky note from the server
+        
         axios.delete(`${apiUrl}/api/sticky-notes/${id}`, {
                 data: {projectKey: projectId }
             })
@@ -87,32 +98,49 @@ const Note = ({ x, y, id, text, scale, projectId }) => {
             .catch(error => {
                 console.error("Error deleting sticky note:", error);
             });
+            
     };
     const preventDefault = (event) => {
         event.preventDefault();
       };
 
     return (
-        <Draggable scale={scale} onStop={handleDragStop}  position={{ x: position.x, y: position.y }}>
-            <div
-                className="note-container"
-            >
+        <Rnd
+            default={{
+                width: '150px',
+                height: '150px'
+            }}
+            disableDragging={!isDraggingEnabled}
+            maxWidth={400}
+            maxHeight={400}
+            minWidth={150}
+            minHeight={150}
+            scale = {scale}
+            position={{ x: position.x, y: position.y }}
+            onDragStop={handleDragStop}
+            onResizeStop={(e, direction, ref, delta, position) => {
+                setPosition(position);
+                setIsUpdated(true);
+            }} >
+
+            <div className="note-container" style={{ margin: 0, height: "100%", width :"100%"}}>
                 <button className="delete-note" onClick={handleDelete}>×</button>
-                <textarea
-                    ref={textareaRef}
-                    className="note-text"
-                    onDragOver={preventDefault}
-                    value={noteText}
-                    onChange={handleNoteTextChange}
-                    onClick={handleTextareaClick}
-                    style={{
-                        fontSize: calculateFontSize(),
-                        border: "none",
-                        outline: "none",
-                    }}
-                />
+                    <textarea
+                        ref={textareaRef}
+                        className="note-text"
+                        onClick={handleTextareaClick}
+                        value={noteText}
+                        onFocus={handleTextareaFocus}
+                        onBlur={handleTextareaBlur}
+                        onChange={handleNoteTextChange}
+                        onResize={preventDefault}
+                        style={{
+                            fontSize: calculateFontSize(),
+                            border: "none",
+                            outline: "none",
+                    }}></textarea>
             </div>
-        </Draggable>
+      </Rnd>
     );
 };
 
