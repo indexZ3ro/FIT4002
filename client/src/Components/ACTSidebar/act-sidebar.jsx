@@ -49,10 +49,10 @@ const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis}) => {
     
     // Make a POST request to create the new emoji on the server
     axios
-      .post(apiUrl + "/api/emoji", { projectKey: projectId, x, y, url: url })
+      .post(apiUrl + "/api/emoji", { projectKey: projectId, x, y, url: url, height:70,width:70  })
       .then((response) => {
         console.log(response.data);
-        setEmojis([...emojis, { x, y , url,id:response.data.id}]);
+        setEmojis([...emojis, { x, y , url,height,width,id:response.data.id}]);
       })
       .catch((error) => {
         console.log("Backend URL:", process.env.REACT_APP_BACKEND_URL);
