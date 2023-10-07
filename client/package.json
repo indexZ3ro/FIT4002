@@ -31,7 +31,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "vitest",
+        "test": "vitest --coverage",
         "eject": "react-scripts eject",
         "proxy": "https://project-5389016526708021196.ts.r.appspot.com"
     },
@@ -51,6 +51,7 @@
         "@babel/core": "^7.23.0",
         "@babel/preset-env": "^7.22.20",
         "@babel/preset-react": "^7.22.15",
+        "@vitest/coverage-v8": "^0.34.6",
         "babel-jest": "^29.7.0",
         "jest": "^27.5.1",
         "jest-transform-stub": "^2.0.0",
