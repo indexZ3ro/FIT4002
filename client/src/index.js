@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 // import NavigationStickyNote from "./Components/NavigationStickyNote/NavigationStickyNote";
-
+require("./mocks/browser.js");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
