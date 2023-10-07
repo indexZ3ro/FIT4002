@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import StopWatch from "../../assets/stopwatch.svg";
 import "../../css/Timer.css";
+import IconsDropdown from "../ACTQuestions/icons_dropdown";
 
 class Timer extends Component {
   constructor(props) {
@@ -12,6 +13,8 @@ class Timer extends Component {
       isRunning: false,
       isModalOpen: false,
       timerFinished: false,
+      currentQuestion: "",
+      selectedValue: "2",
     };
 
     this.timerInterval = null;
@@ -39,7 +42,7 @@ class Timer extends Component {
 
   resetTimer = () => {
     this.stopTimer();
-    this.setState({ minutes: 0, seconds: 0 });
+    this.setState({ minutes: 0, seconds: 0, currentQuestion:"" });
   };
 
   tick = () => {
@@ -113,6 +116,14 @@ class Timer extends Component {
         {isModalOpen && (
           <div className="timerModal">
             <div className="timerWrap">
+              <IconsDropdown selectedValue={this.state.selectedValue} onSelect={(newValue) => this.setState({ selectedValue: newValue })}/>
+              <textarea
+                type="text"
+                placeholder="Question Text"
+                value={this.state.currentQuestion}
+                onChange={(e) => this.setState({ currentQuestion: e.target.value })}
+                className="questionInput"
+              />
               <input
                 type="text"
                 placeholder="mm:ss"
