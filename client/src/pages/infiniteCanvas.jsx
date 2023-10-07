@@ -179,7 +179,7 @@ const InfiniteCanvas = () => {
             <div className="wrapContainer">
               {/* <img src={StopWatch}></img> */}
               {/* <div className="timer">5:30</div> */}
-              <Timer />
+              <Timer projectId={projectId} />
             </div>
           </div>
         </div>

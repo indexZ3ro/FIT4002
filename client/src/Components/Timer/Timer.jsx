@@ -2,6 +2,8 @@ import React, { Component, useState } from "react";
 import StopWatch from "../../assets/stopwatch.svg";
 import "../../css/Timer.css";
 import IconsDropdown from "../ACTQuestions/icons_dropdown";
+import axios from 'axios';
+
 
 class Timer extends Component {
   constructor(props) {
@@ -14,10 +16,11 @@ class Timer extends Component {
       isModalOpen: false,
       timerFinished: false,
       currentQuestion: "",
-      selectedValue: "2",
+      selectedValue: "1",
     };
 
     this.timerInterval = null;
+    this.apiUrl = process.env.REACT_APP_API_URL; 
   }
 
   componentWillUnmount() {
@@ -25,9 +28,23 @@ class Timer extends Component {
   }
 
   startTimer = () => {
+    const { projectId } = this.props;
     if (!this.state.isRunning) {
       this.setState({ isRunning: true }, () => {
         this.timerInterval = setInterval(this.tick, 1000);
+
+        // API call to update and activate the question
+        axios.post(this.apiUrl + `/api/questionTypeUpdate`, {
+          text: this.state.currentQuestion,
+          projectId: projectId,
+          type: this.state.selectedValue,
+        })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error('Error updating and activating the question:', error);
+        });
       });
     }
     this.setState({ isModalOpen: false });

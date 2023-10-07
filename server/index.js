@@ -236,6 +236,41 @@ app.put("/api/questionDesc/:questionId", (req, res) => {
     });
 });
 
+// Updated question by type
+app.post("/api/questionTypeUpdate", (req, res) => {
+  const { projectId, type, text } = req.body;
+  
+  // Reference to all questions of the specified project
+  const questionsRef = admin.database().ref(`Projects/${projectId}/questions`);
+
+  // Fetching all questions and then filtering the one with the specified type
+  questionsRef.once('value')
+    .then(snapshot => {
+      const questions = snapshot.val();
+      const updates = {};
+
+      // Loop through the questions to find the one with the specified type
+      for (let id in questions) {
+        if (questions[id].type === parseInt(type, 10)) {
+            // Set the selected question to active and update its text
+            updates[id] = { ...questions[id], text, status: "active" };
+          } else {
+            // Set other questions to inactive
+            updates[id] = { ...questions[id], status: "inactive" };
+          }
+      }
+      return questionsRef.update(updates);
+    })
+    .then(() => {
+      res.status(200).json({ message: 'Question updated and others set to inactive' });
+    })
+    .catch(error => {
+        console.error('Error updating questions:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    });
+});
+
+
 // create a new project and return it
 app.post("/api/createProject", (req, res) => {
   const { projectName, userID, userName } = req.body;
@@ -582,26 +617,27 @@ app.delete("/api/emoji/:emojiId", (req, res) => {
 // Create a web server to serve files and listen to WebSocket connections
 const server = http.createServer(app);
 
+// Unused
 // Connect any incoming WebSocket connection
-const wss = new WebSocket.Server({ server });
+// const wss = new WebSocket.Server({ server });
 
-// Realtime Database event listeners
-const db = admin.database();
-const notesRef = db.ref("project/stickyNotes");
+// // Realtime Database event listeners
+// const db = admin.database();
+// const notesRef = db.ref("project/stickyNotes");
 
-// Send data to clients when data changes in the Realtime Database
-notesRef.on("value", (snapshot) => {
-  const notesData = snapshot.val();
-  const dataToSend = Object.entries(notesData || {}).map(([key, value]) => ({
-    ...value,
-    id: key,
-  }));
-  wss.clients.forEach((client) => {
-    client.send(JSON.stringify(dataToSend));
-  });
+// // Send data to clients when data changes in the Realtime Database
+// notesRef.on("value", (snapshot) => {
+//   const notesData = snapshot.val();
+//   const dataToSend = Object.entries(notesData || {}).map(([key, value]) => ({
+//     ...value,
+//     id: key,
+//   }));
+//   wss.clients.forEach((client) => {
+//     client.send(JSON.stringify(dataToSend));
+//   });
 
-  console.log("Data received from Realtime Database:", dataToSend);
-});
+//   console.log("Data received from Realtime Database:", dataToSend);
+// });
 
 server.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
