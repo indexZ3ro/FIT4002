@@ -51,7 +51,6 @@ const ACTQuestionsDropdown = ({
         axios
             .get(apiUrl + `/api/project/${projectId}/questions`)
             .then((response) => {
-                console.log(response.data);
                 response.data.forEach((question) => {
                     if (String(question.type) == String(value)) {
                         displayText = question.text;
@@ -59,16 +58,16 @@ const ACTQuestionsDropdown = ({
                         divRef.current.textContent = displayText;
                         divRef.current.id = question.id;
 
-                        axios
-                            .put(apiUrl + `/api/questions/${questionID}`, {
-                                projectKey: projectId,
-                            })
-                            .then((response) => {
-                                console.log(response.data);
-                            })
-                            .catch((error) => {
-                                console.log("Error updating questions:", error);
-                            });
+                        // axios
+                        //     .put(apiUrl + `/api/questions/${questionID}`, {
+                        //         projectKey: projectId,
+                        //     })
+                        //     .then((response) => {
+                        //         console.log(response.data);
+                        //     })
+                        //     .catch((error) => {
+                        //         console.log("Error updating questions:", error);
+                        //     });
                         return;
                     }
                 });
