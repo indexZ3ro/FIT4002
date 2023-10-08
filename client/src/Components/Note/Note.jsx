@@ -111,6 +111,10 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId }) =>
     const preventDefault = (event) => {
         event.preventDefault();
       };
+    const handleDrop = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+    };
 
     return (
         <Rnd
@@ -140,6 +144,7 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId }) =>
                         onFocus={handleTextareaFocus}
                         onBlur={handleTextareaBlur}
                         onChange={handleNoteTextChange}
+                        onDrop={handleDrop}
                         onResize={preventDefault}
                         style={{
                             fontSize: calculateFontSize(),

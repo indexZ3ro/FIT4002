@@ -551,13 +551,13 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
 // API route for post a Emoji
 app.post("/api/emoji", (req, res) => {
   const projectKey = req.body.projectKey;
-  const { x, y, url } = req.body;
+  const { x, y, url, height, width  } = req.body;
   const emojiRef = admin.database().ref(`Projects/${projectKey}/emoji`);
 
   const newEmojiRef = emojiRef.push();
   const newEmojiId = newEmojiRef.key; // Get the newly generated ID
   newEmojiRef
-    .set({ url, x, y })
+    .set({ url, x, y,height,width })
     .then(() => {
       res
         .status(201)
@@ -572,19 +572,19 @@ app.post("/api/emoji", (req, res) => {
 // API route for updating an existing emoji
 app.put("/api/emoji/:emojiID", (req, res) => {
   const { emojiID } = req.params;
-  const { projectKey, x, y, url } = req.body;
+  const { projectKey, x, y, url, height, width} = req.body;
   const emojiRef = admin.database().ref(`Projects/${projectKey}/emoji`);
 
   emojiRef
     .child(emojiID)
-    .update({ x, y, url }) // Update the sticky note data
+    .update({ x, y, url,height, width }) // Update the sticky note data
     .then(() => {
       // Send a success response back to the client
       res.status(200).json({ message: "Emoji updated successfully", x: x });
 
       // If you want to notify clients about the update, you can do it here
       // For example, you can use a WebSocket to send real-time updates to connected clients
-      const updatedEmojiData = { id: emojiID, x, y, url };
+      const updatedEmojiData = { id: emojiID, x, y, url,height, width };
       wss.clients.forEach((client) => {
         client.send(JSON.stringify(updatedEmojiData));
       });
