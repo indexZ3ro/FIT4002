@@ -57,7 +57,8 @@ const ACTQuestionsDropdown = ({
                         questionID = question.id;
                         divRef.current.textContent = displayText;
                         divRef.current.id = question.id;
-
+                        
+                        // don't update the active question
                         // axios
                         //     .put(apiUrl + `/api/questions/${questionID}`, {
                         //         projectKey: projectId,
