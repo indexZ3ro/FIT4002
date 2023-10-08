@@ -26,6 +26,7 @@ const InfiniteCanvas = () => {
   const [questions, setQuestions] = useState([]);
   const [emojis,setEmojis] = useState([]);
   const [accessCode, setAccessCode] = useState('');
+  const [noteColour, setNoteColour] = useState(''); 
 
   // Fetch all sticky notes from the database when the component mounts
   useEffect(() => {
@@ -40,6 +41,30 @@ const InfiniteCanvas = () => {
         console.error("Error fetching sticky notes:", error);
       });
   }, [projectId, setNotes]);
+
+  // Load in saved matrix data from database
+  useEffect(() => {
+
+    onAuthStateChanged(auth, (user) => {
+
+      if (user) {
+          axios.get(apiUrl + `/api/getUserColour/${projectId}/${user.uid}`)
+          .then((response) => {
+            setNoteColour(response.data.colour);
+          })
+          .catch((error) => {
+
+              console.log("Error getting user note colour:", error);
+          });
+      } else {
+          // User is signed out
+          // ...
+          navigate("/");
+          console.log("User is logged out");
+      }
+      console.log("End")
+    })
+}, []);
 
   // Get access code for Admin user
   useEffect(() => {
@@ -161,6 +186,45 @@ const InfiniteCanvas = () => {
     };
 }, [projectId, localChanges]);
 
+  //Firebase Realtime Database listener for updates Emojis
+  useEffect(() => {
+    console.log("Listener");
+    const questionRef = ref(realtimeDb, `Projects/${projectId}/questions`);
+
+    const unsubscribe = onValue(questionRef, (snapshot) => {
+        const updatedQuestion = [];
+        snapshot.forEach((childSnapshot) => {
+          const questionId = childSnapshot.key;
+          const questionData = childSnapshot.val();
+          if (localChanges.some(change => change.id === questionId)) {
+              // If the question ID is in localChanges, then retain the current question data
+              // Find the current question data
+              const currentQuestion = questions.find(question => question.id === questionId);
+              if (currentQuestion) {
+                updatedQuestion.push(currentQuestion);
+                const currentTime = Date.now();
+                
+                setLocalChanges(prevChanges =>
+                  prevChanges.filter(change =>{
+                    const timeDifference = currentTime - change.timestamp;
+                    return !(change.id === questionId && timeDifference > 5000);
+                  })
+                );
+              }
+          } else {
+            updatedQuestion.push({ ...questionData, id: questionId });
+          }
+        });
+        // Log the updated questions to the console
+        console.log("Updated Questions:", updatedQuestion);
+        setQuestions(updatedQuestion);
+      });
+
+      return () => {
+          unsubscribe();
+      };
+  }, [projectId, localChanges]);
+
 
   return (
     
@@ -179,14 +243,14 @@ const InfiniteCanvas = () => {
             <div className="wrapContainer">
               {/* <img src={StopWatch}></img> */}
               {/* <div className="timer">5:30</div> */}
-              <Timer />
+              <Timer projectId={projectId} />
             </div>
           </div>
         </div>
       </div>
       <div className="bodyContainer">
         <ACTMatrix notes={notes} setNotes={setNotes} emojis ={emojis} setEmojis= {setEmojis} projectId={projectId}/>
-        <ACTSidebar notes={notes} setNotes={setNotes} projectId={projectId} emojis ={emojis} setEmojis= {setEmojis}/>
+        <ACTSidebar notes={notes} setNotes={setNotes} projectId={projectId} emojis ={emojis} setEmojis= {setEmojis} noteColour={noteColour}/>
 
       </div>
     </div>

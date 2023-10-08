@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
+
     const apiUrl = process.env.REACT_APP_API_URL;
     const [isDragging, setIsDragging] = useState(false);
     const [scale, setScale] = useState(1);
@@ -81,7 +82,6 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
     });
   }, []);
 
-
     return (
         <div
             className={`outer-infinite ${isDragging ? "grabbing" : ""}`}
@@ -94,18 +94,34 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                 className={`infiniteCanvas ${isDragging ? "grabbing" : ""}`}
                 ref={canvasRef}
             >
-                <div className="line-x"></div> {/* positive x */}
-                <div className="line-y"></div> {/* positive y */}
-                <div
-                    className="line-x"
-                    style={{ top: "initial", bottom: "50%" }}
-                ></div>{" "}
-                {/* negative x */}
-                <div
-                    className="line-y"
-                    style={{ left: "initial", right: "50%" }}
-                ></div>{" "}
-                {/* negative y */}
+                <div className="line-x"></div>
+                <div className="line-y"></div>
+                <div className="grid-container">
+                  <div className="quadrant">
+                    <img
+                      className = "act-image top-left"
+                      src={require('../../assets/Hook.png')}
+                    />
+                  </div>
+                  <div className="quadrant">
+                    <img
+                      className = "act-image top-right"
+                      src={ require('../../assets/Heart.png')}
+                    />
+                  </div>
+                  <div className="quadrant">
+                    <img
+                      className = "act-image bottom-left"
+                      src={ require('../../assets/Camera.png')}
+                    />
+                  </div>
+                  <div className="quadrant">
+                    <img
+                      className = "act-image bottom-right"
+                      src={ require('../../assets/Camera.png')}
+                    />
+                  </div>
+                </div>
                 {/* stickynotes */}
                 {notes.map((note) => (
                     <Note
@@ -118,6 +134,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                         text={note.text}
                         scale={scale}
                         projectId={projectId}
+                        noteColour={note.noteColour}
                     />
                 ))}
                 {emojis.map((emoji) => (
@@ -126,7 +143,10 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                         id={emoji.id}
                         x={emoji.x}
                         y={emoji.y}
+                        width = {emoji.width}
+                        height = {emoji.height}
                         url={emoji.url}
+                        scale={scale}
                         projectId={projectId}
                     />
                 ))}

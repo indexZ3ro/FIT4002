@@ -3,7 +3,8 @@ import Draggable from "react-draggable";
 import axios from "axios";
 import LocalChangeContext from "../../contexts/LocalChangeContext";
 import {Rnd} from "react-rnd";
-const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId }) => {
+const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, noteColour }) => {
+
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
     const apiUrl = process.env.REACT_APP_API_URL;
     const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
@@ -111,6 +112,10 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId }) =>
     const preventDefault = (event) => {
         event.preventDefault();
       };
+    const handleDrop = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+    };
 
     return (
         <Rnd
@@ -130,7 +135,7 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId }) =>
                 setIsUpdated(true);
             }} >
 
-            <div className="note-container" style={{ margin: 0, height: "100%", width :"100%"}}>
+            <div className="note-container" style={{ margin: 0, height: "100%", width :"100%", backgroundColor: `${noteColour}`, border: `2px solid ${noteColour}`}}>
                 <button className="delete-note" onClick={handleDelete}>×</button>
                     <textarea
                         ref={textareaRef}
@@ -140,6 +145,7 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId }) =>
                         onFocus={handleTextareaFocus}
                         onBlur={handleTextareaBlur}
                         onChange={handleNoteTextChange}
+                        onDrop={handleDrop}
                         onResize={preventDefault}
                         style={{
                             fontSize: calculateFontSize(),
