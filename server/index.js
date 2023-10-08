@@ -260,6 +260,9 @@ app.post("/api/createProject", (req, res) => {
   const question3Id = admin.database().ref().push().key;
   const question4Id = admin.database().ref().push().key;
 
+  const currentDate = new Date();
+  const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+
   const min = 100000; // Minimum 6-digit number
   const max = 999999;
 
@@ -291,7 +294,8 @@ app.post("/api/createProject", (req, res) => {
   var randChoice = Math.floor(Math.random() * (colourArr.length));
   const usersArr = {
     [userID]: {
-      colour: colourArr[randChoice]
+      colour: colourArr[randChoice],
+      status: "Active"
     },
   };
 
@@ -305,6 +309,7 @@ app.post("/api/createProject", (req, res) => {
         userName: userName,
       },
       users: usersArr,
+      dateCreated: formattedDate
     })
     .then(() => {
       res.status(200).json({
@@ -385,7 +390,8 @@ app.post("/api/addUserToMatrix", (req, res) => {
         // To add user to the Matrix (No form of validation on if they should be added)
         const userNode = {
           [userID]: {
-            colour: colourArr[randChoice]
+            colour: colourArr[randChoice],
+            status: "Active"
           },
         };
 
@@ -399,6 +405,22 @@ app.post("/api/addUserToMatrix", (req, res) => {
             res.status(500).json({ error: "Internal server error" });
           });
       }
+    })
+    .catch((error) => {
+      console.error("Error finding user:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+app.put("/api/removeUserFromMatrix", (req, res) => {
+  const { projectKey, userID } = req.body;
+  const userRef = admin.database().ref(`Projects/${projectKey}/users`);
+  userRef
+    .child(userID)
+    .update( { status: "Inactive" } )
+    .then(() => {
+      // To remove user from the Matrix (No form of validation on if they exist)
+      res.status(201).json({ message: "User removed successfully" });
     })
     .catch((error) => {
       console.error("Error finding user:", error);
@@ -478,7 +500,8 @@ app.post("/api/joinMatrix", async (req, res) => {
       // Add user to matrix
       const userNode = {
         [userID]: {
-          colour: colourArr[randChoice]
+          colour: colourArr[randChoice],
+          status: "Active"
         },
       };
 
@@ -516,16 +539,18 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
         const promise = usersRef
           .once("value")
           .then((userSnapshot) => {
-            if (userSnapshot.exists() && userSnapshot.hasChild(userID)) {
+            if (userSnapshot.exists() && userSnapshot.hasChild(userID) && userSnapshot.child(userID).val().status === 'Active') {
               const projectName = projectSnapshot.val().name; // Corrected property name
               const adminUser = projectSnapshot.val().admin;
               const adminUserName = adminUser ? adminUser.userName || "" : "";
+              const dateCreated = projectSnapshot.val().dateCreated
 
               const project = {
                 projectKey: projectKey,
                 projectName: projectName,
                 adminUser: adminUser.userID,
                 adminUserName: adminUserName,
+                dateCreated: dateCreated
               };
 
               return project;
