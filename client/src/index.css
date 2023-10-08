@@ -19,8 +19,8 @@ code {
   position: absolute;
   width: 150px;
   height: 150px;
-  background-color: #ffe4b5;
-  border: 2px solid #ffdab9;
+  /*background-color: #ffe4b5;*/
+  /*border: 2px solid #ffdab9;*/
   border-radius: 10px;
   box-shadow: 0 9px 5px rgb(0 0 0 / 20%); /* Add this line */
   cursor: grab;

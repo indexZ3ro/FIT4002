@@ -26,6 +26,7 @@ const InfiniteCanvas = () => {
   const [questions, setQuestions] = useState([]);
   const [emojis,setEmojis] = useState([]);
   const [accessCode, setAccessCode] = useState('');
+  const [noteColour, setNoteColour] = useState(''); 
 
   // Fetch all sticky notes from the database when the component mounts
   useEffect(() => {
@@ -40,6 +41,30 @@ const InfiniteCanvas = () => {
         console.error("Error fetching sticky notes:", error);
       });
   }, [projectId, setNotes]);
+
+  // Load in saved matrix data from database
+  useEffect(() => {
+
+    onAuthStateChanged(auth, (user) => {
+
+      if (user) {
+          axios.get(apiUrl + `/api/getUserColour/${projectId}/${user.uid}`)
+          .then((response) => {
+            setNoteColour(response.data.colour);
+          })
+          .catch((error) => {
+
+              console.log("Error getting user note colour:", error);
+          });
+      } else {
+          // User is signed out
+          // ...
+          navigate("/");
+          console.log("User is logged out");
+      }
+      console.log("End")
+    })
+}, []);
 
   // Get access code for Admin user
   useEffect(() => {
@@ -225,7 +250,7 @@ const InfiniteCanvas = () => {
       </div>
       <div className="bodyContainer">
         <ACTMatrix notes={notes} setNotes={setNotes} emojis ={emojis} setEmojis= {setEmojis} projectId={projectId}/>
-        <ACTSidebar notes={notes} setNotes={setNotes} projectId={projectId} emojis ={emojis} setEmojis= {setEmojis}/>
+        <ACTSidebar notes={notes} setNotes={setNotes} projectId={projectId} emojis ={emojis} setEmojis= {setEmojis} noteColour={noteColour}/>
 
       </div>
     </div>

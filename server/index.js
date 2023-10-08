@@ -11,6 +11,14 @@ const admin = require("firebase-admin");
 const serviceAccount = require("../project-5389016526708021196-firebase-adminsdk-hitz3-cab5dbb661.json");
 const { stat } = require("fs");
 const { isSet } = require("util/types");
+const colourArr = [
+  "#82ff76",
+  "#8f97d4",
+  "#ea759e",
+  "#ffe4b5",
+  "#f1ffa6",
+  "#7dadff"
+];
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -70,14 +78,14 @@ app.get("/api/project/:projectKey/sticky-notes", (req, res) => {
 // create sticky note
 app.post("/api/sticky-notes", (req, res) => {
   const projectKey = req.body.projectKey;
-  const { x, y, text, height, width } = req.body;
+  const { x, y, text, height, width, noteColour } = req.body;
   const notesRef = admin.database().ref(`Projects/${projectKey}/stickyNotes`);
 
   const newNoteRef = notesRef.push();
   const newNoteId = newNoteRef.key; // Get the newly generated ID
   console.log(text)
   newNoteRef
-    .set({ text, x, y, height,width })
+    .set({ text, x, y, height,width, noteColour })
     .then(() => {
       res
         .status(201)
@@ -311,9 +319,10 @@ app.post("/api/createProject", (req, res) => {
     },
   };
 
+  var randChoice = Math.floor(Math.random() * (colourArr.length));
   const usersArr = {
     [userID]: {
-      colour: "green",
+      colour: colourArr[randChoice]
     },
   };
 
@@ -364,6 +373,31 @@ app.get("/api/getAccessCode/:projectKey/:userID", (req, res) => {
     });
 });
 
+app.get("/api/getUserColour/:projectKey/:userID", async (req, res) => {
+
+  const { projectKey, userID } = req.params;
+  const userRef = admin.database().ref(`Projects/${projectKey}/users`);
+
+  userRef
+    .child(userID)
+    .once("value")
+    .then((snapshot) => {
+
+      if (snapshot.exists()) {
+        // Get Colour
+        res.json({ message: "Colour found", colour: snapshot.val().colour });
+      } else {
+        console.error("Error finding user:", error);
+        res.status(500).json({ error: "Internal server error" });
+      }
+      
+    })
+    .catch((error) => {
+      console.error("Error finding user:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
 app.post("/api/addUserToMatrix", (req, res) => {
   const { projectKey, userID } = req.body;
   const userRef = admin.database().ref(`Projects/${projectKey}/users`);
@@ -376,10 +410,13 @@ app.post("/api/addUserToMatrix", (req, res) => {
         // If the User exists in the Matrix, return success
         res.status(200).json({ message: "User exists in Matrix" });
       } else {
+      
+        var randChoice = Math.floor(Math.random() * (colourArr.length));
+
         // To add user to the Matrix (No form of validation on if they should be added)
         const userNode = {
           [userID]: {
-            colour: "blue",
+            colour: colourArr[randChoice]
           },
         };
 
@@ -467,10 +504,12 @@ app.post("/api/joinMatrix", async (req, res) => {
         projectKey: projectKey,
       });
     } else {
+
+      var randChoice = Math.floor(Math.random() * (colourArr.length));
       // Add user to matrix
       const userNode = {
         [userID]: {
-          colour: "blue",
+          colour: colourArr[randChoice]
         },
       };
 
