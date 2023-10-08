@@ -1,5 +1,4 @@
 import { setupWorker, rest } from "msw";
-import { useParams } from "react-router-dom";
 import logo192 from "../assets/logo192.png";
 const apiUrl = process.env.REACT_APP_API_URL;
 
