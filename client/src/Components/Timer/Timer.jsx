@@ -3,6 +3,7 @@ import StopWatch from "../../assets/stopwatch.svg";
 import "../../css/Timer.css";
 import IconsDropdown from "../ACTQuestions/icons_dropdown";
 import axios from 'axios';
+import ReviewStage from '../ReviewStage/review_stage';
 
 
 class Timer extends Component {
@@ -116,7 +117,7 @@ class Timer extends Component {
   }
 
   render() {
-    const { minutes, seconds, isRunning, isModalOpen, timerFinished } =
+    const { minutes, seconds, isRunning, isModalOpen, timerFinished, currentQuestion, selectedValue, review} =
       this.state;
     const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
       seconds
@@ -173,6 +174,7 @@ class Timer extends Component {
             </div>
           </div>
         )}
+        {review && <ReviewStage />}
       </div>
     );
   }

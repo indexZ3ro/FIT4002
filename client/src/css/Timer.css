@@ -39,6 +39,7 @@
     align-items: center;
     justify-content: center;
     gap: 15px;
+    cursor: auto
 }
 
 .timerInput{
@@ -142,4 +143,26 @@
 .questionInput::-webkit-scrollbar {
   width: 8px;
   height: 8px;
+}
+
+.whiteTextbox{
+  min-height: 40px;  
+  padding: 6px 8px;
+  gap: 18px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  border: 1px solid #E6E7E9;
+  background: #FFF;
+  box-shadow: 3px 3px 15px -1px rgba(0, 0, 0, 0.15);
+}
+
+.centreText{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.reviewPin{
+  width: 30px;
+  height: 30px;
 }
