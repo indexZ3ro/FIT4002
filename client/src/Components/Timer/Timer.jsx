@@ -17,6 +17,7 @@ class Timer extends Component {
       timerFinished: false,
       currentQuestion: "",
       selectedValue: "1",
+      review: false,
     };
 
     this.timerInterval = null;
@@ -109,6 +110,11 @@ class Timer extends Component {
     this.setState({ isModalOpen: false });
   };
 
+  reviewMatrix = () => {
+    this.setState({review: true})
+    this.closeModal();
+  }
+
   render() {
     const { minutes, seconds, isRunning, isModalOpen, timerFinished } =
       this.state;
@@ -160,6 +166,9 @@ class Timer extends Component {
               </button>
               <button onClick={this.resetTimer} className="timerButton">
                 Reset
+              </button>
+              <button onClick={this.reviewMatrix} className="timerButton">
+                Review Matrix
               </button>
             </div>
           </div>

@@ -619,7 +619,7 @@ const server = http.createServer(app);
 
 // Unused
 // Connect any incoming WebSocket connection
-// const wss = new WebSocket.Server({ server });
+const wss = new WebSocket.Server({ server });
 
 // // Realtime Database event listeners
 // const db = admin.database();

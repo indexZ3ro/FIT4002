@@ -99,25 +99,25 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                 <div className="grid-container">
                   <div className="quadrant">
                     <img
-                      class = "act-image top-left"
+                      className = "act-image top-left"
                       src={require('../../assets/Hook.png')}
                     />
                   </div>
                   <div className="quadrant">
                     <img
-                      class = "act-image top-right"
+                      className = "act-image top-right"
                       src={ require('../../assets/Heart.png')}
                     />
                   </div>
                   <div className="quadrant">
                     <img
-                      class = "act-image bottom-left"
+                      className = "act-image bottom-left"
                       src={ require('../../assets/Camera.png')}
                     />
                   </div>
                   <div className="quadrant">
                     <img
-                      class = "act-image bottom-right"
+                      className = "act-image bottom-right"
                       src={ require('../../assets/Camera.png')}
                     />
                   </div>
