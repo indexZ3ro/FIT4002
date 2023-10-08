@@ -198,7 +198,7 @@ const InfiniteCanvas = () => {
     };
 }, [projectId, localChanges]);
 
-  //Firebase Realtime Database listener for updates Emojis
+  //Firebase Realtime Database listener for question updates
   useEffect(() => {
     console.log("Listener");
     const questionRef = ref(realtimeDb, `Projects/${projectId}/questions`);
@@ -208,6 +208,8 @@ const InfiniteCanvas = () => {
         snapshot.forEach((childSnapshot) => {
           const questionId = childSnapshot.key;
           const questionData = childSnapshot.val();
+
+          // TODO: This if is never actually used, can be removed
           if (localChanges.some(change => change.id === questionId)) {
               // If the question ID is in localChanges, then retain the current question data
               // Find the current question data

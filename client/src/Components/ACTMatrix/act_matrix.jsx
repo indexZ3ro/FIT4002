@@ -95,8 +95,9 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
             onMouseMove={handleMouseMove}
         >
             <div
-                className={`infiniteCanvas ${isDragging ? "grabbing" : ""}`}
-                ref={canvasRef}
+              id="infiniteCanvas"
+              className={`infiniteCanvas ${isDragging ? "grabbing" : ""}`}
+              ref={canvasRef}
             >
                 <div className="line-x"></div>
                 <div className="line-y"></div>

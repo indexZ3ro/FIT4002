@@ -9,7 +9,6 @@ import Line from "../../assets/Line.svg";
 
 const ACTQuestions = ({ id, text, type, projectId }) => {
   const apiUrl = process.env.REACT_APP_API_URL;
-
   const [name, setName] = useState(text || ""); // Renamed state variable from 'Question' to 'name'
   const divRef = useRef();
   const { localQuestions, setLocalQuestions } = useContext(QuestionContext);
@@ -76,7 +75,6 @@ const ACTQuestions = ({ id, text, type, projectId }) => {
     <div className='act-questions-inner'>
       <ACTQuestionsDropdown divRef={divRef} questionArray={questions} selectedQuestionType={type} projectId={projectId}/>
       <div ref={divRef} id={selectedQuestion} className='act-questions' onInput={handleInput}></div>
-
     </div>
   );
 };
