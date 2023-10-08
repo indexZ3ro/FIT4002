@@ -178,36 +178,36 @@ app.post("/api/questions", (req, res) => {
     });
 });
 
-app.put("/api/questions/:questionId", (req, res) => {
-  const { questionId } = req.params;
-  const { projectKey } = req.body;
-  const questionRef = admin.database().ref(`Projects/${projectKey}/questions`);
+// app.put("/api/questions/:questionId", (req, res) => {
+//   const { questionId } = req.params;
+//   const { projectKey } = req.body;
+//   const questionRef = admin.database().ref(`Projects/${projectKey}/questions`);
 
-  questionRef
-    .once("value")
-    .then((snapshot) => {
-      const questionsData = snapshot.val();
+//   questionRef
+//     .once("value")
+//     .then((snapshot) => {
+//       const questionsData = snapshot.val();
 
-      // Loop through the questions and update their status
-      Object.keys(questionsData).forEach((key) => {
-        if (key === questionId) {
-          // Update the selected question to "active"
-          questionRef.child(key).update({ status: "active" });
-        } else {
-          // Update all other questions to "inactive"
-          questionRef.child(key).update({ status: "inactive" });
-        }
-      });
+//       // Loop through the questions and update their status
+//       Object.keys(questionsData).forEach((key) => {
+//         if (key === questionId) {
+//           // Update the selected question to "active"
+//           questionRef.child(key).update({ status: "active" });
+//         } else {
+//           // Update all other questions to "inactive"
+//           questionRef.child(key).update({ status: "inactive" });
+//         }
+//       });
 
-      // TODO: Ensure selected question loads for each user
+//       // TODO: Ensure selected question loads for each user
 
-      res.status(200).json({ message: "Status updated successfully" });
-    })
-    .catch((error) => {
-      console.error("Error updating status: ", error);
-      res.status(500).json({ error: "Internal server error" });
-    });
-});
+//       res.status(200).json({ message: "Status updated successfully" });
+//     })
+//     .catch((error) => {
+//       console.error("Error updating status: ", error);
+//       res.status(500).json({ error: "Internal server error" });
+//     });
+// });
 
 // API route for updating a question
 app.put("/api/questionDesc/:questionId", (req, res) => {
@@ -235,6 +235,41 @@ app.put("/api/questionDesc/:questionId", (req, res) => {
       console.log(error);
     });
 });
+
+// Updated question by type
+app.post("/api/questionTypeUpdate", (req, res) => {
+  const { projectId, type, text } = req.body;
+  
+  // Reference to all questions of the specified project
+  const questionsRef = admin.database().ref(`Projects/${projectId}/questions`);
+
+  // Fetching all questions and then filtering the one with the specified type
+  questionsRef.once('value')
+    .then(snapshot => {
+      const questions = snapshot.val();
+      const updates = {};
+
+      // Loop through the questions to find the one with the specified type
+      for (let id in questions) {
+        if (questions[id].type === parseInt(type, 10)) {
+            // Set the selected question to active and update its text
+            updates[id] = { ...questions[id], text, status: "active" };
+          } else {
+            // Set other questions to inactive
+            updates[id] = { ...questions[id], status: "inactive" };
+          }
+      }
+      return questionsRef.update(updates);
+    })
+    .then(() => {
+      res.status(200).json({ message: 'Question updated and others set to inactive' });
+    })
+    .catch(error => {
+        console.error('Error updating questions:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    });
+});
+
 
 // create a new project and return it
 app.post("/api/createProject", (req, res) => {
@@ -582,26 +617,27 @@ app.delete("/api/emoji/:emojiId", (req, res) => {
 // Create a web server to serve files and listen to WebSocket connections
 const server = http.createServer(app);
 
+// Unused
 // Connect any incoming WebSocket connection
 const wss = new WebSocket.Server({ server });
 
-// Realtime Database event listeners
-const db = admin.database();
-const notesRef = db.ref("project/stickyNotes");
+// // Realtime Database event listeners
+// const db = admin.database();
+// const notesRef = db.ref("project/stickyNotes");
 
-// Send data to clients when data changes in the Realtime Database
-notesRef.on("value", (snapshot) => {
-  const notesData = snapshot.val();
-  const dataToSend = Object.entries(notesData || {}).map(([key, value]) => ({
-    ...value,
-    id: key,
-  }));
-  wss.clients.forEach((client) => {
-    client.send(JSON.stringify(dataToSend));
-  });
+// // Send data to clients when data changes in the Realtime Database
+// notesRef.on("value", (snapshot) => {
+//   const notesData = snapshot.val();
+//   const dataToSend = Object.entries(notesData || {}).map(([key, value]) => ({
+//     ...value,
+//     id: key,
+//   }));
+//   wss.clients.forEach((client) => {
+//     client.send(JSON.stringify(dataToSend));
+//   });
 
-  console.log("Data received from Realtime Database:", dataToSend);
-});
+//   console.log("Data received from Realtime Database:", dataToSend);
+// });
 
 server.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
