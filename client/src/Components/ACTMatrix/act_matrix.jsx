@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
+
     const apiUrl = process.env.REACT_APP_API_URL;
     const [isDragging, setIsDragging] = useState(false);
     const [scale, setScale] = useState(1);
@@ -81,7 +82,6 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
     });
   }, []);
 
-
     return (
         <div
             className={`outer-infinite ${isDragging ? "grabbing" : ""}`}
@@ -118,6 +118,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                         text={note.text}
                         scale={scale}
                         projectId={projectId}
+                        noteColour={note.noteColour}
                     />
                 ))}
                 {emojis.map((emoji) => (
