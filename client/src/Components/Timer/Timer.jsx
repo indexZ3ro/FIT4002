@@ -1,6 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import StopWatch from "../../assets/stopwatch.svg";
 import "../../css/Timer.css";
+import IconsDropdown from "../ACTQuestions/icons_dropdown";
+import axios from 'axios';
+import ReviewStage from '../ReviewStage/review_stage';
+
 
 class Timer extends Component {
   constructor(props) {
@@ -12,9 +16,13 @@ class Timer extends Component {
       isRunning: false,
       isModalOpen: false,
       timerFinished: false,
+      currentQuestion: "",
+      selectedValue: "1",
+      review: false,
     };
 
     this.timerInterval = null;
+    this.apiUrl = process.env.REACT_APP_API_URL; 
   }
 
   componentWillUnmount() {
@@ -22,9 +30,23 @@ class Timer extends Component {
   }
 
   startTimer = () => {
+    const { projectId } = this.props;
     if (!this.state.isRunning) {
       this.setState({ isRunning: true }, () => {
         this.timerInterval = setInterval(this.tick, 1000);
+
+        // API call to update and activate the question
+        axios.post(this.apiUrl + `/api/questionTypeUpdate`, {
+          text: this.state.currentQuestion,
+          projectId: projectId,
+          type: this.state.selectedValue,
+        })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error('Error updating and activating the question:', error);
+        });
       });
     }
     this.setState({ isModalOpen: false });
@@ -39,7 +61,7 @@ class Timer extends Component {
 
   resetTimer = () => {
     this.stopTimer();
-    this.setState({ minutes: 0, seconds: 0 });
+    this.setState({ minutes: 0, seconds: 0, currentQuestion:"" });
   };
 
   tick = () => {
@@ -89,8 +111,13 @@ class Timer extends Component {
     this.setState({ isModalOpen: false });
   };
 
+  reviewMatrix = () => {
+    this.setState({review: true})
+    this.closeModal();
+  }
+
   render() {
-    const { minutes, seconds, isRunning, isModalOpen, timerFinished } =
+    const { minutes, seconds, isRunning, isModalOpen, timerFinished, currentQuestion, selectedValue, review} =
       this.state;
     const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
       seconds
@@ -113,6 +140,14 @@ class Timer extends Component {
         {isModalOpen && (
           <div className="timerModal">
             <div className="timerWrap">
+              <IconsDropdown selectedValue={this.state.selectedValue} onSelect={(newValue) => this.setState({ selectedValue: newValue })}/>
+              <textarea
+                type="text"
+                placeholder="Question Text"
+                value={this.state.currentQuestion}
+                onChange={(e) => this.setState({ currentQuestion: e.target.value })}
+                className="questionInput"
+              />
               <input
                 type="text"
                 placeholder="mm:ss"
@@ -133,9 +168,13 @@ class Timer extends Component {
               <button onClick={this.resetTimer} className="timerButton">
                 Reset
               </button>
+              <button onClick={this.reviewMatrix} className="timerButton">
+                Review Matrix
+              </button>
             </div>
           </div>
         )}
+        {review && <ReviewStage />}
       </div>
     );
   }

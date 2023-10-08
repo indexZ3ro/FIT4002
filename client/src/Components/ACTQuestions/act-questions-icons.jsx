@@ -7,15 +7,15 @@ import camera from "../../assets/Camera.png";
 const dropdownItems = [
     {
         value: "1",
-        imageSource: hook,
-    },
-    {
-        value: "2",
         imageSource: heart,
     },
     {
-        value: "3",
+        value: "2",
         imageSource: camera,
+    },
+    {
+        value: "3",
+        imageSource: hook,
     },
     {
         value: "4",
@@ -51,24 +51,24 @@ const ACTQuestionsDropdown = ({
         axios
             .get(apiUrl + `/api/project/${projectId}/questions`)
             .then((response) => {
-                console.log(response.data);
                 response.data.forEach((question) => {
                     if (String(question.type) == String(value)) {
                         displayText = question.text;
                         questionID = question.id;
                         divRef.current.textContent = displayText;
                         divRef.current.id = question.id;
-
-                        axios
-                            .put(apiUrl + `/api/questions/${questionID}`, {
-                                projectKey: projectId,
-                            })
-                            .then((response) => {
-                                console.log(response.data);
-                            })
-                            .catch((error) => {
-                                console.log("Error updating questions:", error);
-                            });
+                        
+                        // don't update the active question
+                        // axios
+                        //     .put(apiUrl + `/api/questions/${questionID}`, {
+                        //         projectKey: projectId,
+                        //     })
+                        //     .then((response) => {
+                        //         console.log(response.data);
+                        //     })
+                        //     .catch((error) => {
+                        //         console.log("Error updating questions:", error);
+                        //     });
                         return;
                     }
                 });
