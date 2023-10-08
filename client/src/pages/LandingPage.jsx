@@ -62,9 +62,7 @@ const LandingPage = () => {
                     </h3>
                     {/* <div className="landingPageSubtitle textFont xs"> </div>*/}
                     <h6 className="normal landing-page-text">
-                        Authentically replicate the ACT Matrix process and allow
-                        individuals and teams to reflect on their visual map and
-                        progress in an ongoing manner.
+                        Visualise and reflect on what matters as an individual or together as a team.
                     </h6>
                     <TextButton
                         id="Get Started"
