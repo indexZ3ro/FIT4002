@@ -14,7 +14,11 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
     const textareaRef = useRef(null);
     const [position, setPosition] = useState({ x, y });
     const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
-    const [size, setSize] = useState({ width, height }); 
+    const [size, setSize] = useState({ width, height });
+
+    if (noteColour === undefined || noteColour === null || noteColour === "") {
+        noteColour = "#ffe4b5";
+    }
     const handleNoteTextChange = (e) => {
         setNoteText(e.target.value);
         setIsUpdated(true);
