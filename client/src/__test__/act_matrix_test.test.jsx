@@ -1,10 +1,10 @@
-import ACTMatrix from "../components/ACTMatrix/act_matrix.jsx";
+import ACTMatrix from "../Components/ACTMatrix/act_matrix";
+
 import { render, screen } from "@testing-library/react";
 import { expect, test } from "vitest";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React, { useState, useEffect, useContext } from "react";
 
 const mock_data = [
     {

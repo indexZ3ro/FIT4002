@@ -7,6 +7,10 @@ import { auth } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import Hook from '../../assets/Hook.png';
+import Heart from '../../assets/Heart.png';
+import Camera from '../../assets/Camera.png';
+
 
 const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
 
@@ -100,25 +104,25 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                   <div className="quadrant">
                     <img
                       className = "act-image top-left"
-                      src={require('../../assets/Hook.png')}
+                      src={ Hook}
                     />
                   </div>
                   <div className="quadrant">
                     <img
                       className = "act-image top-right"
-                      src={ require('../../assets/Heart.png')}
+                      src={ Heart}
                     />
                   </div>
                   <div className="quadrant">
                     <img
                       className = "act-image bottom-left"
-                      src={ require('../../assets/Camera.png')}
+                      src={ Camera}
                     />
                   </div>
                   <div className="quadrant">
                     <img
                       className = "act-image bottom-right"
-                      src={ require('../../assets/Camera.png')}
+                      src={ Camera}
                     />
                   </div>
                 </div>

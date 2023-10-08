@@ -6,7 +6,7 @@ import React from "react";
 test("Test 1: Check if the component renders successfully", () => {
     render(<App />);
 
-    const element = screen.getByText(/Matrix/i);
+    const element = screen.getByText(/Find your goals/i);
 
     expect(element).toBeDefined();
 });
