@@ -23,6 +23,22 @@ const ReviewStage = () => {
         setIsDragging(false);
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', stopDragging);
+
+        const matrixContainer = document.getElementById('infiniteCanvas');  // get the matrix container by id
+        const pin = document.querySelector('.reviewPin');
+
+        const matrixRect = matrixContainer.getBoundingClientRect();  // get the bounding box of the matrix container
+        const pinRect = pin.getBoundingClientRect();  // get the bounding box of the pin
+
+        // calculate the position of the pin relative to the matrix container
+        const relativeX = pinRect.left - matrixRect.left;
+        const relativeY = pinRect.top - matrixRect.top;
+
+        console.log('Relative Position:', { x: relativeX, y: relativeY });
+
+        // calculate the horizontal center of the matrix container
+        const horizontalCenter = matrixRect.width / 2;
+        console.log('Horizontal Center of the Matrix Container:', horizontalCenter);
     };
 
     return (
@@ -32,7 +48,7 @@ const ReviewStage = () => {
                     <div className="timerWrap">
                         <div className="whiteTextbox">
                             <div className='centreText'>Let's review your matrix.</div>
-                            <div className='centreText'>Pick up this pin and place it on the matrix where you think you're currently at.</div>
+                            <div className='centreText'>Pick up this pin and place it on the matrix where you feel you're currently at.</div>
                         </div>
                     </div>
                 </div>

@@ -91,65 +91,66 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
             onMouseMove={handleMouseMove}
         >
             <div
-                className={`infiniteCanvas ${isDragging ? "grabbing" : ""}`}
-                ref={canvasRef}
+              id="infiniteCanvas"
+              className={`infiniteCanvas ${isDragging ? "grabbing" : ""}`}
+              ref={canvasRef}
             >
-                <div className="line-x"></div>
-                <div className="line-y"></div>
-                <div className="grid-container">
-                  <div className="quadrant">
-                    <img
-                      className = "act-image top-left"
-                      src={require('../../assets/Hook.png')}
-                    />
-                  </div>
-                  <div className="quadrant">
-                    <img
-                      className = "act-image top-right"
-                      src={ require('../../assets/Heart.png')}
-                    />
-                  </div>
-                  <div className="quadrant">
-                    <img
-                      className = "act-image bottom-left"
-                      src={ require('../../assets/Camera.png')}
-                    />
-                  </div>
-                  <div className="quadrant">
-                    <img
-                      className = "act-image bottom-right"
-                      src={ require('../../assets/Camera.png')}
-                    />
-                  </div>
+              <div className="line-x"></div>
+              <div className="line-y"></div>
+              <div className="grid-container">
+                <div className="quadrant">
+                  <img
+                    className = "act-image top-left"
+                    src={require('../../assets/Hook.png')}
+                  />
                 </div>
-                {/* stickynotes */}
-                {notes.map((note) => (
-                    <Note
-                        key={note.id}
-                        id={note.id}
-                        x={note.x}
-                        y={note.y}
-                        width = {note.width}
-                        height = {note.height}
-                        text={note.text}
-                        scale={scale}
-                        projectId={projectId}
-                        noteColour={note.noteColour}
-                    />
-                ))}
-                {emojis.map((emoji) => (
-                    <Emoji
-                        key={emoji.id}
-                        id={emoji.id}
-                        x={emoji.x}
-                        y={emoji.y}
-                        width = {emoji.width}
-                        height = {emoji.height}
-                        url={emoji.url}
-                        scale={scale}
-                        projectId={projectId}
-                    />
-                ))}
+                <div className="quadrant">
+                  <img
+                    className = "act-image top-right"
+                    src={ require('../../assets/Heart.png')}
+                  />
+                </div>
+                <div className="quadrant">
+                  <img
+                    className = "act-image bottom-left"
+                    src={ require('../../assets/Camera.png')}
+                  />
+                </div>
+                <div className="quadrant">
+                  <img
+                    className = "act-image bottom-right"
+                    src={ require('../../assets/Camera.png')}
+                  />
+                </div>
+              </div>
+              {/* stickynotes */}
+              {notes.map((note) => (
+                  <Note
+                      key={note.id}
+                      id={note.id}
+                      x={note.x}
+                      y={note.y}
+                      width = {note.width}
+                      height = {note.height}
+                      text={note.text}
+                      scale={scale}
+                      projectId={projectId}
+                      noteColour={note.noteColour}
+                  />
+              ))}
+              {emojis.map((emoji) => (
+                  <Emoji
+                      key={emoji.id}
+                      id={emoji.id}
+                      x={emoji.x}
+                      y={emoji.y}
+                      width = {emoji.width}
+                      height = {emoji.height}
+                      url={emoji.url}
+                      scale={scale}
+                      projectId={projectId}
+                  />
+              ))}
             </div>
         </div>
     );
