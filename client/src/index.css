@@ -60,23 +60,42 @@ textarea:focus {
 }
 
 .act-questions {
-    display: flex;
-    align-items: center;
-    /* font-size: 12px;
-    margin-left: 15px;
-    margin-right: 15px;
-    flex: 1;
-    border: 2px solid #ccc;
-    font-weight: 600;
-    margin-top: -2.2%; */
-    color: #000;
-    font-size: 15px;
-    font-weight: 300;
-    letter-spacing: -0.72px;
-    min-width: 150px;
-    max-width: 300px;
-    height: -webkit-fill-available;
-    /* overflow-y: scroll ; */
+  display: flex;
+  align-items: center;
+  /* font-size: 12px;
+  margin-left: 15px;
+  margin-right: 15px;
+  flex: 1;
+  border: 2px solid #ccc;
+  font-weight: 600;
+  margin-top: -2.2%; */
+  color: #000;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: -0.72px;
+  min-width: 150px;
+  max-width: 500px;
+  height: -webkit-fill-available;
+  overflow-y: auto ;
+  overflow-x: hidden;
+}
+
+/* Style for scrollbar thumb (the part you drag) */
+.act-questions::-webkit-scrollbar-thumb {
+  background-color: #888; 
+  border-radius: 10px; 
+}
+
+/* Style for scrollbar track (the background) */
+.act-questions::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Width and height of the scrollbar */
+.act-questions::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
   
 .act-questions-label {
