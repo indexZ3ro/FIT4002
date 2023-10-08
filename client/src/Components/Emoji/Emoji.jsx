@@ -3,7 +3,8 @@ import "../../css/act-sidebar.css";
 import Draggable from "react-draggable";
 import axios from "axios";
 import LocalChangeContext from "../../contexts/LocalChangeContext";
-const Emoji = ({id,x,y,url,projectId}) => {
+import {Rnd} from "react-rnd";
+const Emoji = ({id,x,y,width = 75, height= 75,scale,url,projectId}) => {
   const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
   const apiUrl = process.env.REACT_APP_API_URL;
   const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
@@ -12,6 +13,8 @@ const Emoji = ({id,x,y,url,projectId}) => {
   const [Emojiurl, setEmojiURL] = useState(url || "");
   const [position, setPosition] = useState({ x, y });
   const [isHovered, setIsHovered] = useState(false);
+  const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
+  const [size, setSize] = useState({ width, height }); 
 
   const handleDragStop = (e, ui) => {
     setPosition({ x: ui.lastX, y: ui.lastY });
@@ -27,6 +30,12 @@ const Emoji = ({id,x,y,url,projectId}) => {
     setEmojiURL(url || "");
   }, [url]);
 
+  useEffect(() => {
+    setSize({ width, height });
+    console.log(x, y);
+}, [width, height]);
+
+
   useEffect(()=> {
        // Make the axios request to update the emoji  on the server
        if (!isInitialMount && isUpdated) {
@@ -36,6 +45,8 @@ const Emoji = ({id,x,y,url,projectId}) => {
             projectKey: projectId,
             x: position.x,
             y: position.y,
+            width: size.width,
+            height: size.height,
             url: Emojiurl,
         })
         .then((response) => {
@@ -49,7 +60,7 @@ const Emoji = ({id,x,y,url,projectId}) => {
         // Set the flag to false after the component has mounted
         setIsInitialMount(false);
       }
-  }, [position, Emojiurl, id, isUpdated, isInitialMount]);
+  }, [position,size, Emojiurl, id, isUpdated, isInitialMount]);
 
   const handleDelete = () => {
     // API request to delete the emoji from the server
@@ -72,9 +83,24 @@ const Emoji = ({id,x,y,url,projectId}) => {
     setIsHovered(false);
   };
 
+  
+
 
   return (
-    <Draggable onStop={handleDragStop} position={{ x: position.x, y: position.y }}>
+    <Rnd    disableDragging={!isDraggingEnabled}
+            maxWidth={170}
+            maxHeight={170}
+            minWidth={70}
+            minHeight={70}
+            scale = {scale}
+            position={{ x: position.x, y: position.y }}
+            size={{ width: size.width,  height: size.height }}
+            onDragStop={handleDragStop}
+            onResizeStop={(e, direction, ref, delta, position) => {
+                setSize({ width: ref.style.width, height: ref.style.height });
+                setPosition(position);
+                setIsUpdated(true);
+            }} >
     <div
       className="emoji-container"
       onMouseEnter={handleMouseEnter}
@@ -85,9 +111,10 @@ const Emoji = ({id,x,y,url,projectId}) => {
           X
         </button>
       )}
-      <img value={url} src={url} alt="Emoji" />
+      <img src={url} alt="Emoji"   style={{ width: '100%', height: '100%' }}   // Added this style
+             />
     </div>
-  </Draggable>
+    </Rnd>
   );
 };
 
