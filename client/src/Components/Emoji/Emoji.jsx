@@ -36,7 +36,6 @@ const Emoji = ({id,x,y,width = 75, height= 75,scale,url,projectId}) => {
 }, [width, height]);
 
 
-
   useEffect(()=> {
        // Make the axios request to update the emoji  on the server
        if (!isInitialMount && isUpdated) {
@@ -84,6 +83,8 @@ const Emoji = ({id,x,y,width = 75, height= 75,scale,url,projectId}) => {
     setIsHovered(false);
   };
 
+  
+
 
   return (
     <Rnd    disableDragging={!isDraggingEnabled}
@@ -110,7 +111,7 @@ const Emoji = ({id,x,y,width = 75, height= 75,scale,url,projectId}) => {
           X
         </button>
       )}
-      <img value={url} src={url} alt="Emoji"   style={{ width: '100%', height: '100%' }}   // Added this style
+      <img src={url} alt="Emoji"   style={{ width: '100%', height: '100%' }}   // Added this style
              />
     </div>
     </Rnd>
