@@ -139,7 +139,6 @@ const Note = ({
                 setPosition(position);
                 setIsUpdated(true);
             }}
-            bounds={"parent"}
         >
             <div
                 className="note-container"

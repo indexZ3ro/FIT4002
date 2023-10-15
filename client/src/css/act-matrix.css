@@ -30,11 +30,11 @@
     font-size: 32px;
 }
 
-
 .infiniteCanvas {
     width: 100%;
     height: 100%;
     position: relative;
+    display: flex;
 }
 
 .line-x {
@@ -44,7 +44,7 @@
     right: -40%;
     height: 2px;
     background-color: rgb(0, 0, 0);
-    width: 180%
+    width: 180%;
 }
 
 .line-y {
@@ -54,17 +54,16 @@
     bottom: -40%;
     width: 2px; /* Adjust based on your preference */
     background-color: rgb(0, 0, 0);
-    
 }
 .grabbing {
     cursor: grabbing;
 }
 
-.outer-infinite{
-    background: #FAF9F6;
+.outer-infinite {
+    background: #faf9f6;
     position: absolute;
-    width: 100%; 
-    height: 100%; 
+    width: 100%;
+    height: 100%;
     overflow: hidden; /* To hide the zoomed-out parts */
 }
 
@@ -75,13 +74,12 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(#D2D6DB 2px, transparent 1px);
+    background-image: radial-gradient(#d2d6db 2px, transparent 1px);
     background-size: 20px 20px; /* adjust size */
     background-position: 0 0, 5px 5px; /* adjust position */
 }
 
-
-.actImage{
+.actImage {
     position: absolute;
     width: 1100px;
     height: 700px;
@@ -89,3 +87,10 @@
     left: 10%;
 }
 
+.act-axis {
+    width: 3000px;
+    height: 3000px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}

@@ -5,8 +5,9 @@ import ACT from "../../assets/ACT.svg";
 import Emoji from "../Emoji/Emoji.jsx";
 import { auth } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import axios from 'axios';
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Axis from "../../assets/matrix-axis.svg";
 
 const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -48,39 +49,40 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
         }
     };
 
-  useEffect(() => {
-    if (canvasRef.current) {
-      const x = position.x * scale;
-      const y = position.y * scale;
-      canvasRef.current.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
-    }
-  }, [position, scale]);
+    useEffect(() => {
+        if (canvasRef.current) {
+            const x = position.x * scale;
+            const y = position.y * scale;
+            canvasRef.current.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+        }
+    }, [position, scale]);
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        axios.get(apiUrl + `/api/checkUserAccess/${projectId}/${user.uid}`)
-        .then((response) => {
-          // If the user should not have access, remove them from the matrix.
-          if (!response.data.status) {
-            navigate("/Home");
-          }
-        })
-        .catch((error) => {
-          console.log("Error adding user to Matrix:", error);
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                axios
+                    .get(
+                        apiUrl + `/api/checkUserAccess/${projectId}/${user.uid}`
+                    )
+                    .then((response) => {
+                        // If the user should not have access, remove them from the matrix.
+                        if (!response.data.status) {
+                            navigate("/Home");
+                        }
+                    })
+                    .catch((error) => {
+                        console.log("Error adding user to Matrix:", error);
+                    });
+            } else {
+                // User is signed out
+                // ...
+                navigate("/");
+                console.log("user is logged out");
+            }
         });
-
-      } else {
-        // User is signed out
-        // ...
-        navigate("/");
-        console.log("user is logged out");
-      }
-    });
-  }, []);
-
+    }, []);
 
     return (
         <div
@@ -94,17 +96,8 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                 className={`infiniteCanvas ${isDragging ? "grabbing" : ""}`}
                 ref={canvasRef}
             >
-                <div className="line-x"></div> {/* positive x */}
-                <div className="line-y"></div> {/* positive y */}
-                <div
-                    className="line-x"
-                    style={{ top: "initial", bottom: "50%" }}
-                ></div>{" "}
-                {/* negative x */}
-                <div
-                    className="line-y"
-                    style={{ left: "initial", right: "50%" }}
-                ></div>{" "}
+                <img className="act-axis" src={Axis}></img>
+
                 {/* negative y */}
                 {/* stickynotes */}
                 {notes.map((note) => (
@@ -113,8 +106,8 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                         id={note.id}
                         x={note.x}
                         y={note.y}
-                        width = {note.width}
-                        height = {note.height}
+                        width={note.width}
+                        height={note.height}
                         text={note.text}
                         scale={scale}
                         projectId={projectId}
