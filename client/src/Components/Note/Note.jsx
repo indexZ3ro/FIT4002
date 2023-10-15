@@ -2,9 +2,18 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import Draggable from "react-draggable";
 import axios from "axios";
 import LocalChangeContext from "../../contexts/LocalChangeContext";
-import {Rnd} from "react-rnd";
-const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, noteColour }) => {
-
+import { Rnd } from "react-rnd";
+const Note = ({
+    x,
+    y,
+    id,
+    width = 150,
+    height = 150,
+    text,
+    scale,
+    projectId,
+    noteColour,
+}) => {
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
     const apiUrl = process.env.REACT_APP_API_URL;
     const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
@@ -71,7 +80,6 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
         setSize({ width, height });
         console.log(x, y);
     }, [width, height]);
-
     useEffect(() => {
         // Make the axios request to update the sticky note on the server
         if (!isInitialMount && isUpdated) {
@@ -117,7 +125,7 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
     };
     const preventDefault = (event) => {
         event.preventDefault();
-      };
+    };
     const handleDrop = (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -138,25 +146,37 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
                 setSize({ width: ref.style.width, height: ref.style.height });
                 setPosition(position);
                 setIsUpdated(true);
-            }} >
-
-            <div className="note-container" style={{ margin: 0, height: "100%", width :"100%", backgroundColor: `${noteColour}`, border: `2px solid ${noteColour}`}}>
-                <button className="delete-note" onClick={handleDelete}>×</button>
-                    <textarea
-                        ref={textareaRef}
-                        className="note-text"
-                        onClick={handleTextareaClick}
-                        value={noteText}
-                        onFocus={handleTextareaFocus}
-                        onBlur={handleTextareaBlur}
-                        onChange={handleNoteTextChange}
-                        onDrop={handleDrop}
-                        onResize={preventDefault}
-                        style={{
-                            fontSize: calculateFontSize(),
-                            border: "none",
-                            outline: "none",
-                    }}></textarea>
+            }}
+        >
+            <div
+                className="note-container"
+                style={{
+                    margin: 0,
+                    height: "100%",
+                    width: "100%",
+                    backgroundColor: `${noteColour}`,
+                    border: `2px solid ${noteColour}`,
+                }}
+            >
+                <button className="delete-note" onClick={handleDelete}>
+                    ×
+                </button>
+                <textarea
+                    ref={textareaRef}
+                    className="note-text"
+                    onClick={handleTextareaClick}
+                    value={noteText}
+                    onFocus={handleTextareaFocus}
+                    onBlur={handleTextareaBlur}
+                    onChange={handleNoteTextChange}
+                    onDrop={handleDrop}
+                    onResize={preventDefault}
+                    style={{
+                        fontSize: calculateFontSize(),
+                        border: "none",
+                        outline: "none",
+                    }}
+                ></textarea>
             </div>
         </Rnd>
     );
