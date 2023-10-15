@@ -96,21 +96,20 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
             onMouseMove={handleMouseMove}
         >
             <div
-              id="infiniteCanvas"
-              className={`infiniteCanvas ${isDragging ? "grabbing" : ""}`}
-              ref={canvasRef}
-            >   
+                id="infiniteCanvas"
+                className={`infiniteCanvas ${isDragging ? "grabbing" : ""}`}
+                ref={canvasRef}
+            >
                 <div className="away">Away</div>
                 <img src={arrow} alt="Arrow X" className="arrow-x-negative" />
                 <div className="line-x"></div>
                 <div className="towards">Towards</div>
                 <img src={arrow} alt="Arrow X" className="arrow-x" />
-
                 <div className="inside">Inside</div>
-                <img  src={arrow} alt="Arrow Y" className="arrow-y-positive" />
+                <img src={arrow} alt="Arrow Y" className="arrow-y-positive" />
                 <div className="line-y"></div>
                 <div className="outside">Outside</div>
-                <img  src={arrow} alt="Arrow Y" className="arrow-y" />
+                <img src={arrow} alt="Arrow Y" className="arrow-y" />
 
                 <div className="grid-container">
                     <div className="quadrant">

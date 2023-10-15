@@ -30,19 +30,18 @@ const InfiniteCanvas = () => {
   const [accessCode, setAccessCode] = useState('');
   const [noteColour, setNoteColour] = useState(''); 
 
-  // Fetch all sticky notes from the database when the component mounts
-  useEffect(() => {
-    axios
-      .get(apiUrl + `/api/project/${projectId}/sticky-notes`)
-      .then((response) => {
-        setNotes(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("apiURL is:" + apiUrl);
-        console.error("Error fetching sticky notes:", error);
-      });
-  }, [projectId, setNotes]);
+    // Fetch all sticky notes from the database when the component mounts
+    useEffect(() => {
+        axios
+            .get(apiUrl + `/api/project/${projectId}/sticky-notes`)
+            .then((response) => {
+                setNotes(response.data);
+            })
+            .catch((error) => {
+                console.error("apiURL is:" + apiUrl);
+                console.error("Error fetching sticky notes:", error);
+            });
+    }, [projectId, setNotes]);
 
   // Load in saved matrix data from database
   useEffect(() => {

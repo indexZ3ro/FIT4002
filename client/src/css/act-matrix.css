@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap");
 
 .text-inside {
     opacity: 0.11;
@@ -31,11 +31,12 @@
     font-size: 32px;
 }
 
-
 .infiniteCanvas {
-    width: 100%;
-    height: 100%;
+    width: 1000px;
+    height: 1000px;
     position: relative;
+    left: 20%;
+    top: -5%;
 }
 
 .line-x {
@@ -44,8 +45,8 @@
     left: -40%;
     right: -40%;
     height: 2px;
-    background-color: #2D2D2D;
-    width: 180%
+    background-color: #2d2d2d;
+    width: 180%;
 }
 
 .arrow-x {
@@ -53,49 +54,47 @@
     top: 50%;
     right: -40%;
     width: 60px;
-    transform: translateY(-50%)  translateX(50%) rotate(180deg);
+    transform: translateY(-50%) translateX(50%) rotate(180deg);
 }
 
-.arrow-x-negative{
+.arrow-x-negative {
     position: absolute;
     top: 50%;
     right: 140%;
     width: 60px;
-    transform: translateY(-50%)  translateX(50%)
+    transform: translateY(-50%) translateX(50%);
 }
 
-.away{
+.away {
     position: absolute;
-    top: 35%;
-    right: 130%;
-    font-family: 'Gloria Hallelujah', cursive;
-    font-size: 2vw;
+    top: 41%;
+    right: 150%;
+    font-family: "Gloria Hallelujah", cursive;
+    font-size: 80px;
 }
 
-
-.towards{
+.towards {
     position: absolute;
-    top: 35%;
-    right: -35%;
-    font-family: 'Gloria Hallelujah', cursive;
-    font-size: 2vw;
+    top: 41%;
+    right: -80%;
+    font-family: "Gloria Hallelujah", cursive;
+    font-size: 80px;
 }
 
-.inside{
+.inside {
     position: absolute;
     top: -60%;
-    right: 47%;
-    font-family: 'Gloria Hallelujah', cursive;
-    font-size: 2vw;
+    right: 38%;
+    font-family: "Gloria Hallelujah", cursive;
+    font-size: 80px;
 }
 
-
-.outside{
+.outside {
     position: absolute;
-    top: 145%;
-    right: 46%;
-    font-family: 'Gloria Hallelujah', cursive;
-    font-size: 2vw;
+    top: 143%;
+    right: 36%;
+    font-family: "Gloria Hallelujah", cursive;
+    font-size: 80px;
 }
 
 .line-y {
@@ -104,15 +103,14 @@
     top: -40%;
     bottom: -40%;
     width: 2px;
-    background-color: #2D2D2D;
-    
+    background-color: #2d2d2d;
 }
 .arrow-y {
     position: absolute;
     left: 50%;
     bottom: -40%;
     width: 60px;
-    transform: translateY(50%)  translateX(-50%) rotate(270deg);
+    transform: translateY(50%) translateX(-50%) rotate(270deg);
 }
 
 .arrow-y-positive {
@@ -120,19 +118,18 @@
     left: 50%;
     bottom: 140%;
     width: 60px;
-    transform: translateY(50%)  translateX(-50%) rotate(90deg);
+    transform: translateY(50%) translateX(-50%) rotate(90deg);
 }
-
 
 .grabbing {
     cursor: grabbing;
 }
 
-.outer-infinite{
-    background: #FAF9F6;
+.outer-infinite {
+    background: #faf9f6;
     position: absolute;
-    width: 100%; 
-    height: 100%; 
+    width: 100%;
+    height: 100%;
     overflow: hidden; /* To hide the zoomed-out parts */
 }
 
@@ -143,17 +140,15 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(#D2D6DB 2px, transparent 1px);
+    background-image: radial-gradient(#d2d6db 2px, transparent 1px);
     background-size: 20px 20px; /* adjust size */
     background-position: 0 0, 5px 5px; /* adjust position */
 }
 
-
-.actImage{
+.actImage {
     position: absolute;
     width: 1100px;
     height: 700px;
     top: 10%;
     left: 10%;
 }
-
