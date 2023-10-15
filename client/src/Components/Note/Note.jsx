@@ -3,6 +3,8 @@ import Draggable from "react-draggable";
 import axios from "axios";
 import LocalChangeContext from "../../contexts/LocalChangeContext";
 import {Rnd} from "react-rnd";
+import useHistoryState from "../HistoryProvider";
+
 const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, noteColour }) => {
 
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
@@ -10,11 +12,12 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
     const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
     const [isInitialMount, setIsInitialMount] = useState(true); // Flag to track initial mount
 
-    const [noteText, setNoteText] = useState(text || "");
+   
+    const [noteText, setNoteText, undoNoteText] = useHistoryState(text || "");
     const textareaRef = useRef(null);
-    const [position, setPosition] = useState({ x, y });
+    const [position, setPosition, undoPosition] = useHistoryState({ x, y });
     const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
-    const [size, setSize] = useState({ width, height });
+    const [size, setSize, undoSize] = useHistoryState({ width, height });
 
     if (noteColour === undefined || noteColour === null || noteColour === "") {
         noteColour = "#ffe4b5";
@@ -27,7 +30,9 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
             timestamp: Date.now() // Gets the current timestamp in milliseconds
           };
         setLocalChanges(prevChanges => [...prevChanges, newChange]);
+    
     };
+
 
     const handleTextareaClick = (e) => {
         e.preventDefault();
@@ -72,6 +77,7 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
     const handleDragStop = (e, ui) => {
         setPosition({ x: ui.lastX, y: ui.lastY });
         setIsUpdated(true);
+
     };
   
     useEffect(() => {
@@ -87,6 +93,19 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
         setSize({ width, height });
         console.log(x, y);
     }, [width, height]);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.ctrlKey && e.key === 'z') {
+                undoNoteText();
+                undoPosition();
+                undoSize();
+                setIsUpdated(true);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [undoNoteText, undoPosition, undoSize]);
 
 
     useEffect(() => { 

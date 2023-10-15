@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {createContext,useState} from "react";
 import "../../css/act-sidebar.css";
 import SheetIcon from "../DraggableIcons/sheet_icon";
 import EmojiIcon from "../DraggableIcons/emoji_icon";
@@ -26,7 +26,6 @@ const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis, noteColour}
         console.error("Error creating sticky note:", error);
       });
   };
-
 
 
   function handleRemove(index) {
@@ -63,34 +62,35 @@ const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis, noteColour}
 
  
   return (
- 
-    <div className="ACTSidebar">
-      <div className="draggable-container">
-    
-        {/* Add draggable components here */}
-        <div className="draggable-item sheet" onClick={() => handleIconAdded(50, 50)}>
-        <SheetIcon/>
-        </div>
 
-        <div className="draggable-item-emoji" onClick={() => setShowPicker(val => !val)}>
-            <EmojiIcon/>
-            <div className = "emoji-container-picker" onClick={(e) => {e.stopPropagation();}}>
-              {showPicker && <EmojiPicker
-                pickerStyle={{
-                width: '150px',
-                fontSize: '12px', 
-                padding: '5px' }}
-                onEmojiClick={onEmojiClick}/>
-                }
-              
-            </div>
+      <div className="ACTSidebar">
+        <div className="draggable-container">
+      
+          {/* Add draggable components here */}
+          <div className="draggable-item sheet" onClick={() => handleIconAdded(50, 50)}>
+          <SheetIcon/>
+          </div>
+
+          <div className="draggable-item-emoji" onClick={() => setShowPicker(val => !val)}>
+              <EmojiIcon/>
+              <div className = "emoji-container-picker" onClick={(e) => {e.stopPropagation();}}>
+                {showPicker && <EmojiPicker
+                  pickerStyle={{
+                  width: '150px',
+                  fontSize: '12px', 
+                  padding: '5px' }}
+                  onEmojiClick={onEmojiClick}/>
+                  }
+                
+              </div>
+          </div>
+          <div className="draggable-item move">
+            <BluePointerIcon></BluePointerIcon>
+          </div>
+          
         </div>
-        <div className="draggable-item move">
-          <BluePointerIcon></BluePointerIcon>
-        </div>
-        
       </div>
-    </div>
+
   );
 };
 

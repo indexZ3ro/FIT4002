@@ -4,6 +4,9 @@ import Draggable from "react-draggable";
 import axios from "axios";
 import LocalChangeContext from "../../contexts/LocalChangeContext";
 import {Rnd} from "react-rnd";
+import useHistoryState from "../HistoryProvider";
+
+
 const Emoji = ({id,x,y,width = 75, height= 75,scale,url,projectId}) => {
   const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -11,10 +14,11 @@ const Emoji = ({id,x,y,width = 75, height= 75,scale,url,projectId}) => {
   const [isInitialMount, setIsInitialMount] = useState(true); // Flag to track initial mount
 
   const [Emojiurl, setEmojiURL] = useState(url || "");
-  const [position, setPosition] = useState({ x, y });
+  const [position, setPosition,undoPosition] = useHistoryState({ x, y });
+  const [size, setSize,undoSize] = useHistoryState({ width, height }); 
+
   const [isHovered, setIsHovered] = useState(false);
   const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
-  const [size, setSize] = useState({ width, height }); 
 
   const handleDragStop = (e, ui) => {
     setPosition({ x: ui.lastX, y: ui.lastY });
@@ -35,6 +39,18 @@ const Emoji = ({id,x,y,width = 75, height= 75,scale,url,projectId}) => {
     console.log(x, y);
 }, [width, height]);
 
+useEffect(() => {
+  const handleKeyDown = (e) => {
+      if (e.ctrlKey && e.key === 'z') {
+     
+          undoPosition();
+          undoSize();
+          setIsUpdated(true);
+      }
+  };
+  window.addEventListener('keydown', handleKeyDown);
+  return () => window.removeEventListener('keydown', handleKeyDown);
+}, [undoPosition, undoSize]);
 
   useEffect(()=> {
        // Make the axios request to update the emoji  on the server
