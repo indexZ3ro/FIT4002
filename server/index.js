@@ -11,6 +11,14 @@ const admin = require("firebase-admin");
 const serviceAccount = require("../project-5389016526708021196-firebase-adminsdk-hitz3-cab5dbb661.json");
 const { stat } = require("fs");
 const { isSet } = require("util/types");
+const colourArr = [
+  "#82ff76",
+  "#8f97d4",
+  "#ea759e",
+  "#ffe4b5",
+  "#f1ffa6",
+  "#7dadff"
+];
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -70,14 +78,14 @@ app.get("/api/project/:projectKey/sticky-notes", (req, res) => {
 // create sticky note
 app.post("/api/sticky-notes", (req, res) => {
   const projectKey = req.body.projectKey;
-  const { x, y, text, height, width } = req.body;
+  const { x, y, text, height, width, noteColour } = req.body;
   const notesRef = admin.database().ref(`Projects/${projectKey}/stickyNotes`);
 
   const newNoteRef = notesRef.push();
   const newNoteId = newNoteRef.key; // Get the newly generated ID
   console.log(text)
   newNoteRef
-    .set({ text, x, y, height,width })
+    .set({ text, x, y, height,width, noteColour })
     .then(() => {
       res
         .status(201)
@@ -178,37 +186,6 @@ app.post("/api/questions", (req, res) => {
     });
 });
 
-app.put("/api/questions/:questionId", (req, res) => {
-  const { questionId } = req.params;
-  const { projectKey } = req.body;
-  const questionRef = admin.database().ref(`Projects/${projectKey}/questions`);
-
-  questionRef
-    .once("value")
-    .then((snapshot) => {
-      const questionsData = snapshot.val();
-
-      // Loop through the questions and update their status
-      Object.keys(questionsData).forEach((key) => {
-        if (key === questionId) {
-          // Update the selected question to "active"
-          questionRef.child(key).update({ status: "active" });
-        } else {
-          // Update all other questions to "inactive"
-          questionRef.child(key).update({ status: "inactive" });
-        }
-      });
-
-      // TODO: Ensure selected question loads for each user
-
-      res.status(200).json({ message: "Status updated successfully" });
-    })
-    .catch((error) => {
-      console.error("Error updating status: ", error);
-      res.status(500).json({ error: "Internal server error" });
-    });
-});
-
 // API route for updating a question
 app.put("/api/questionDesc/:questionId", (req, res) => {
   const { questionId } = req.params;
@@ -236,6 +213,41 @@ app.put("/api/questionDesc/:questionId", (req, res) => {
     });
 });
 
+// Updated question by type
+app.post("/api/questionTypeUpdate", (req, res) => {
+  const { projectId, type, text } = req.body;
+  
+  // Reference to all questions of the specified project
+  const questionsRef = admin.database().ref(`Projects/${projectId}/questions`);
+
+  // Fetching all questions and then filtering the one with the specified type
+  questionsRef.once('value')
+    .then(snapshot => {
+      const questions = snapshot.val();
+      const updates = {};
+
+      // Loop through the questions to find the one with the specified type
+      for (let id in questions) {
+        if (questions[id].type === parseInt(type, 10)) {
+            // Set the selected question to active and update its text
+            updates[id] = { ...questions[id], text, status: "active" };
+          } else {
+            // Set other questions to inactive
+            updates[id] = { ...questions[id], status: "inactive" };
+          }
+      }
+      return questionsRef.update(updates);
+    })
+    .then(() => {
+      res.status(200).json({ message: 'Question updated and others set to inactive' });
+    })
+    .catch(error => {
+        console.error('Error updating questions:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    });
+});
+
+
 // create a new project and return it
 app.post("/api/createProject", (req, res) => {
   const { projectName, userID, userName } = req.body;
@@ -247,6 +259,9 @@ app.post("/api/createProject", (req, res) => {
   const question2Id = admin.database().ref().push().key;
   const question3Id = admin.database().ref().push().key;
   const question4Id = admin.database().ref().push().key;
+
+  const currentDate = new Date();
+  const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
 
   const min = 100000; // Minimum 6-digit number
   const max = 999999;
@@ -276,9 +291,11 @@ app.post("/api/createProject", (req, res) => {
     },
   };
 
+  var randChoice = Math.floor(Math.random() * (colourArr.length));
   const usersArr = {
     [userID]: {
-      colour: "green",
+      colour: colourArr[randChoice],
+      status: "Active"
     },
   };
 
@@ -292,6 +309,7 @@ app.post("/api/createProject", (req, res) => {
         userName: userName,
       },
       users: usersArr,
+      dateCreated: formattedDate
     })
     .then(() => {
       res.status(200).json({
@@ -329,6 +347,31 @@ app.get("/api/getAccessCode/:projectKey/:userID", (req, res) => {
     });
 });
 
+app.get("/api/getUserColour/:projectKey/:userID", async (req, res) => {
+
+  const { projectKey, userID } = req.params;
+  const userRef = admin.database().ref(`Projects/${projectKey}/users`);
+
+  userRef
+    .child(userID)
+    .once("value")
+    .then((snapshot) => {
+
+      if (snapshot.exists()) {
+        // Get Colour
+        res.json({ message: "Colour found", colour: snapshot.val().colour });
+      } else {
+        console.error("Error finding user:", error);
+        res.status(500).json({ error: "Internal server error" });
+      }
+      
+    })
+    .catch((error) => {
+      console.error("Error finding user:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
 app.post("/api/addUserToMatrix", (req, res) => {
   const { projectKey, userID } = req.body;
   const userRef = admin.database().ref(`Projects/${projectKey}/users`);
@@ -341,10 +384,14 @@ app.post("/api/addUserToMatrix", (req, res) => {
         // If the User exists in the Matrix, return success
         res.status(200).json({ message: "User exists in Matrix" });
       } else {
+      
+        var randChoice = Math.floor(Math.random() * (colourArr.length));
+
         // To add user to the Matrix (No form of validation on if they should be added)
         const userNode = {
           [userID]: {
-            colour: "blue",
+            colour: colourArr[randChoice],
+            status: "Active"
           },
         };
 
@@ -358,6 +405,22 @@ app.post("/api/addUserToMatrix", (req, res) => {
             res.status(500).json({ error: "Internal server error" });
           });
       }
+    })
+    .catch((error) => {
+      console.error("Error finding user:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+app.put("/api/removeUserFromMatrix", (req, res) => {
+  const { projectKey, userID } = req.body;
+  const userRef = admin.database().ref(`Projects/${projectKey}/users`);
+  userRef
+    .child(userID)
+    .update( { status: "Inactive" } )
+    .then(() => {
+      // To remove user from the Matrix (No form of validation on if they exist)
+      res.status(201).json({ message: "User removed successfully" });
     })
     .catch((error) => {
       console.error("Error finding user:", error);
@@ -432,10 +495,13 @@ app.post("/api/joinMatrix", async (req, res) => {
         projectKey: projectKey,
       });
     } else {
+
+      var randChoice = Math.floor(Math.random() * (colourArr.length));
       // Add user to matrix
       const userNode = {
         [userID]: {
-          colour: "blue",
+          colour: colourArr[randChoice],
+          status: "Active"
         },
       };
 
@@ -473,16 +539,18 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
         const promise = usersRef
           .once("value")
           .then((userSnapshot) => {
-            if (userSnapshot.exists() && userSnapshot.hasChild(userID)) {
+            if (userSnapshot.exists() && userSnapshot.hasChild(userID) && userSnapshot.child(userID).val().status === 'Active') {
               const projectName = projectSnapshot.val().name; // Corrected property name
               const adminUser = projectSnapshot.val().admin;
               const adminUserName = adminUser ? adminUser.userName || "" : "";
+              const dateCreated = projectSnapshot.val().dateCreated
 
               const project = {
                 projectKey: projectKey,
                 projectName: projectName,
                 adminUser: adminUser.userID,
                 adminUserName: adminUserName,
+                dateCreated: dateCreated
               };
 
               return project;
@@ -516,13 +584,13 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
 // API route for post a Emoji
 app.post("/api/emoji", (req, res) => {
   const projectKey = req.body.projectKey;
-  const { x, y, url } = req.body;
+  const { x, y, url, height, width  } = req.body;
   const emojiRef = admin.database().ref(`Projects/${projectKey}/emoji`);
 
   const newEmojiRef = emojiRef.push();
   const newEmojiId = newEmojiRef.key; // Get the newly generated ID
   newEmojiRef
-    .set({ url, x, y })
+    .set({ url, x, y,height,width })
     .then(() => {
       res
         .status(201)
@@ -537,19 +605,19 @@ app.post("/api/emoji", (req, res) => {
 // API route for updating an existing emoji
 app.put("/api/emoji/:emojiID", (req, res) => {
   const { emojiID } = req.params;
-  const { projectKey, x, y, url } = req.body;
+  const { projectKey, x, y, url, height, width} = req.body;
   const emojiRef = admin.database().ref(`Projects/${projectKey}/emoji`);
 
   emojiRef
     .child(emojiID)
-    .update({ x, y, url }) // Update the sticky note data
+    .update({ x, y, url,height, width }) // Update the sticky note data
     .then(() => {
       // Send a success response back to the client
       res.status(200).json({ message: "Emoji updated successfully", x: x });
 
       // If you want to notify clients about the update, you can do it here
       // For example, you can use a WebSocket to send real-time updates to connected clients
-      const updatedEmojiData = { id: emojiID, x, y, url };
+      const updatedEmojiData = { id: emojiID, x, y, url,height, width };
       wss.clients.forEach((client) => {
         client.send(JSON.stringify(updatedEmojiData));
       });
@@ -582,26 +650,27 @@ app.delete("/api/emoji/:emojiId", (req, res) => {
 // Create a web server to serve files and listen to WebSocket connections
 const server = http.createServer(app);
 
+// Unused
 // Connect any incoming WebSocket connection
 const wss = new WebSocket.Server({ server });
 
-// Realtime Database event listeners
-const db = admin.database();
-const notesRef = db.ref("project/stickyNotes");
+// // Realtime Database event listeners
+// const db = admin.database();
+// const notesRef = db.ref("project/stickyNotes");
 
-// Send data to clients when data changes in the Realtime Database
-notesRef.on("value", (snapshot) => {
-  const notesData = snapshot.val();
-  const dataToSend = Object.entries(notesData || {}).map(([key, value]) => ({
-    ...value,
-    id: key,
-  }));
-  wss.clients.forEach((client) => {
-    client.send(JSON.stringify(dataToSend));
-  });
+// // Send data to clients when data changes in the Realtime Database
+// notesRef.on("value", (snapshot) => {
+//   const notesData = snapshot.val();
+//   const dataToSend = Object.entries(notesData || {}).map(([key, value]) => ({
+//     ...value,
+//     id: key,
+//   }));
+//   wss.clients.forEach((client) => {
+//     client.send(JSON.stringify(dataToSend));
+//   });
 
-  console.log("Data received from Realtime Database:", dataToSend);
-});
+//   console.log("Data received from Realtime Database:", dataToSend);
+// });
 
 server.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

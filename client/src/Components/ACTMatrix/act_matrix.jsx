@@ -7,6 +7,10 @@ import { auth } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Hook from "../../assets/Hook.png";
+import Heart from "../../assets/Heart.png";
+import Camera from "../../assets/Camera.png";
+import arrow from "../../assets/Arrow.svg";
 import Axis from "../../assets/matrix-axis.svg";
 
 const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
@@ -93,12 +97,36 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
             onMouseMove={handleMouseMove}
         >
             <div
-                className={`infiniteCanvas ${isDragging ? "grabbing" : ""}`}
-                ref={canvasRef}
-            >
-                <img className="act-axis" src={Axis}></img>
+              id="infiniteCanvas"
+              className={`infiniteCanvas ${isDragging ? "grabbing" : ""}`}
+              ref={canvasRef}
+            >   
+                <div className="away">Away</div>
+                <img src={arrow} alt="Arrow X" className="arrow-x-negative" />
+                <div className="line-x"></div>
+                <div className="towards">Towards</div>
+                <img src={arrow} alt="Arrow X" className="arrow-x" />
 
-                {/* negative y */}
+                <div className="inside">Inside</div>
+                <img  src={arrow} alt="Arrow Y" className="arrow-y-positive" />
+                <div className="line-y"></div>
+                <div className="outside">Outside</div>
+                <img  src={arrow} alt="Arrow Y" className="arrow-y" />
+
+                <div className="grid-container">
+                    <div className="quadrant">
+                        <img className="act-image top-left" src={Hook} />
+                    </div>
+                    <div className="quadrant">
+                        <img className="act-image top-right" src={Heart} />
+                    </div>
+                    <div className="quadrant">
+                        <img className="act-image bottom-left" src={Camera} />
+                    </div>
+                    <div className="quadrant">
+                        <img className="act-image bottom-right" src={Camera} />
+                    </div>
+                </div>
                 {/* stickynotes */}
                 {notes.map((note) => (
                     <Note
@@ -111,6 +139,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                         text={note.text}
                         scale={scale}
                         projectId={projectId}
+                        noteColour={note.noteColour}
                     />
                 ))}
                 {emojis.map((emoji) => (
@@ -119,7 +148,10 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                         id={emoji.id}
                         x={emoji.x}
                         y={emoji.y}
+                        width={emoji.width}
+                        height={emoji.height}
                         url={emoji.url}
+                        scale={scale}
                         projectId={projectId}
                     />
                 ))}
