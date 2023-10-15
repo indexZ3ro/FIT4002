@@ -32,11 +32,11 @@
 }
 
 .infiniteCanvas {
-    width: 2000px;
-    height: 2000px;
+    width: 1000px;
+    height: 1000px;
     position: relative;
     left: -10%;
-    top: -60%;
+    top: -10%;
 }
 
 .line-x {
@@ -67,34 +67,34 @@
 
 .away {
     position: absolute;
-    top: 35%;
-    right: 130%;
+    top: 42%;
+    right: 150%;
     font-family: "Gloria Hallelujah", cursive;
-    font-size: 2vw;
+    font-size: 8vw;
 }
 
 .towards {
     position: absolute;
-    top: 35%;
-    right: -35%;
+    top: 42%;
+    right: -75%;
     font-family: "Gloria Hallelujah", cursive;
-    font-size: 2vw;
+    font-size: 8vw;
 }
 
 .inside {
     position: absolute;
-    top: -60%;
-    right: 47%;
+    top: -58%;
+    right: 40%;
     font-family: "Gloria Hallelujah", cursive;
-    font-size: 2vw;
+    font-size: 8vw;
 }
 
 .outside {
     position: absolute;
     top: 145%;
-    right: 46%;
+    right: 38%;
     font-family: "Gloria Hallelujah", cursive;
-    font-size: 2vw;
+    font-size: 8vw;
 }
 
 .line-y {
