@@ -35,8 +35,8 @@
     width: 1000px;
     height: 1000px;
     position: relative;
-    left: -10%;
-    top: -10%;
+    left: 20%;
+    top: -5%;
 }
 
 .line-x {
@@ -67,34 +67,34 @@
 
 .away {
     position: absolute;
-    top: 42%;
+    top: 41%;
     right: 150%;
     font-family: "Gloria Hallelujah", cursive;
-    font-size: 8vw;
+    font-size: 80px;
 }
 
 .towards {
     position: absolute;
-    top: 42%;
-    right: -75%;
+    top: 41%;
+    right: -80%;
     font-family: "Gloria Hallelujah", cursive;
-    font-size: 8vw;
+    font-size: 80px;
 }
 
 .inside {
     position: absolute;
-    top: -58%;
-    right: 40%;
+    top: -60%;
+    right: 38%;
     font-family: "Gloria Hallelujah", cursive;
-    font-size: 8vw;
+    font-size: 80px;
 }
 
 .outside {
     position: absolute;
-    top: 145%;
-    right: 38%;
+    top: 143%;
+    right: 36%;
     font-family: "Gloria Hallelujah", cursive;
-    font-size: 8vw;
+    font-size: 80px;
 }
 
 .line-y {
