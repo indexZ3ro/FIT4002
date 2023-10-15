@@ -32,7 +32,7 @@
 }
 
 .infiniteCanvas {
-    width: 1000px;
+    width: 1750px;
     height: 1000px;
     position: relative;
     left: 20%;
@@ -76,7 +76,7 @@
 .towards {
     position: absolute;
     top: 41%;
-    right: -80%;
+    right: -70%;
     font-family: "Gloria Hallelujah", cursive;
     font-size: 80px;
 }
@@ -84,7 +84,7 @@
 .inside {
     position: absolute;
     top: -60%;
-    right: 38%;
+    right: 40%;
     font-family: "Gloria Hallelujah", cursive;
     font-size: 80px;
 }
