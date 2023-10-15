@@ -38,10 +38,26 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
     };
     const calculateFontSize = () => {
         const textLength = noteText.length;
+        const area = size.width * size.height;
+    
+        // You may need to adjust these constants to get the desired result
+        const maxTextLength = 200; // Adjust based on your specific use case
+        const maxArea = 400 * 400; // Adjust to the maximum expected area of the note
+    
+        // Initial large font size and minimum font size cap
         const maxFontSize = 40;
         const minFontSize = 16;
-        const fontSize = maxFontSize - (textLength * (maxFontSize - minFontSize)) / 50;
-        return `${Math.max(fontSize, minFontSize)}px`;
+    
+        // Calculate reductions in font size based on text length and note area
+        const textLengthProportion = Math.min(textLength, maxTextLength) / maxTextLength;
+        const areaProportion = area / maxArea;
+    
+        // Calculate final font size based on both proportions, ensuring it stays within min and max bounds
+        const fontSize = maxFontSize - 
+                         (maxFontSize - minFontSize) * 
+                         Math.max(textLengthProportion, areaProportion);
+    
+        return `${Math.max(minFontSize, Math.min(maxFontSize, fontSize))}px`;
     };
           
     const handleTextareaFocus = () => {
@@ -146,7 +162,7 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
                         className="note-text"
                         onClick={handleTextareaClick}
                         value={noteText}
-                        onFocus={handleTextareaFocus}
+                   
                         onBlur={handleTextareaBlur}
                         onChange={handleNoteTextChange}
                         onDrop={handleDrop}
