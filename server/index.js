@@ -538,8 +538,57 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
     snapshot.forEach((projectSnapshot) => {
       const projectKey = projectSnapshot.key;
       const usersRef = projectRef.child(`${projectKey}/users`);
-
+      const notesRef = projectRef.child(`${projectKey}/stickyNotes`);
+      var score = 0;
       if (projectSnapshot.exists()) {
+        if (projectSnapshot.hasChild("Reviews")) {
+          const reviewsRef = projectSnapshot.child("Reviews");
+          const reviewsArray = [];
+
+          // Loop through review sections
+          reviewsRef.forEach((reviewSection) => {
+            const dateTime = reviewSection.child("date_time").val();
+            const scores = reviewSection.child("scores").val();
+            const reviewData = {
+              dateTime,
+              scores,
+              // Add any other relevant data you want to include from the review
+            };
+            reviewsArray.push(reviewData);
+          });
+
+          // Sort the reviewsArray based on dateTime in descending order
+          reviewsArray.sort(
+            (a, b) => new Date(b.dateTime) - new Date(a.dateTime)
+          );
+
+          // The most recent review will be the first element in the sorted array
+          const mostRecentReview = reviewsArray[0];
+          const scoreNodes = mostRecentReview.scores;
+          var localScore = 0;
+          var counter = 0;
+          Object.keys(scoreNodes).forEach((scoreId) => {
+            var individualScore = scoreNodes[scoreId];
+            if (individualScore != "null") {
+              localScore += parseFloat(individualScore);
+              counter += 1;
+            }
+          });
+
+          if (counter > 0) {
+            score = localScore / counter;
+          }
+        }
+
+        var numNotes = 0;
+        const notes = notesRef.once("value").then((notesSnapshot) => {
+          numNotes = notesSnapshot.numChildren();
+          if (notesSnapshot.exists()) {
+            numNotes = notesSnapshot.numChildren();
+          } else {
+            numNotes = 0;
+          }
+        });
         const promise = usersRef
           .once("value")
           .then((userSnapshot) => {
@@ -552,6 +601,7 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
               const adminUser = projectSnapshot.val().admin;
               const adminUserName = adminUser ? adminUser.userName || "" : "";
               const dateCreated = projectSnapshot.val().dateCreated;
+              const numUsers = userSnapshot.numChildren();
 
               const project = {
                 projectKey: projectKey,
@@ -559,6 +609,9 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
                 adminUser: adminUser.userID,
                 adminUserName: adminUserName,
                 dateCreated: dateCreated,
+                numUsers: numUsers,
+                numNotes: numNotes,
+                score: score,
               };
 
               return project;
@@ -676,6 +729,61 @@ app.get("/api/checkAdminAccess/:projectKey/:userID", (req, res) => {
       console.error("Error checking admin access:", error);
       res.status(500).json({ error: "Failed to check admin access" });
     });
+});
+
+// Add a review for a project
+app.post("/api/add-review", async (req, res) => {
+  const { projectId, date_time } = req.body;
+  const projectRef = admin.database().ref(`Projects/${projectId}`);
+  const reviewsRef = projectRef.child("Reviews");
+  const usersRef = projectRef.child("users");
+
+  try {
+    const snapshot = await reviewsRef.once("value");
+    if (!snapshot.exists()) {
+      await projectRef.update({ Reviews: { dummyNode: true } }); // Create Reviews node under the project
+    }
+
+    const newReviewRef = await reviewsRef.push({ date_time, scores: {} });
+
+    const usersSnapshot = await usersRef.once("value");
+    if (usersSnapshot.exists()) {
+      usersSnapshot.forEach((userSnapshot) => {
+        const userId = userSnapshot.key;
+        newReviewRef.child(`scores/${userId}`).set("null"); // Set initial value to null
+      });
+    }
+
+    await projectRef.child("Reviews/dummyNode").remove(); // Remove the dummy node
+
+    res.status(200).json({
+      reviewId: newReviewRef.key,
+    });
+  } catch (error) {
+    console.error("Error adding review:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/api/update-user-review", async (req, res) => {
+  const { projectId, reviewId, userID, score } = req.body;
+
+  try {
+    const projectRef = admin.database().ref(`Projects/${projectId}`);
+    const reviewRef = projectRef.child(`Reviews/${reviewId}/scores`);
+
+    // Update the user's score
+    await reviewRef.child(userID).set(score);
+
+    res.status(200).json({
+      message: "User review updated successfully",
+    });
+  } catch (error) {
+    console.error("Error updating user review:", error);
+    res
+      .status(500)
+      .json({ error: "Internal server error", error: error.message });
+  }
 });
 
 // Create a web server to serve files and listen to WebSocket connections

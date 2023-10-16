@@ -24,56 +24,55 @@ const InfiniteCanvas = () => {
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
     const [isAdmin, setIsAdmin] = useState(false);
 
-  // handle sticky notes state management here
-  const [notes, setNotes] = useState([]);
-  const [questions, setQuestions] = useState([]);
-  const [emojis,setEmojis] = useState([]);
-  const [accessCode, setAccessCode] = useState('');
-  const [noteColour, setNoteColour] = useState(''); 
+    // handle sticky notes state management here
+    const [notes, setNotes] = useState([]);
+    const [questions, setQuestions] = useState([]);
+    const [emojis,setEmojis] = useState([]);
+    const [accessCode, setAccessCode] = useState('');
+    const [noteColour, setNoteColour] = useState(''); 
+    const [userID, setUserID] = useState('');
 
-  // Fetch all sticky notes from the database when the component mounts
-  useEffect(() => {
-    axios
-      .get(apiUrl + `/api/project/${projectId}/sticky-notes`)
-      .then((response) => {
-        setNotes(response.data);
-        // console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("apiURL is:" + apiUrl);
-        console.error("Error fetching sticky notes:", error);
-      });
-  }, [projectId, setNotes]);
+    // Fetch all sticky notes from the database when the component mounts
+    useEffect(() => {
+        axios
+            .get(apiUrl + `/api/project/${projectId}/sticky-notes`)
+            .then((response) => {
+                setNotes(response.data);
+            })
+            .catch((error) => {
+                console.error("apiURL is:" + apiUrl);
+                console.error("Error fetching sticky notes:", error);
+            });
+    }, [projectId, setNotes]);
 
-  // Load in saved matrix data from database
-  useEffect(() => {
+    // Load in saved matrix data from database
+    useEffect(() => {
 
-    onAuthStateChanged(auth, (user) => {
-
-      if (user) {
-          axios.get(apiUrl + `/api/getUserColour/${projectId}/${user.uid}`)
-          .then((response) => {
-            setNoteColour(response.data.colour);
-          })
-          .catch((error) => {
-
-              console.log("Error getting user note colour:", error);
-          });
-      } else {
-          // User is signed out
-          // ...
-          navigate("/");
-          console.log("User is logged out");
-      }
-      console.log("End")
-    })
-}, []);
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUserID(user.uid);
+                axios.get(apiUrl + `/api/getUserColour/${projectId}/${user.uid}`)
+                .then((response) => {
+                    setNoteColour(response.data.colour);
+                })
+                .catch((error) => {
+                    console.log("Error getting user note colour:", error);
+                });
+            } else {
+                // User is signed out
+                // ...
+                navigate("/");
+                console.log("User is logged out");
+            }
+            console.log("End")
+        })
+    }, []);
 
     // Check Admin Access
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                const userID = user.uid;
+                setUserID(user.uid);
                 axios
                     .get(apiUrl + `/api/checkAdminAccess/${projectId}/${userID}`)
                     .then((response) => {
@@ -285,7 +284,7 @@ const InfiniteCanvas = () => {
             <div className="wrapContainer">
               {/* <img src={StopWatch}></img> */}
               {/* <div className="timer">5:30</div> */}
-              <Timer projectId={projectId} adminAccess={isAdmin} />
+              <Timer projectId={projectId} userID={userID}  adminAccess={isAdmin}/>
             </div>
           </div>
         </div>
@@ -293,7 +292,6 @@ const InfiniteCanvas = () => {
       <div className="bodyContainer">
         <ACTMatrix notes={notes} setNotes={setNotes} emojis ={emojis} setEmojis= {setEmojis} projectId={projectId}/>
         <ACTSidebar notes={notes} setNotes={setNotes} projectId={projectId} emojis ={emojis} setEmojis= {setEmojis} noteColour={noteColour}/>
-
       </div>
     </div>
   );

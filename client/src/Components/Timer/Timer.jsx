@@ -22,10 +22,57 @@ class Timer extends Component {
       currentQuestion: "",
       selectedValue: "1",
       review: false,
+      reviewId: "",
     };
-
     this.timerInterval = null;
     this.apiUrl = process.env.REACT_APP_API_URL; 
+  }
+
+  // Function to handle the Firebase Realtime Database listener
+  handleFirebaseListener = () => {
+    const { projectId, userID } = this.props;
+    const reviewsRef = ref(realtimeDb, `Projects/${projectId}/Reviews`);
+    const userScoresRef = ref(realtimeDb, `Projects/${projectId}/users/${userID}/scores`);
+
+    const unsubscribe = onValue(reviewsRef, (snapshot) => {
+      const reviews = [];
+      snapshot.forEach((childSnapshot) => {
+        const reviewId = childSnapshot.key;
+        const reviewData = childSnapshot.val();
+        reviews.push({ ...reviewData, id: reviewId });
+      });
+
+      // Find the latest review
+      const latestReview = reviews.reduce((latest, review) => {
+        if (!latest || review.date_time > latest.date_time) {
+          return review;
+        }
+        return latest;
+      }, null);
+
+      // Check if the current user's score is null
+      const userScoreIsNull = latestReview && latestReview.scores && latestReview.scores[userID] === "null";
+      latestReview ? this.setState({ review: userScoreIsNull, reviewId:latestReview.id}) : latestReview
+      console.log("latest:", latestReview);
+      // Set the latest review in the state
+    });
+
+    // Store the unsubscribe function in an instance variable to use it in componentWillUnmount
+    this.unsubscribeFirebaseListener = unsubscribe;
+  }
+
+  // Call the Firebase listener setup in componentDidMount
+  componentDidMount() {
+    setTimeout(() => {
+      this.handleFirebaseListener();
+    }, 1000);
+  }
+
+  // Unsubscribe from the Firebase listener in componentWillUnmount
+  componentWillUnmount() {
+    if (this.unsubscribeFirebaseListener) {
+      this.unsubscribeFirebaseListener();
+    }
   }
 
   componentWillUnmount() {
@@ -195,13 +242,26 @@ class Timer extends Component {
     this.setState({ isModalOpen: false });
   };
 
-  reviewMatrix = () => {
-    this.setState({review: true})
+  reviewMatrix = async () => {
+    // this.setState({review: true})
     this.closeModal();
+
+    try {
+      const projectId = this.props.projectId;
+      const date_time = new Date().toISOString();
+
+      // add a review
+      const response = await axios.post(this.apiUrl + '/api/add-review', { projectId, date_time });
+      this.setState({ reviewId: response.data.reviewId });
+      console.log('Review added successfully. Review ID:', response.data.reviewId);
+
+    } catch (error) {
+      console.error('Error adding review:', error);
+    }
   }
 
   render() {
-    const { minutes, seconds, isRunning, isModalOpen, timerFinished, currentQuestion, selectedValue, review} =
+    const { minutes, seconds, isRunning, isModalOpen, timerFinished, currentQuestion, selectedValue, review, reviewId} =
       this.state;
     const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
       seconds
@@ -260,7 +320,7 @@ class Timer extends Component {
             </div>
           </div>
         )}
-        {review && <ReviewStage />}
+        {review && <ReviewStage reviewId={reviewId} projectId={this.props.projectId} userID={this.props.userID} />}
       </div>
       ) : (
         <div
