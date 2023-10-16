@@ -534,23 +534,42 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
     snapshot.forEach((projectSnapshot) => {
       const projectKey = projectSnapshot.key;
       const usersRef = projectRef.child(`${projectKey}/users`);
+      const notesRef = projectRef.child(`${projectKey}/stickyNotes`)
 
       if (projectSnapshot.exists()) {
+        var numNotes = 0;
+        const notes = notesRef
+              .once("value")
+              .then((notesSnapshot) => {
+                numNotes = notesSnapshot.numChildren();
+                if (notesSnapshot.exists()) {
+                  numNotes = notesSnapshot.numChildren();
+                } else {
+                  numNotes = 0;
+                }
+        });
         const promise = usersRef
           .once("value")
           .then((userSnapshot) => {
             if (userSnapshot.exists() && userSnapshot.hasChild(userID) && userSnapshot.child(userID).val().status === 'Active') {
+              
+
+              
+
               const projectName = projectSnapshot.val().name; // Corrected property name
               const adminUser = projectSnapshot.val().admin;
               const adminUserName = adminUser ? adminUser.userName || "" : "";
-              const dateCreated = projectSnapshot.val().dateCreated
+              const dateCreated = projectSnapshot.val().dateCreated;
+              const numUsers = userSnapshot.numChildren();
 
               const project = {
                 projectKey: projectKey,
                 projectName: projectName,
                 adminUser: adminUser.userID,
                 adminUserName: adminUserName,
-                dateCreated: dateCreated
+                dateCreated: dateCreated,
+                numUsers: numUsers,
+                numNotes: numNotes
               };
 
               return project;

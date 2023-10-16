@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import axios from 'axios';
+import ACT from "../assets/ACT.svg";
 
 export const HistoryTile = (props) => {
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -74,7 +75,13 @@ export const HistoryTile = (props) => {
                     }}
                 />
             </div>
-            <div className="history-tile-preview"></div>
+            <div className="history-tile-preview">
+                <img
+                    src={ACT}
+                ></img>
+                <p className="history-image-text-users">Users: {props.numUsers}</p>
+                <p className="history-image-text-notes">Notes: {props.numNotes}</p>
+            </div>
             <h6 className="history-tile-lead">Lead Member: {props.lead}</h6>
             <div
                 className={`history-tile-result ${
