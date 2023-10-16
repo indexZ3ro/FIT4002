@@ -65,7 +65,7 @@
     transform: translateY(-50%) translateX(50%);
 }
 
-.away {
+.arrow-away {
     position: absolute;
     top: 41%;
     right: 150%;

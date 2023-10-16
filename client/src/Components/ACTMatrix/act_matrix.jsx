@@ -100,7 +100,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                 className={`infiniteCanvas ${isDragging ? "grabbing" : ""}`}
                 ref={canvasRef}
             >
-                <div className="away">Away</div>
+                <div className="arrow-away ">Away</div>
                 <img src={arrow} alt="Arrow X" className="arrow-x-negative" />
                 <div className="line-x"></div>
                 <div className="towards">Towards</div>

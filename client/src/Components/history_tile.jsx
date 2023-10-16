@@ -20,7 +20,6 @@ export const HistoryTile = (props) => {
     const [translatedScore, setTranslatedScore] = useState();
     const [loading, setLoading] = useState(true);
 
-    console.log(typeof(props.score));
     const historyOpenMatrix = () => {
         console.log("opened matrix");
         navigate(`/ACTMatrixSession/${projectID}`);
