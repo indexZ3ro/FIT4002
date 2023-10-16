@@ -18,7 +18,7 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
     const [position, setPosition, undoPosition] = useHistoryState({ x, y });
     const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
     const [size, setSize, undoSize] = useHistoryState({ width, height });
-
+  
     if (noteColour === undefined || noteColour === null || noteColour === "") {
         noteColour = "#ffe4b5";
     }
@@ -100,6 +100,7 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
                 undoNoteText();
                 undoPosition();
                 undoSize();
+
                 setIsUpdated(true);
             }
         };
@@ -135,7 +136,7 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
 
     const handleDelete = () => {
         // API request to delete the sticky note from the server
-        
+;
         axios.delete(`${apiUrl}/api/sticky-notes/${id}`, {
                 data: {projectKey: projectId }
             })
@@ -148,6 +149,7 @@ const Note = ({ x, y, id, width = 150, height= 150, text, scale, projectId, note
             });
             
     };
+
     const preventDefault = (event) => {
         event.preventDefault();
       };
