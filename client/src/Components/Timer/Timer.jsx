@@ -130,20 +130,7 @@ class Timer extends Component {
       this.setState({ isRunning: false });
     // }
   };
-
-  // resetTimer = () => {
-  //   const {projectId} = this.props;
-  //   this.stopTimer();
-  //   this.setState({ minutes: 0, seconds: 0, currentQuestion:"" });
-  //   const timerRef = ref(realtimeDb, `Projects/${projectId}/timer`);
-  //   set(timerRef,{
-  //     startAt: serverTimestamp(),
-  //     minutes: 0,
-  //     seconds: 0
-  //   });
-  //   console.log("timer reset")
-  // };
-
+  
   resetTimer = () => {
     const { projectId, adminAccess } = this.props;
 
