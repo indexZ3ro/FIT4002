@@ -30,7 +30,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
     };
 
     const handleMouseDown = (e) => {
-        if (e.button === 1) {
+        if (e.button === 0) {
             e.preventDefault();
             setIsDragging(true);
             setLastMousePosition({ x: e.clientX, y: e.clientY });
@@ -38,7 +38,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
     };
 
     const handleMouseUp = (e) => {
-        if (e.button === 1) {
+        if (e.button === 0) {
             setIsDragging(false);
         }
     };

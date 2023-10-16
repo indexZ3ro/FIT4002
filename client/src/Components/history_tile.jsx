@@ -20,6 +20,7 @@ export const HistoryTile = (props) => {
     const [translatedScore, setTranslatedScore] = useState();
     const [loading, setLoading] = useState(true);
 
+    console.log(typeof(props.score));
     const historyOpenMatrix = () => {
         console.log("opened matrix");
         navigate(`/ACTMatrixSession/${projectID}`);
@@ -51,9 +52,9 @@ export const HistoryTile = (props) => {
     };
 
     useEffect(() => {
-        if (props.score <= 3) {
+        if (props.score <= -2) {
             setTranslatedScore(0);
-        } else if (props.score > 3 && props.score <= 7) {
+        } else if (props.score > -2 && props.score <= 2) {
             setTranslatedScore(1);
         } else {
             setTranslatedScore(2);
@@ -91,9 +92,9 @@ export const HistoryTile = (props) => {
                 <>
                     <h6
                         className={`history-matrix-score ${
-                            props.score <= 2.5 ? "away" : ""
+                            props.score <= -2.5 ? "away" : ""
                         } ${
-                            props.score > 2.5 && props.score < 7.5
+                            props.score > -2.5 && props.score < 2.5
                                 ? "neutral"
                                 : ""
                         }`}
