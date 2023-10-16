@@ -535,8 +535,46 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
       const projectKey = projectSnapshot.key;
       const usersRef = projectRef.child(`${projectKey}/users`);
       const notesRef = projectRef.child(`${projectKey}/stickyNotes`)
-
+      var score = 0;
       if (projectSnapshot.exists()) {
+        if (projectSnapshot.hasChild('Reviews')) {
+          const reviewsRef = projectSnapshot.child('Reviews');
+          const reviewsArray = [];
+
+          // Loop through review sections
+          reviewsRef.forEach(reviewSection => {
+            const dateTime = reviewSection.child('date_time').val();
+            const scores = reviewSection.child('scores').val();
+            const reviewData = {
+              dateTime,
+              scores,
+              // Add any other relevant data you want to include from the review
+            };
+            reviewsArray.push(reviewData);
+          });
+
+          // Sort the reviewsArray based on dateTime in descending order
+          reviewsArray.sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
+
+          // The most recent review will be the first element in the sorted array
+          const mostRecentReview = reviewsArray[0];
+          const scoreNodes = mostRecentReview.scores;
+          var localScore = 0;
+          var counter = 0;
+          Object.keys(scoreNodes).forEach(scoreId => {
+            var individualScore = scoreNodes[scoreId];
+            if (individualScore != "null") {
+              localScore += parseFloat(individualScore);
+              counter += 1;
+            }
+          });
+
+          if (counter > 0) {
+            score = localScore / counter;
+          }
+        }
+
+
         var numNotes = 0;
         const notes = notesRef
               .once("value")
@@ -552,9 +590,6 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
           .once("value")
           .then((userSnapshot) => {
             if (userSnapshot.exists() && userSnapshot.hasChild(userID) && userSnapshot.child(userID).val().status === 'Active') {
-              
-
-              
 
               const projectName = projectSnapshot.val().name; // Corrected property name
               const adminUser = projectSnapshot.val().admin;
@@ -569,7 +604,8 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
                 adminUserName: adminUserName,
                 dateCreated: dateCreated,
                 numUsers: numUsers,
-                numNotes: numNotes
+                numNotes: numNotes,
+                score: score
               };
 
               return project;

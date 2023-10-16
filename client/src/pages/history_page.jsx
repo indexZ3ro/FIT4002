@@ -52,7 +52,7 @@ const HistoryPage = () => {
                             lead={matrix.adminUserName}
                             numUsers={matrix.numUsers}
                             numNotes={matrix.numNotes}
-                            // score={matrix.score}
+                            score={matrix.score}
                         />
                     );
                 })}
