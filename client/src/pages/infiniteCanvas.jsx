@@ -22,6 +22,7 @@ const InfiniteCanvas = () => {
     const apiUrl = process.env.REACT_APP_API_URL;
     const { projectId } = useParams();
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
+    const [isAdmin, setIsAdmin] = useState(false);
 
   // handle sticky notes state management here
   const [notes, setNotes] = useState([]);
@@ -36,7 +37,7 @@ const InfiniteCanvas = () => {
       .get(apiUrl + `/api/project/${projectId}/sticky-notes`)
       .then((response) => {
         setNotes(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         console.error("apiURL is:" + apiUrl);
@@ -68,16 +69,18 @@ const InfiniteCanvas = () => {
     })
 }, []);
 
-    // Get access code for Admin user
+    // Check Admin Access
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const userID = user.uid;
                 axios
-                    .get(apiUrl + `/api/getAccessCode/${projectId}/${userID}`)
+                    .get(apiUrl + `/api/checkAdminAccess/${projectId}/${userID}`)
                     .then((response) => {
                         if (response.data !== false) {
-                            setAccessCode(response.data);
+                            setIsAdmin(response.data);
+                        }else{
+                            setIsAdmin(false);
                         }
                     })
                     .catch((error) => {
@@ -93,13 +96,38 @@ const InfiniteCanvas = () => {
         });
     }, []);
 
+        // Get access code for Admin user
+        useEffect(() => {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    const userID = user.uid;
+                    axios
+                        .get(apiUrl + `/api/getAccessCode/${projectId}/${userID}`)
+                        .then((response) => {
+                            if (response.data !== false) {
+                                setAccessCode(response.data);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("apiURL is:" + apiUrl);
+                            console.error("Error fetching sticky notes:", error);
+                        });
+                } else {
+                    // User is signed out
+                    // ...
+                    navigate("/");
+                    console.log("User is logged out");
+                }
+            });
+        }, []);
+
     // Get the Question
     useEffect(() => {
         axios
             .get(apiUrl + `/api/project/${projectId}/questions`)
             .then((response) => {
                 setQuestions(response.data);
-                console.log(response.data);
+                // console.log(response.data);
             })
             .catch((error) => {
                 console.error("Error fetching questions:", error);
@@ -143,7 +171,7 @@ const InfiniteCanvas = () => {
                 }
             });
             // Log the updated notes to the console
-            console.log("Updated notes:", updatedNotes);
+            // console.log("Updated notes:", updatedNotes);
             setNotes(updatedNotes);
         });
 
@@ -189,7 +217,7 @@ const InfiniteCanvas = () => {
                 }
             });
             // Log the updated notes to the console
-            console.log("Updated Emoji:", updatedEmoji);
+            // console.log("Updated Emoji:", updatedEmoji);
             setEmojis(updatedEmoji);
         });
 
@@ -200,7 +228,7 @@ const InfiniteCanvas = () => {
 
   //Firebase Realtime Database listener for question updates
   useEffect(() => {
-    console.log("Listener");
+    // console.log("Listener");
     const questionRef = ref(realtimeDb, `Projects/${projectId}/questions`);
 
     const unsubscribe = onValue(questionRef, (snapshot) => {
@@ -230,7 +258,7 @@ const InfiniteCanvas = () => {
           }
         });
         // Log the updated questions to the console
-        console.log("Updated Questions:", updatedQuestion);
+        // console.log("Updated Questions:", updatedQuestion);
         setQuestions(updatedQuestion);
       });
 
@@ -257,7 +285,7 @@ const InfiniteCanvas = () => {
             <div className="wrapContainer">
               {/* <img src={StopWatch}></img> */}
               {/* <div className="timer">5:30</div> */}
-              <Timer projectId={projectId} />
+              <Timer projectId={projectId} adminAccess={isAdmin} />
             </div>
           </div>
         </div>

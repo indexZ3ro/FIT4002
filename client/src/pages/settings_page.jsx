@@ -14,11 +14,6 @@ const Settings = () => {
     const [userId, setUserId] = useState("");
     const [error, setError] = useState("");
 
-    function reauthWithGoogle() {
-        const loginAuth = getAuth();
-        return reauthenticateWithPopup(loginAuth, googleProvider)
-    }
- 
     const update = () => {
         // TO DO
         const currentUser = auth.currentUser;

@@ -48,7 +48,7 @@ const ACTQuestions = ({ id, text, type, projectId }) => {
       .get(apiUrl + `/api/project/${projectId}/questions`)
       .then((response) => {
         setQuestions(response.data);
-        console.log(response.data);
+        // console.log(response.data);
 
         questions.forEach((question) => {
           if (question.status == "active") {
