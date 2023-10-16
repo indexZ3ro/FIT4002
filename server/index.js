@@ -647,6 +647,64 @@ app.delete("/api/emoji/:emojiId", (req, res) => {
     });
 });
 
+// Add a review for a project
+app.post("/api/add-review", async (req, res) => {
+  const { projectId, date_time } = req.body;
+  const projectRef = admin.database().ref(`Projects/${projectId}`);
+  const reviewsRef = projectRef.child("Reviews");
+  const usersRef = projectRef.child("users");
+
+  try {
+    const snapshot = await reviewsRef.once("value");
+    if (!snapshot.exists()) {
+      await projectRef.update({ Reviews: { dummyNode: true } }); // Create Reviews node under the project
+    }
+
+    const newReviewRef = await reviewsRef.push({ date_time, scores: {} });
+
+    const usersSnapshot = await usersRef.once("value");
+    if (usersSnapshot.exists()) {
+      usersSnapshot.forEach((userSnapshot) => {
+        const userId = userSnapshot.key;
+        newReviewRef.child(`scores/${userId}`).set("null"); // Set initial value to null
+      });
+    }
+
+    await projectRef.child("Reviews/dummyNode").remove(); // Remove the dummy node
+
+    res.status(200).json({
+      reviewId: newReviewRef.key,
+    });
+  } catch (error) {
+    console.error("Error adding review:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/api/update-user-review", async (req, res) => {
+  const { projectId, reviewId, userID, score } = req.body;
+
+  try {
+    const projectRef = admin.database().ref(`Projects/${projectId}`);
+    const reviewRef = projectRef.child(`Reviews/${reviewId}/scores`);
+
+    // Update the user's score
+    await reviewRef.child(userID).set(score);
+
+    res.status(200).json({
+      message: "User review updated successfully",
+    });
+  } catch (error) {
+    console.error("Error updating user review:", error);
+    res.status(500).json({ error: "Internal server error", error: error.message });
+  }
+});
+
+
+
+
+
+
 // Create a web server to serve files and listen to WebSocket connections
 const server = http.createServer(app);
 

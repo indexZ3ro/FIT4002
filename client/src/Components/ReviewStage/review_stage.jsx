@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import locationPin from '../../assets/locationPin.svg';
+import axios from "axios";
 
-const ReviewStage = () => {
+const ReviewStage = ({reviewId, projectId, userID}) => {
     const [isDragging, setIsDragging] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(true);
+    const apiUrl = process.env.REACT_APP_API_URL; 
 
     const startDragging = (e) => {
         e.preventDefault();
@@ -36,7 +38,26 @@ const ReviewStage = () => {
 
         // calculate the horizontal center of the matrix container
         const horizontalCenter = matrixRect.width / 2;
+
+        // Calculate the percentage width rounded to the nearest 10
+        let percentageWidth = Math.round((relativeX - horizontalCenter) / (matrixRect.width*1.8 / 2) * 10) * 10;
+        percentageWidth > 100 ? percentageWidth = 100 : percentageWidth;
+        percentageWidth < -100 ? percentageWidth = -100 : percentageWidth;
+        percentageWidth = percentageWidth / 20;
+        console.log('Percentage Width:', percentageWidth);
         console.log('X', relativeX - horizontalCenter);
+
+        // Update the user's score using an API call
+        const score = percentageWidth;
+
+        // update the user's review score
+        axios.post(apiUrl + '/api/update-user-review', { projectId, reviewId, userID, score })
+            .then(response => {
+                console.log('User review updated successfully:', response.data.message);
+            })
+            .catch(error => {
+                console.error('Error updating user review:', error);
+        });
     };
 
     return (
