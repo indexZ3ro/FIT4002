@@ -19,6 +19,7 @@ class Timer extends Component {
       currentQuestion: "",
       selectedValue: "1",
       review: false,
+      reviewId: "",
     };
 
     this.timerInterval = null;
@@ -111,13 +112,26 @@ class Timer extends Component {
     this.setState({ isModalOpen: false });
   };
 
-  reviewMatrix = () => {
+  reviewMatrix = async () => {
     this.setState({review: true})
     this.closeModal();
+
+    try {
+      const projectId = this.props.projectId;
+      const date_time = new Date().toISOString();
+
+      // add a review
+      const response = await axios.post(this.apiUrl + '/api/add-review', { projectId, date_time });
+      this.setState({ reviewId: response.data.reviewId });
+      console.log('Review added successfully. Review ID:', response.data.reviewId);
+
+    } catch (error) {
+      console.error('Error adding review:', error);
+    }
   }
 
   render() {
-    const { minutes, seconds, isRunning, isModalOpen, timerFinished, currentQuestion, selectedValue, review} =
+    const { minutes, seconds, isRunning, isModalOpen, timerFinished, currentQuestion, selectedValue, review, reviewId} =
       this.state;
     const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
       seconds
@@ -174,7 +188,7 @@ class Timer extends Component {
             </div>
           </div>
         )}
-        {review && <ReviewStage />}
+        {review && <ReviewStage reviewId={reviewId} projectId={this.props.projectId} userID={this.props.userID} />}
       </div>
     );
   }
