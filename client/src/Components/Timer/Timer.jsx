@@ -1,9 +1,11 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import StopWatch from "../../assets/stopwatch.svg";
 import "../../css/Timer.css";
 import IconsDropdown from "../ACTQuestions/icons_dropdown";
 import axios from 'axios';
 import ReviewStage from '../ReviewStage/review_stage';
+import { ref, onValue } from 'firebase/database';
+import { realtimeDb } from '../../firebase'; 
 
 
 class Timer extends Component {
@@ -21,9 +23,55 @@ class Timer extends Component {
       review: false,
       reviewId: "",
     };
-
     this.timerInterval = null;
     this.apiUrl = process.env.REACT_APP_API_URL; 
+  }
+
+  // Function to handle the Firebase Realtime Database listener
+  handleFirebaseListener = () => {
+    const { projectId, userID } = this.props;
+    const reviewsRef = ref(realtimeDb, `Projects/${projectId}/Reviews`);
+    const userScoresRef = ref(realtimeDb, `Projects/${projectId}/users/${userID}/scores`);
+
+    const unsubscribe = onValue(reviewsRef, (snapshot) => {
+      const reviews = [];
+      snapshot.forEach((childSnapshot) => {
+        const reviewId = childSnapshot.key;
+        const reviewData = childSnapshot.val();
+        reviews.push({ ...reviewData, id: reviewId });
+      });
+
+      // Find the latest review
+      const latestReview = reviews.reduce((latest, review) => {
+        if (!latest || review.date_time > latest.date_time) {
+          return review;
+        }
+        return latest;
+      }, null);
+
+      // Check if the current user's score is null
+      const userScoreIsNull = latestReview && latestReview.scores && latestReview.scores[userID] === "null";
+      latestReview ? this.setState({ review: userScoreIsNull, reviewId:latestReview.id}) : latestReview
+      console.log("latest:", latestReview);
+      // Set the latest review in the state
+    });
+
+    // Store the unsubscribe function in an instance variable to use it in componentWillUnmount
+    this.unsubscribeFirebaseListener = unsubscribe;
+  }
+
+  // Call the Firebase listener setup in componentDidMount
+  componentDidMount() {
+    setTimeout(() => {
+      this.handleFirebaseListener();
+    }, 1000);
+  }
+
+  // Unsubscribe from the Firebase listener in componentWillUnmount
+  componentWillUnmount() {
+    if (this.unsubscribeFirebaseListener) {
+      this.unsubscribeFirebaseListener();
+    }
   }
 
   componentWillUnmount() {
@@ -113,7 +161,7 @@ class Timer extends Component {
   };
 
   reviewMatrix = async () => {
-    this.setState({review: true})
+    // this.setState({review: true})
     this.closeModal();
 
     try {
