@@ -38,7 +38,7 @@ const LandingPage = () => {
                 {/* <div className="landingPageTopButton textFont s">About Us</div> */}
                 <button
                     className="normal landingPageTopButton"
-                    onClick={aboutUs}
+                    //onClick={aboutUs}
                 >
                     About Us
                 </button>
