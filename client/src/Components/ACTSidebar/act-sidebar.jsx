@@ -13,6 +13,7 @@ const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis, noteColour}
   const [scale]= useContext(ScaleContext);
   const apiUrl = process.env.REACT_APP_API_URL;
 
+
   const handleIconAdded = (x, y) => {
     
     setNotes([...notes, { x, y }]);
@@ -29,7 +30,6 @@ const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis, noteColour}
       });
   };
 
-
   function handleRemove(index) {
     setNotes(notes.filter((_, i) => i !== index));
   }
@@ -43,7 +43,9 @@ const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis, noteColour}
   const [isDragging, setIsDragging] = useState(false);
   const [draggingPosition, setDraggingPosition] = useState({x: 0, y: 0});
   const [initialPosition, setInitialPosition] = useState({x: 0, y: 0});
- 
+  const [isDraggingEmoji, setIsDraggingEmoji] = useState(false);
+  const [emojiURL, setEmojiURL] = useState('');
+
   const startDragging = (e) => {
     if(!isDragging) {  // Added condition to start dragging only if not already dragging
       setIsDragging(true);
@@ -53,15 +55,23 @@ const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis, noteColour}
     }
   };
 
+  const startDraggingEmoji = (e) => {
+    if (!isDraggingEmoji) {
+      setIsDraggingEmoji(true);
+      setInitialPosition({ x: e.clientX, y: e.clientY });
+      setDraggingPosition({ x: e.clientX, y: e.clientY });
+      e.stopPropagation();
+    }
+  };
   const onDragging = (e) => {
-    if (isDragging) {
+    if (isDragging || isDraggingEmoji) {
       setDraggingPosition({ x: e.clientX, y: e.clientY });
     }
   };
+  
 
   const placeNote = (e) => {
-    if (isDragging) {
-      console.log("scale:", scale);
+    if (isDragging || isDraggingEmoji) {
     
     const canvas = document.getElementById('infiniteCanvas');
     const rect = canvas.getBoundingClientRect();
@@ -69,19 +79,31 @@ const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis, noteColour}
     const x = (e.clientX - rect.left) / scale;
     const y = (e.clientY - rect.top) / scale;
 
-    console.log("x:", x);
-    console.log("y:", y);
       const distanceMoved = Math.sqrt(
         Math.pow(draggingPosition.x - initialPosition.x, 2) +
         Math.pow(draggingPosition.y - initialPosition.y, 2)
       );
-
-      if (distanceMoved > 5) {
-        setIsDragging(false);
-        handleIconAdded(x, y);
+    if (distanceMoved > 5) {
+          setIsDragging(false);
+          setIsDraggingEmoji(false);
+          if (isDragging) {
+            handleIconAdded(x, y);
+          } else if (isDraggingEmoji) {
+            // Make a POST request to create the new emoji on the server
+            axios
+            .post(apiUrl + "/api/emoji", { projectKey: projectId, x, y, url: emojiURL, height:70,width:70  })
+            .then((response) => {
+              console.log(response.data);
+              setEmojis([...emojis, { x, y , emojiURL,height,width,id:response.data.id}]);
+            })
+            .catch((error) => {
+              console.log("Backend URL:", process.env.REACT_APP_BACKEND_URL);
+              console.error("Error creating emoji note:", error);
+          });
+          }
+        }
       }
-    }
-  };
+    };
 
   useEffect(() => {
     window.addEventListener('mousemove', onDragging);
@@ -96,22 +118,17 @@ const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis, noteColour}
 
   const onEmojiClick = (event,emojiObject) =>{
     const url = emojiObject.srcElement.getAttribute("src")
+    setEmojiURL(url); // Update the state
     setShowPicker(false);
-    const x =100
-    const y = 100
-
-    
-    // Make a POST request to create the new emoji on the server
-    axios
-      .post(apiUrl + "/api/emoji", { projectKey: projectId, x, y, url: url, height:70,width:70  })
-      .then((response) => {
-        console.log(response.data);
-        setEmojis([...emojis, { x, y , url,height,width,id:response.data.id}]);
-      })
-      .catch((error) => {
-        console.log("Backend URL:", process.env.REACT_APP_BACKEND_URL);
-        console.error("Error creating emoji note:", error);
-      });
+      // Calculate the position of the EmojiPicker
+    const pickerElement = document.querySelector('.emoji-container-picker');
+    const rect = pickerElement.getBoundingClientRect();
+    const x = rect.left
+    const y = rect.top
+    // Start dragging the selected emoji
+    setIsDraggingEmoji(true);
+    setDraggingPosition({ x: rect.left, y: rect.top }); // set initial position to the EmojiPicker's position
+    setCurrentEmoji(url); // set the current emoji to the selected one
 
   }
 
@@ -136,6 +153,19 @@ const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis, noteColour}
         }}
           >
             <Note x={0} y={0} /* Other required props */ />
+          </div>
+        )}
+          {isDraggingEmoji && (  // Add this part
+          <div 
+            style={{
+              position: 'fixed',
+              top: draggingPosition.y - 35,
+              left: draggingPosition.x - 35,
+              pointerEvents: 'none',
+              opacity: 0.7
+            }}
+          >
+            <img src={currentEmoji} alt="ghost emoji" style={{ width: '70px', height: '70px' }} />
           </div>
         )}
           <div className="draggable-item-emoji" onClick={() => setShowPicker(val => !val)}>
