@@ -14,6 +14,7 @@ import Sidebar from "./Components/Sidebar/Sidebar";
 import "./App.css";
 import LocalChangeContext from "./contexts/LocalChangeContext";
 import QuestionContext from "./contexts/QuestionContext";
+import ScaleContext from "./contexts/scaleContext";
 import React, { useRef, useState } from "react";
 import HistoryPage from "./pages/history_page";
 import Settings from "./pages/settings_page";
@@ -23,10 +24,12 @@ import InfiniteCanvas from "./pages/infiniteCanvas";
 function App() {
   const [localChanges, setLocalChanges] = useState([]);
   const [localQuestions, setLocalQuestions] = useState([]);
+  const [localScale, setLocalScale] = useState(1);
   return (
     <Provider store={store}>
       <LocalChangeContext.Provider value={{ localChanges, setLocalChanges }}>
         <QuestionContext.Provider value={{ localQuestions, setLocalQuestions }}>
+         <ScaleContext.Provider value={[localScale, setLocalScale ]}>
           <Router>
             <div className="App">
               <Sidebar />
@@ -46,6 +49,7 @@ function App() {
               </Routes>
             </div>
           </Router>
+          </ScaleContext.Provider>
         </QuestionContext.Provider>
       </LocalChangeContext.Provider>
     </Provider>
