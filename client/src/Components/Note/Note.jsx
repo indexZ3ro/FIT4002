@@ -14,7 +14,7 @@ const Note = ({
     scale,
     projectId,
     noteColour,
-    status = "Active"
+    status = ""
 }) => {
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
     const {localUndoIds, setLocalUndoIds} = useContext(UndoContext);
@@ -96,8 +96,7 @@ const Note = ({
                     y: position.y,
                     width: size.width,
                     height: size.height,
-                    text: noteText,
-                    status: status
+                    text: noteText
                 })
                 .then((response) => {
                     console.log(
@@ -119,7 +118,7 @@ const Note = ({
         // API request to delete the sticky note from the server
    
         axios
-        .put(`${apiUrl}/api/sticky-notes/${id}`, {
+        .put(`${apiUrl}/api/sticky-notes-restore/${id}`, {
             projectKey: projectId,
             x: position.x,
             y: position.y,

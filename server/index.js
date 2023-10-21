@@ -105,7 +105,7 @@ app.put("/api/sticky-notes/:noteId", (req, res) => {
 
   notesRef
     .child(noteId)
-    .update({ x, y, text, width, height,status}) // Update the sticky note data
+    .update({ x, y, text, width, height}) // Update the sticky note data
     .then(() => {
       // Send a success response back to the client
       res
@@ -137,7 +137,7 @@ app.put("/api/sticky-notes-restore/:noteId", (req, res) => {
       // Send a success response back to the client
       res
         .status(200)
-        .json({ message: "Sticky note updated successfully", x: x });
+        .json({ message: "Sticky note updated successfully"});
 
       // If you want to notify clients about the update, you can do it here
       // For example, you can use a WebSocket to send real-time updates to connected clients
