@@ -13,6 +13,7 @@ const Note = ({
     scale,
     projectId,
     noteColour,
+    status = "Active"
 }) => {
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -91,6 +92,7 @@ const Note = ({
                     width: size.width,
                     height: size.height,
                     text: noteText,
+                    status: status
                 })
                 .then((response) => {
                     console.log(
@@ -106,22 +108,28 @@ const Note = ({
             // Set the flag to false after the component has mounted
             setIsInitialMount(false);
         }
-    }, [position, size, noteText, id, isUpdated, isInitialMount]);
+    }, [position, size, noteText, id, isUpdated, isInitialMount,status]);
 
     const handleDelete = () => {
         // API request to delete the sticky note from the server
-
+   
         axios
-            .delete(`${apiUrl}/api/sticky-notes/${id}`, {
-                data: { projectKey: projectId },
-            })
-            .then((response) => {
-                console.log(id);
-                console.log("Sticky note deleted successfully:", response.data);
-            })
-            .catch((error) => {
-                console.error("Error deleting sticky note:", error);
-            });
+        .put(`${apiUrl}/api/sticky-notes/${id}`, {
+            projectKey: projectId,
+            x: position.x,
+            y: position.y,
+            width: size.width,
+            height: size.height,
+            text: noteText,
+            status: "Deactive"  // Update this field to set the status to "Deactive"
+        })
+        .then((response) => {
+            console.log(id);
+            console.log("Sticky note deactivated successfully:", response.data);
+        })
+        .catch((error) => {
+            console.error("Error deactivating sticky note:", error);
+        });
     };
     const preventDefault = (event) => {
         event.preventDefault();

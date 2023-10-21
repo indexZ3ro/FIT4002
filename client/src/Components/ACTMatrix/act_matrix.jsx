@@ -141,6 +141,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                         scale={scale}
                         projectId={projectId}
                         noteColour={note.noteColour}
+                        status= {note.status}
                     />
                 ))}
                 {emojis.map((emoji) => (
