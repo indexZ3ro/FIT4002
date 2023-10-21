@@ -4,8 +4,9 @@ import "../../css/Timer.css";
 import IconsDropdown from "../ACTQuestions/icons_dropdown";
 import axios from 'axios';
 import ReviewStage from '../ReviewStage/review_stage';
-import { ref, onValue } from 'firebase/database';
-import { realtimeDb } from '../../firebase'; 
+import { onValue, ref, set } from "firebase/database";
+import { realtimeDb } from "../../firebase";
+import { serverTimestamp } from "firebase/database";
 
 
 class Timer extends Component {
@@ -78,39 +79,120 @@ class Timer extends Component {
     this.stopTimer();
   }
 
+  componentDidMount() {
+    this.setupDatabaseListener();
+  }
+
+  setupDatabaseListener = () => {
+    const { projectId } = this.props;
+
+    var serverTimeOffset = 0;
+    const offsetRef = ref(realtimeDb, ".info/serverTimeOffset");
+    onValue(offsetRef, (snap) => {
+      serverTimeOffset = snap.val();
+    });
+    const timerRef = ref(realtimeDb, `Projects/${projectId}/timer`);
+    onValue(timerRef, (snapshot) => {
+      const seconds = snapshot.val().seconds;
+      const minutes = snapshot.val().minutes;
+      const startAt = snapshot.val().startAt;
+      const totalSeconds = seconds + (minutes * 60);
+      const { adminAccess } = this.props;
+
+      const timeLeft = (totalSeconds * 1000) - (Date.now() - startAt - serverTimeOffset);
+
+      if( !adminAccess && timeLeft>0 && this.timerInterval == null){
+        this.timerInterval = setInterval(() => {
+          const timeLeft = (totalSeconds * 1000) - (Date.now() - startAt - serverTimeOffset);
+          if (timeLeft < 0) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+          } else {
+            if(this.timerInterval){
+              this.setState({ minutes: Math.floor(timeLeft / 60000), seconds: Math.floor((timeLeft % 60000) / 1000) });
+            }else{
+              clearInterval(this.timerInterval);
+              this.timerInterval = null;
+              this.setState({ minutes: 0, seconds:0});
+            }
+            
+          }
+        }, 1000);
+      } else if (!adminAccess && timeLeft < 0) {
+        // Check if the timer interval is running
+        if (this.timerInterval) {
+          clearInterval(this.timerInterval);
+            this.timerInterval = null;
+            this.setState({ minutes: 0, seconds:0});
+        } else {
+          clearInterval(this.timerInterval);
+            this.timerInterval = null;
+            this.setState({ minutes: 0, seconds:0});
+        }
+      }
+      
+
+
+    });
+  }
+
   startTimer = () => {
     const { projectId } = this.props;
+    const { adminAccess } = this.props;
     if (!this.state.isRunning) {
       this.setState({ isRunning: true }, () => {
         this.timerInterval = setInterval(this.tick, 1000);
 
-        // API call to update and activate the question
-        axios.post(this.apiUrl + `/api/questionTypeUpdate`, {
-          text: this.state.currentQuestion,
-          projectId: projectId,
-          type: this.state.selectedValue,
-        })
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error('Error updating and activating the question:', error);
-        });
+        if(adminAccess){
+          const timerRef = ref(realtimeDb, `Projects/${projectId}/timer`);
+          set(timerRef,{
+            startAt: serverTimestamp(),
+            minutes: this.state.minutes,
+            seconds: this.state.seconds
+          });
+        
+
+          // API call to update and activate the question
+          axios.post(this.apiUrl + `/api/questionTypeUpdate`, {
+            text: this.state.currentQuestion,
+            projectId: projectId,
+            type: this.state.selectedValue,
+          })
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.error('Error updating and activating the question:', error);
+          });
+        }
       });
     }
     this.setState({ isModalOpen: false });
   };
 
   stopTimer = () => {
-    if (this.state.isRunning) {
+    // if (this.state.isRunning) {
       clearInterval(this.timerInterval);
+      this.timerInterval = null; // Clear the reference to the interval
       this.setState({ isRunning: false });
-    }
+    // }
   };
-
+  
   resetTimer = () => {
+    const { projectId, adminAccess } = this.props;
+
     this.stopTimer();
     this.setState({ minutes: 0, seconds: 0, currentQuestion:"" });
+  
+    if (adminAccess) {
+      // Only the admin should update the timer in the database
+      const timerRef = ref(realtimeDb, `Projects/${projectId}/timer`);
+      set(timerRef, {
+        startAt: serverTimestamp(),
+        minutes: 0,
+        seconds: 0
+      });
+    }
   };
 
   tick = () => {
@@ -134,7 +216,7 @@ class Timer extends Component {
       // Set a timeout to reset the timerFinished state after a delay
       setTimeout(() => {
         this.setState({ timerFinished: false });
-        console.log("state removed");
+        // console.log("state removed");
       }, 100);
     });
   };
@@ -184,8 +266,10 @@ class Timer extends Component {
     const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
       seconds
     ).padStart(2, "0")}`;
+    const { adminAccess } = this.props;
 
     return (
+      adminAccess ? (
       <div
         className={`timerContainer ${timerFinished ? "timerFinished" : ""}`}
         onAnimationEnd={this.onAnimationEnd}
@@ -238,6 +322,61 @@ class Timer extends Component {
         )}
         {review && <ReviewStage reviewId={reviewId} projectId={this.props.projectId} userID={this.props.userID} />}
       </div>
+      ) : (
+        <div
+        className={`timerContainer ${timerFinished ? "timerFinished" : ""}`}
+        onAnimationEnd={this.onAnimationEnd}
+        style={{pointerEvents:"none"}}
+      >
+        <img src={StopWatch} className="timerIcon"></img>
+        <div
+          onClick={this.openModal}
+          className="timer"
+          onAnimationEnd={this.onAnimationEnd}
+        >
+          {formattedTime}
+        </div>
+
+        {isModalOpen && (
+          <div className="timerModal">
+            <div className="timerWrap">
+              <IconsDropdown selectedValue={this.state.selectedValue} onSelect={(newValue) => this.setState({ selectedValue: newValue })}/>
+              <textarea
+                type="text"
+                placeholder="Question Text"
+                value={this.state.currentQuestion}
+                onChange={(e) => this.setState({ currentQuestion: e.target.value })}
+                className="questionInput"
+              />
+              <input
+                type="text"
+                placeholder="mm:ss"
+                value={formattedTime}
+                onChange={this.handleTimeChange}
+                className="timerInput"
+              />
+              <button
+                onClick={this.startTimer}
+                disabled={isRunning}
+                className="timerButton"
+              >
+                Start
+              </button>
+              <button onClick={this.closeModal} className="timerButton">
+                Close
+              </button>
+              <button onClick={this.resetTimer} className="timerButton">
+                Reset
+              </button>
+              <button onClick={this.reviewMatrix} className="timerButton">
+                Review Matrix
+              </button>
+            </div>
+          </div>
+        )}
+        {review && <ReviewStage />}
+      </div>
+      )
     );
   }
 }

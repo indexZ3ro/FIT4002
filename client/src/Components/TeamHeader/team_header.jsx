@@ -41,7 +41,7 @@ const TeamHeader = ({ accessCode }) => {
     get(child(dbRef, `Projects/${projectId}`))
       .then((snapshot) => {
         if (snapshot.exists()) {
-          console.log(snapshot.val());
+          // console.log(snapshot.val());
           setName(snapshot.val().name);
           setCache(snapshot.val());
           console.log(cache.name);

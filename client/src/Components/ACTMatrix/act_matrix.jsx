@@ -23,7 +23,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
     const navigate = useNavigate();
 
     const handleWheel = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         let newScale = scale + e.deltaY * -0.001;
         newScale = Math.min(Math.max(0.125, newScale), 4);
         setScale(newScale);

@@ -38,20 +38,21 @@ const SignUpPage = () => {
         await createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
+                console.log(userCredential)
                 const user = userCredential.user;
 
                 updateProfile(user, {
                     displayName: name,
                 })
-                    .then(() => {
-                        // Profile updated!
-                        // ...
-                    })
-                    .catch((error) => {
-                        // An error occurred
-                        // ...
-                        console.log(error);
-                    });
+                .then(() => {
+                    // Profile updated!
+                    // ...
+                })
+                .catch((error) => {
+                    // An error occurred
+                    // ...
+                    console.log(error);
+                });
 
                 navigate("/Home");
             })

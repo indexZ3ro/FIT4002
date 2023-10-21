@@ -70,11 +70,11 @@ const Modal = ({ handleClose, show, create, userID, userName }) => {
                         value={projectName}
                         onChange={(e) => setProjectName(e.target.value)}
                     ></input>
-                    <input
+                    {/* <input
                         className="userInput"
                         type={"number"}
                         placeholder="Timer"
-                    ></input>
+                    ></input> */}
                     <TextButton
                         id="create"
                         customStyle={{
