@@ -124,6 +124,33 @@ app.put("/api/sticky-notes/:noteId", (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     });
 });
+// API route for updating an existing sticky note
+app.put("/api/sticky-notes-restore/:noteId", (req, res) => {
+  const { noteId } = req.params;
+  const { projectKey,status} = req.body;
+  const notesRef = admin.database().ref(`Projects/${projectKey}/stickyNotes`);
+
+  notesRef
+    .child(noteId)
+    .update({status}) // Update the sticky note data
+    .then(() => {
+      // Send a success response back to the client
+      res
+        .status(200)
+        .json({ message: "Sticky note updated successfully", x: x });
+
+      // If you want to notify clients about the update, you can do it here
+      // For example, you can use a WebSocket to send real-time updates to connected clients
+      const updatedNoteData = { id: noteId,status };
+      wss.clients.forEach((client) => {
+        client.send(JSON.stringify(updatedNoteData));
+      });
+    })
+    .catch((error) => {
+      console.error("Error updating sticky note:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
 
 // API route for deleting a sticky note
 app.delete("/api/sticky-notes/:noteId", (req, res) => {

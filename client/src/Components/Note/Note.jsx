@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import Draggable from "react-draggable";
 import axios from "axios";
 import LocalChangeContext from "../../contexts/LocalChangeContext";
+import UndoContext from "../../contexts/UndoContext";
 import { Rnd } from "react-rnd";
 const Note = ({
     x,
@@ -16,6 +17,8 @@ const Note = ({
     status = "Active"
 }) => {
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
+    const {localUndoIds, setLocalUndoIds} = useContext(UndoContext);
+    
     const apiUrl = process.env.REACT_APP_API_URL;
     const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
     const [isInitialMount, setIsInitialMount] = useState(true); // Flag to track initial mount
@@ -25,6 +28,7 @@ const Note = ({
     const [position, setPosition] = useState({ x, y });
     const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
     const [size, setSize] = useState({ width, height });
+
 
     if (noteColour === undefined || noteColour === null || noteColour === "") {
         noteColour = "#ffe4b5";
@@ -74,16 +78,17 @@ const Note = ({
 
     useEffect(() => {
         setPosition({ x, y });
-        console.log(x, y);
+       
     }, [x, y]);
 
     useEffect(() => {
         setSize({ width, height });
-        console.log(x, y);
+      
     }, [width, height]);
     useEffect(() => {
         // Make the axios request to update the sticky note on the server
         if (!isInitialMount && isUpdated) {
+         
             axios
                 .put(apiUrl + `/api/sticky-notes/${id}`, {
                     projectKey: projectId,
@@ -126,6 +131,7 @@ const Note = ({
         .then((response) => {
             console.log(id);
             console.log("Sticky note deactivated successfully:", response.data);
+            setLocalUndoIds(prevIds => [...prevIds, id]);
         })
         .catch((error) => {
             console.error("Error deactivating sticky note:", error);
@@ -138,6 +144,8 @@ const Note = ({
         event.preventDefault();
         event.stopPropagation();
     };
+
+
 
     return (
         <Rnd
