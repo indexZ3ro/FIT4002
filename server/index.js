@@ -78,14 +78,14 @@ app.get("/api/project/:projectKey/sticky-notes", (req, res) => {
 // create sticky note
 app.post("/api/sticky-notes", (req, res) => {
   const projectKey = req.body.projectKey;
-  const { x, y, text, height, width, noteColour } = req.body;
+  const { x, y, text, height, width, noteColour, status } = req.body;
   const notesRef = admin.database().ref(`Projects/${projectKey}/stickyNotes`);
 
   const newNoteRef = notesRef.push();
   const newNoteId = newNoteRef.key; // Get the newly generated ID
   console.log(text);
   newNoteRef
-    .set({ text, x, y, height, width, noteColour })
+    .set({ text, x, y, height, width, noteColour, status })
     .then(() => {
       res
         .status(201)
@@ -100,12 +100,12 @@ app.post("/api/sticky-notes", (req, res) => {
 // API route for updating an existing sticky note
 app.put("/api/sticky-notes/:noteId", (req, res) => {
   const { noteId } = req.params;
-  const { projectKey, x, y, text, height, width } = req.body;
+  const { projectKey, x, y, text, height, width,status } = req.body;
   const notesRef = admin.database().ref(`Projects/${projectKey}/stickyNotes`);
 
   notesRef
     .child(noteId)
-    .update({ x, y, text, width, height }) // Update the sticky note data
+    .update({ x, y, text, width, height}) // Update the sticky note data
     .then(() => {
       // Send a success response back to the client
       res
@@ -115,6 +115,33 @@ app.put("/api/sticky-notes/:noteId", (req, res) => {
       // If you want to notify clients about the update, you can do it here
       // For example, you can use a WebSocket to send real-time updates to connected clients
       const updatedNoteData = { id: noteId, x, y, text, width, height };
+      wss.clients.forEach((client) => {
+        client.send(JSON.stringify(updatedNoteData));
+      });
+    })
+    .catch((error) => {
+      console.error("Error updating sticky note:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+// API route for updating an existing sticky note
+app.put("/api/sticky-notes-restore/:noteId", (req, res) => {
+  const { noteId } = req.params;
+  const { projectKey,status} = req.body;
+  const notesRef = admin.database().ref(`Projects/${projectKey}/stickyNotes`);
+
+  notesRef
+    .child(noteId)
+    .update({status}) // Update the sticky note data
+    .then(() => {
+      // Send a success response back to the client
+      res
+        .status(200)
+        .json({ message: "Sticky note updated successfully"});
+
+      // If you want to notify clients about the update, you can do it here
+      // For example, you can use a WebSocket to send real-time updates to connected clients
+      const updatedNoteData = { id: noteId,status };
       wss.clients.forEach((client) => {
         client.send(JSON.stringify(updatedNoteData));
       });

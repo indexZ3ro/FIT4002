@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import Draggable from "react-draggable";
 import axios from "axios";
 import LocalChangeContext from "../../contexts/LocalChangeContext";
+import UndoContext from "../../contexts/UndoContext";
 import { Rnd } from "react-rnd";
 const Note = ({
     x,
@@ -13,8 +14,11 @@ const Note = ({
     scale,
     projectId,
     noteColour,
+    status = ""
 }) => {
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
+    const {localUndoIds, setLocalUndoIds} = useContext(UndoContext);
+    
     const apiUrl = process.env.REACT_APP_API_URL;
     const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
     const [isInitialMount, setIsInitialMount] = useState(true); // Flag to track initial mount
@@ -24,6 +28,7 @@ const Note = ({
     const [position, setPosition] = useState({ x, y });
     const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
     const [size, setSize] = useState({ width, height });
+
 
     if (noteColour === undefined || noteColour === null || noteColour === "") {
         noteColour = "#ffe4b5";
@@ -46,11 +51,26 @@ const Note = ({
     };
     const calculateFontSize = () => {
         const textLength = noteText.length;
+        const area = size.width * size.height;
+    
+        // You may need to adjust these constants to get the desired result
+        const maxTextLength = 200; // Adjust based on your specific use case
+        const maxArea = 400 * 400; // Adjust to the maximum expected area of the note
+    
+        // Initial large font size and minimum font size cap
         const maxFontSize = 40;
         const minFontSize = 16;
-        const fontSize =
-            maxFontSize - (textLength * (maxFontSize - minFontSize)) / 50;
-        return `${Math.max(fontSize, minFontSize)}px`;
+    
+        // Calculate reductions in font size based on text length and note area
+        const textLengthProportion = Math.min(textLength, maxTextLength) / maxTextLength;
+        const areaProportion = area / maxArea;
+    
+        // Calculate final font size based on both proportions, ensuring it stays within min and max bounds
+        const fontSize = maxFontSize - 
+                         (maxFontSize - minFontSize) * 
+                         Math.max(textLengthProportion, areaProportion);
+    
+        return `${Math.max(minFontSize, Math.min(maxFontSize, fontSize))}px`;
     };
 
     const handleTextareaFocus = () => {
@@ -73,16 +93,17 @@ const Note = ({
 
     useEffect(() => {
         setPosition({ x, y });
-        console.log(x, y);
+       
     }, [x, y]);
 
     useEffect(() => {
         setSize({ width, height });
-        console.log(x, y);
+      
     }, [width, height]);
     useEffect(() => {
         // Make the axios request to update the sticky note on the server
         if (!isInitialMount && isUpdated) {
+         
             axios
                 .put(apiUrl + `/api/sticky-notes/${id}`, {
                     projectKey: projectId,
@@ -90,7 +111,7 @@ const Note = ({
                     y: position.y,
                     width: size.width,
                     height: size.height,
-                    text: noteText,
+                    text: noteText
                 })
                 .then((response) => {
                     console.log(
@@ -106,22 +127,29 @@ const Note = ({
             // Set the flag to false after the component has mounted
             setIsInitialMount(false);
         }
-    }, [position, size, noteText, id, isUpdated, isInitialMount]);
+    }, [position, size, noteText, id, isUpdated, isInitialMount,status]);
 
     const handleDelete = () => {
         // API request to delete the sticky note from the server
-
+   
         axios
-            .delete(`${apiUrl}/api/sticky-notes/${id}`, {
-                data: { projectKey: projectId },
-            })
-            .then((response) => {
-                console.log(id);
-                console.log("Sticky note deleted successfully:", response.data);
-            })
-            .catch((error) => {
-                console.error("Error deleting sticky note:", error);
-            });
+        .put(`${apiUrl}/api/sticky-notes-restore/${id}`, {
+            projectKey: projectId,
+            x: position.x,
+            y: position.y,
+            width: size.width,
+            height: size.height,
+            text: noteText,
+            status: "Deactive"  // Update this field to set the status to "Deactive"
+        })
+        .then((response) => {
+            console.log(id);
+            console.log("Sticky note deactivated successfully:", response.data);
+            setLocalUndoIds(prevIds => [...prevIds, id]);
+        })
+        .catch((error) => {
+            console.error("Error deactivating sticky note:", error);
+        });
     };
     const preventDefault = (event) => {
         event.preventDefault();
@@ -130,6 +158,8 @@ const Note = ({
         event.preventDefault();
         event.stopPropagation();
     };
+
+
 
     return (
         <Rnd
@@ -166,7 +196,6 @@ const Note = ({
                     className="note-text"
                     onClick={handleTextareaClick}
                     value={noteText}
-                    onFocus={handleTextareaFocus}
                     onBlur={handleTextareaBlur}
                     onChange={handleNoteTextChange}
                     onDrop={handleDrop}

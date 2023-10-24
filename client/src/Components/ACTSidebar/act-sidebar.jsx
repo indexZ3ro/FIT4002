@@ -20,7 +20,7 @@ const ACTSidebar = ({ notes, setNotes, projectId, emojis, setEmojis, noteColour}
 
     // Make a POST request to create the new sticky note on the server
     axios
-      .post(apiUrl + "/api/sticky-notes", { projectKey: projectId, x, y, text: null, height:150,width:150, noteColour })
+      .post(apiUrl + "/api/sticky-notes", { projectKey: projectId, x, y, text: null, height:150,width:150, noteColour,status:"Active" })
       .then((response) => {
         console.log(response.data);
       })
