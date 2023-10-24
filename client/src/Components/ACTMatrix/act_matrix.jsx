@@ -22,7 +22,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
     const [lastMousePosition, setLastMousePosition] = useState(null);
     const canvasRef = useRef(null);
     const navigate = useNavigate();
-
+    const activeNotes = notes.filter(note => note.status === "Active");
     const handleWheel = (e) => {
         // e.preventDefault();
         let newScale = scale + e.deltaY * -0.001;
@@ -129,7 +129,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                     </div>
                 </div>
                 {/* stickynotes */}
-                {notes.map((note) => (
+                {activeNotes.map((note) => (
                     <Note
                         key={note.id}
                         id={note.id}
@@ -141,6 +141,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                         scale={scale}
                         projectId={projectId}
                         noteColour={note.noteColour}
+                        status= {note.status}
                     />
                 ))}
                 {emojis.map((emoji) => (
