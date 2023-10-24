@@ -1,4 +1,4 @@
-.signUpPage{
+.signUpPage {
     display: flex;
     flex-direction: row;
     width: 100vw;
@@ -7,15 +7,15 @@
 }
 
 /* Split Screen */
-.split-left-signup{
+.split-left-signup {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
     width: 50%;
 }
-  
-.split-right-signup{
+
+.split-right-signup {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,17 +25,17 @@
 }
 
 /* Input */
-.userInput{
+.userInput {
     width: 40vw;
     height: 6vh;
     margin-top: 10px;
     margin-bottom: 10px;
     outline: none;
-    border: 1px solid #D5D8DE;
+    border: 1px solid #d5d8de;
     border-radius: 5px;
 }
 
-.userInput::placeholder{
+.userInput::placeholder {
     font-size: 1vw;
     font-style: normal;
     color: #323941;
@@ -46,55 +46,53 @@ input:focus {
     outline: none;
 }
 
-  
-.signUpPageTeam{
+.signUpPageTeam {
     height: 10%;
     margin-left: 5vw;
     margin-top: 6vh;
 }
 
-.signUpPageCover{
+.signUpPageCover {
     height: 90%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-left: 5vw;
-    
+    margin-bottom: 8vh;
 }
 
-.signUpPageCoverImg{
+.signUpPageCoverImg {
     width: 45vw;
 }
 
 /* Text */
-.subheading{
+.subheading {
     font-style: normal;
     font-weight: 400;
     font-size: 2vw;
     margin-top: 50px;
 
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
-
-.signUpTitle{
+.signUpTitle {
     font-size: 6vw;
     font-weight: 600;
 }
 
-.signUpPageTeam{
-    font-family: 'Poppins', sans-serif;
+.signUpPageTeam {
+    font-family: "Poppins", sans-serif;
     font-size: 24px;
     font-weight: 600;
 }
 
-.signUpToLogin{
+.signUpToLogin {
     text-decoration: underline;
     font-size: 1vw;
     margin-top: 1vh;
     font-weight: 600;
 }
 
-.signUpToLogin:hover{
+.signUpToLogin:hover {
     cursor: pointer;
 }
