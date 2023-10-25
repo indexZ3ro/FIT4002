@@ -17,7 +17,7 @@ const colourArr = [
   "#ea759e",
   "#ffe4b5",
   "#f1ffa6",
-  "#7dadff"
+  "#7dadff",
 ];
 
 admin.initializeApp({
@@ -78,14 +78,14 @@ app.get("/api/project/:projectKey/sticky-notes", (req, res) => {
 // create sticky note
 app.post("/api/sticky-notes", (req, res) => {
   const projectKey = req.body.projectKey;
-  const { x, y, text, height, width, noteColour } = req.body;
+  const { x, y, text, height, width, noteColour, status } = req.body;
   const notesRef = admin.database().ref(`Projects/${projectKey}/stickyNotes`);
 
   const newNoteRef = notesRef.push();
   const newNoteId = newNoteRef.key; // Get the newly generated ID
-  console.log(text)
+  console.log(text);
   newNoteRef
-    .set({ text, x, y, height,width, noteColour })
+    .set({ text, x, y, height, width, noteColour, status })
     .then(() => {
       res
         .status(201)
@@ -100,12 +100,12 @@ app.post("/api/sticky-notes", (req, res) => {
 // API route for updating an existing sticky note
 app.put("/api/sticky-notes/:noteId", (req, res) => {
   const { noteId } = req.params;
-  const { projectKey, x, y, text, height, width } = req.body;
+  const { projectKey, x, y, text, height, width,status } = req.body;
   const notesRef = admin.database().ref(`Projects/${projectKey}/stickyNotes`);
 
   notesRef
     .child(noteId)
-    .update({ x, y, text, width, height }) // Update the sticky note data
+    .update({ x, y, text, width, height}) // Update the sticky note data
     .then(() => {
       // Send a success response back to the client
       res
@@ -114,7 +114,34 @@ app.put("/api/sticky-notes/:noteId", (req, res) => {
 
       // If you want to notify clients about the update, you can do it here
       // For example, you can use a WebSocket to send real-time updates to connected clients
-      const updatedNoteData = { id: noteId, x, y, text,width,height };
+      const updatedNoteData = { id: noteId, x, y, text, width, height };
+      wss.clients.forEach((client) => {
+        client.send(JSON.stringify(updatedNoteData));
+      });
+    })
+    .catch((error) => {
+      console.error("Error updating sticky note:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+// API route for updating an existing sticky note
+app.put("/api/sticky-notes-restore/:noteId", (req, res) => {
+  const { noteId } = req.params;
+  const { projectKey,status} = req.body;
+  const notesRef = admin.database().ref(`Projects/${projectKey}/stickyNotes`);
+
+  notesRef
+    .child(noteId)
+    .update({status}) // Update the sticky note data
+    .then(() => {
+      // Send a success response back to the client
+      res
+        .status(200)
+        .json({ message: "Sticky note updated successfully"});
+
+      // If you want to notify clients about the update, you can do it here
+      // For example, you can use a WebSocket to send real-time updates to connected clients
+      const updatedNoteData = { id: noteId,status };
       wss.clients.forEach((client) => {
         client.send(JSON.stringify(updatedNoteData));
       });
@@ -216,37 +243,39 @@ app.put("/api/questionDesc/:questionId", (req, res) => {
 // Updated question by type
 app.post("/api/questionTypeUpdate", (req, res) => {
   const { projectId, type, text } = req.body;
-  
+
   // Reference to all questions of the specified project
   const questionsRef = admin.database().ref(`Projects/${projectId}/questions`);
 
   // Fetching all questions and then filtering the one with the specified type
-  questionsRef.once('value')
-    .then(snapshot => {
+  questionsRef
+    .once("value")
+    .then((snapshot) => {
       const questions = snapshot.val();
       const updates = {};
 
       // Loop through the questions to find the one with the specified type
       for (let id in questions) {
         if (questions[id].type === parseInt(type, 10)) {
-            // Set the selected question to active and update its text
-            updates[id] = { ...questions[id], text, status: "active" };
-          } else {
-            // Set other questions to inactive
-            updates[id] = { ...questions[id], status: "inactive" };
-          }
+          // Set the selected question to active and update its text
+          updates[id] = { ...questions[id], text, status: "active" };
+        } else {
+          // Set other questions to inactive
+          updates[id] = { ...questions[id], status: "inactive" };
+        }
       }
       return questionsRef.update(updates);
     })
     .then(() => {
-      res.status(200).json({ message: 'Question updated and others set to inactive' });
+      res
+        .status(200)
+        .json({ message: "Question updated and others set to inactive" });
     })
-    .catch(error => {
-        console.error('Error updating questions:', error);
-        res.status(500).json({ error: 'Internal server error' });
+    .catch((error) => {
+      console.error("Error updating questions:", error);
+      res.status(500).json({ error: "Internal server error" });
     });
 });
-
 
 // create a new project and return it
 app.post("/api/createProject", (req, res) => {
@@ -261,7 +290,9 @@ app.post("/api/createProject", (req, res) => {
   const question4Id = admin.database().ref().push().key;
 
   const currentDate = new Date();
-  const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+  const formattedDate = `${currentDate.getDate()}/${
+    currentDate.getMonth() + 1
+  }/${currentDate.getFullYear()}`;
 
   const min = 100000; // Minimum 6-digit number
   const max = 999999;
@@ -291,11 +322,11 @@ app.post("/api/createProject", (req, res) => {
     },
   };
 
-  var randChoice = Math.floor(Math.random() * (colourArr.length));
+  var randChoice = Math.floor(Math.random() * colourArr.length);
   const usersArr = {
     [userID]: {
       colour: colourArr[randChoice],
-      status: "Active"
+      status: "Active",
     },
   };
 
@@ -309,7 +340,12 @@ app.post("/api/createProject", (req, res) => {
         userName: userName,
       },
       users: usersArr,
-      dateCreated: formattedDate
+      dateCreated: formattedDate,
+      timer: {
+        startAt: 0,
+        minutes: 0,
+        seconds: 0,
+      },
     })
     .then(() => {
       res.status(200).json({
@@ -348,7 +384,6 @@ app.get("/api/getAccessCode/:projectKey/:userID", (req, res) => {
 });
 
 app.get("/api/getUserColour/:projectKey/:userID", async (req, res) => {
-
   const { projectKey, userID } = req.params;
   const userRef = admin.database().ref(`Projects/${projectKey}/users`);
 
@@ -356,7 +391,6 @@ app.get("/api/getUserColour/:projectKey/:userID", async (req, res) => {
     .child(userID)
     .once("value")
     .then((snapshot) => {
-
       if (snapshot.exists()) {
         // Get Colour
         res.json({ message: "Colour found", colour: snapshot.val().colour });
@@ -364,7 +398,6 @@ app.get("/api/getUserColour/:projectKey/:userID", async (req, res) => {
         console.error("Error finding user:", error);
         res.status(500).json({ error: "Internal server error" });
       }
-      
     })
     .catch((error) => {
       console.error("Error finding user:", error);
@@ -384,14 +417,13 @@ app.post("/api/addUserToMatrix", (req, res) => {
         // If the User exists in the Matrix, return success
         res.status(200).json({ message: "User exists in Matrix" });
       } else {
-      
-        var randChoice = Math.floor(Math.random() * (colourArr.length));
+        var randChoice = Math.floor(Math.random() * colourArr.length);
 
         // To add user to the Matrix (No form of validation on if they should be added)
         const userNode = {
           [userID]: {
             colour: colourArr[randChoice],
-            status: "Active"
+            status: "Active",
           },
         };
 
@@ -417,7 +449,7 @@ app.put("/api/removeUserFromMatrix", (req, res) => {
   const userRef = admin.database().ref(`Projects/${projectKey}/users`);
   userRef
     .child(userID)
-    .update( { status: "Inactive" } )
+    .update({ status: "Inactive" })
     .then(() => {
       // To remove user from the Matrix (No form of validation on if they exist)
       res.status(201).json({ message: "User removed successfully" });
@@ -495,13 +527,12 @@ app.post("/api/joinMatrix", async (req, res) => {
         projectKey: projectKey,
       });
     } else {
-
-      var randChoice = Math.floor(Math.random() * (colourArr.length));
+      var randChoice = Math.floor(Math.random() * colourArr.length);
       // Add user to matrix
       const userNode = {
         [userID]: {
           colour: colourArr[randChoice],
-          status: "Active"
+          status: "Active",
         },
       };
 
@@ -534,23 +565,80 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
     snapshot.forEach((projectSnapshot) => {
       const projectKey = projectSnapshot.key;
       const usersRef = projectRef.child(`${projectKey}/users`);
-
+      const notesRef = projectRef.child(`${projectKey}/stickyNotes`);
+      var score = 0;
       if (projectSnapshot.exists()) {
+        if (projectSnapshot.hasChild("Reviews")) {
+          const reviewsRef = projectSnapshot.child("Reviews");
+          const reviewsArray = [];
+
+          // Loop through review sections
+          reviewsRef.forEach((reviewSection) => {
+            const dateTime = reviewSection.child("date_time").val();
+            const scores = reviewSection.child("scores").val();
+            const reviewData = {
+              dateTime,
+              scores,
+              // Add any other relevant data you want to include from the review
+            };
+            reviewsArray.push(reviewData);
+          });
+
+          // Sort the reviewsArray based on dateTime in descending order
+          reviewsArray.sort(
+            (a, b) => new Date(b.dateTime) - new Date(a.dateTime)
+          );
+
+          // The most recent review will be the first element in the sorted array
+          const mostRecentReview = reviewsArray[0];
+          const scoreNodes = mostRecentReview.scores;
+          var localScore = 0;
+          var counter = 0;
+          Object.keys(scoreNodes).forEach((scoreId) => {
+            var individualScore = scoreNodes[scoreId];
+            if (individualScore != "null") {
+              localScore += parseFloat(individualScore);
+              counter += 1;
+            }
+          });
+
+          if (counter > 0) {
+            score = localScore / counter;
+          }
+        }
+
+        var numNotes = 0;
+        const notes = notesRef.once("value").then((notesSnapshot) => {
+          numNotes = notesSnapshot.numChildren();
+          if (notesSnapshot.exists()) {
+            numNotes = notesSnapshot.numChildren();
+          } else {
+            numNotes = 0;
+          }
+        });
         const promise = usersRef
           .once("value")
           .then((userSnapshot) => {
-            if (userSnapshot.exists() && userSnapshot.hasChild(userID) && userSnapshot.child(userID).val().status === 'Active') {
+            if (
+              userSnapshot.exists() &&
+              userSnapshot.hasChild(userID) &&
+              userSnapshot.child(userID).val().status === "Active"
+            ) {
               const projectName = projectSnapshot.val().name; // Corrected property name
               const adminUser = projectSnapshot.val().admin;
               const adminUserName = adminUser ? adminUser.userName || "" : "";
-              const dateCreated = projectSnapshot.val().dateCreated
+              const dateCreated = projectSnapshot.val().dateCreated;
+              const numUsers = userSnapshot.numChildren();
 
               const project = {
                 projectKey: projectKey,
                 projectName: projectName,
                 adminUser: adminUser.userID,
                 adminUserName: adminUserName,
-                dateCreated: dateCreated
+                dateCreated: dateCreated,
+                numUsers: numUsers,
+                numNotes: numNotes,
+                score: score,
               };
 
               return project;
@@ -584,13 +672,13 @@ app.get("/api/getMatrixHistory/:userID", async (req, res) => {
 // API route for post a Emoji
 app.post("/api/emoji", (req, res) => {
   const projectKey = req.body.projectKey;
-  const { x, y, url, height, width  } = req.body;
+  const { x, y, url, height, width } = req.body;
   const emojiRef = admin.database().ref(`Projects/${projectKey}/emoji`);
 
   const newEmojiRef = emojiRef.push();
   const newEmojiId = newEmojiRef.key; // Get the newly generated ID
   newEmojiRef
-    .set({ url, x, y,height,width })
+    .set({ url, x, y, height, width })
     .then(() => {
       res
         .status(201)
@@ -605,19 +693,19 @@ app.post("/api/emoji", (req, res) => {
 // API route for updating an existing emoji
 app.put("/api/emoji/:emojiID", (req, res) => {
   const { emojiID } = req.params;
-  const { projectKey, x, y, url, height, width} = req.body;
+  const { projectKey, x, y, url, height, width } = req.body;
   const emojiRef = admin.database().ref(`Projects/${projectKey}/emoji`);
 
   emojiRef
     .child(emojiID)
-    .update({ x, y, url,height, width }) // Update the sticky note data
+    .update({ x, y, url, height, width }) // Update the sticky note data
     .then(() => {
       // Send a success response back to the client
       res.status(200).json({ message: "Emoji updated successfully", x: x });
 
       // If you want to notify clients about the update, you can do it here
       // For example, you can use a WebSocket to send real-time updates to connected clients
-      const updatedEmojiData = { id: emojiID, x, y, url,height, width };
+      const updatedEmojiData = { id: emojiID, x, y, url, height, width };
       wss.clients.forEach((client) => {
         client.send(JSON.stringify(updatedEmojiData));
       });
@@ -645,6 +733,84 @@ app.delete("/api/emoji/:emojiId", (req, res) => {
       console.error("Error deleting sticky note:", error);
       res.status(500).json({ error: "Internal server error" });
     });
+});
+
+// API route for checking admin access
+app.get("/api/checkAdminAccess/:projectKey/:userID", (req, res) => {
+  const { projectKey, userID } = req.params;
+  const projectRef = admin.database().ref(`Projects/${projectKey}`);
+
+  // Fetch the access code from the database
+  projectRef
+    .once("value")
+    .then((snapshot) => {
+      const adminRef = snapshot.val().admin;
+      const adminID = adminRef.userID;
+      if (adminID == userID) {
+        res.json(true);
+      } else {
+        res.json(false);
+      }
+    })
+    .catch((error) => {
+      console.error("Error checking admin access:", error);
+      res.status(500).json({ error: "Failed to check admin access" });
+    });
+});
+
+// Add a review for a project
+app.post("/api/add-review", async (req, res) => {
+  const { projectId, date_time } = req.body;
+  const projectRef = admin.database().ref(`Projects/${projectId}`);
+  const reviewsRef = projectRef.child("Reviews");
+  const usersRef = projectRef.child("users");
+
+  try {
+    const snapshot = await reviewsRef.once("value");
+    if (!snapshot.exists()) {
+      await projectRef.update({ Reviews: { dummyNode: true } }); // Create Reviews node under the project
+    }
+
+    const newReviewRef = await reviewsRef.push({ date_time, scores: {} });
+
+    const usersSnapshot = await usersRef.once("value");
+    if (usersSnapshot.exists()) {
+      usersSnapshot.forEach((userSnapshot) => {
+        const userId = userSnapshot.key;
+        newReviewRef.child(`scores/${userId}`).set("null"); // Set initial value to null
+      });
+    }
+
+    await projectRef.child("Reviews/dummyNode").remove(); // Remove the dummy node
+
+    res.status(200).json({
+      reviewId: newReviewRef.key,
+    });
+  } catch (error) {
+    console.error("Error adding review:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/api/update-user-review", async (req, res) => {
+  const { projectId, reviewId, userID, score } = req.body;
+
+  try {
+    const projectRef = admin.database().ref(`Projects/${projectId}`);
+    const reviewRef = projectRef.child(`Reviews/${reviewId}/scores`);
+
+    // Update the user's score
+    await reviewRef.child(userID).set(score);
+
+    res.status(200).json({
+      message: "User review updated successfully",
+    });
+  } catch (error) {
+    console.error("Error updating user review:", error);
+    res
+      .status(500)
+      .json({ error: "Internal server error", error: error.message });
+  }
 });
 
 // Create a web server to serve files and listen to WebSocket connections

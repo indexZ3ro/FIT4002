@@ -50,7 +50,9 @@ const HistoryPage = () => {
                             name={matrix.projectName}
                             date={matrix.dateCreated}
                             lead={matrix.adminUserName}
-                            // score={matrix.score}
+                            numUsers={matrix.numUsers}
+                            numNotes={matrix.numNotes}
+                            score={matrix.score}
                         />
                     );
                 })}

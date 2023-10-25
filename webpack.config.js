@@ -1,11 +1,11 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
-  entry: './client/src/index.js',
+  entry: "./client/src/index.js",
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public')
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "public"),
   },
   module: {
     rules: [
@@ -13,46 +13,48 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
             presets: [
-              '@babel/preset-env',
-              ['@babel/preset-react', { runtime: 'automatic' }]
-            ]
-          }
-        }
+              "@babel/preset-env",
+              ["@babel/preset-react", { runtime: "automatic" }],
+            ],
+          },
+        },
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[path][name].[ext]',
+              name: "[path][name].[ext]",
               esModule: false,
             },
           },
         ],
-      }      
-    ]
+      },
+    ],
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: [".js", ".jsx"],
   },
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
+    contentBase: path.join(__dirname, "public"),
     port: 8080,
     proxy: {
-      '/api': 'http://localhost:3000'
-    }
+      "/api": "http://localhost:3000",
+    },
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.REACT_APP_API_URL': JSON.stringify('https://project-5389016526708021196.ts.r.appspot.com')
+      "process.env.REACT_APP_API_URL": JSON.stringify(
+        "https://project-5389016526708021196.ts.r.appspot.com"
+      ),
     }),
-  ]
-}
+  ],
+};

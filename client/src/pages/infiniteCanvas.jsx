@@ -8,7 +8,7 @@ import ACTMatrix from "../Components/ACTMatrix/act_matrix";
 import Timer from "../Components/Timer/Timer";
 import ACTSidebar from "../Components/ACTSidebar/act-sidebar";
 import { realtimeDb } from "../firebase";
-import { onValue, ref } from "firebase/database";
+import { getDatabase,onValue, ref,update } from "firebase/database";
 import LocalChangeContext from "../contexts/LocalChangeContext";
 import ACTQuestionsContainer from "../Components/ACTQuestions/act_questions_container";
 import ACT from "../assets/ACT.svg";
@@ -17,67 +17,74 @@ import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
+import UndoContext from "../contexts/UndoContext";
+
 const InfiniteCanvas = () => {
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
     const { projectId } = useParams();
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
+    const {localUndoIds, setLocalUndoIds} = useContext(UndoContext);
+    const [isAdmin, setIsAdmin] = useState(false);
 
-  // handle sticky notes state management here
-  const [notes, setNotes] = useState([]);
-  const [questions, setQuestions] = useState([]);
-  const [emojis,setEmojis] = useState([]);
-  const [accessCode, setAccessCode] = useState('');
-  const [noteColour, setNoteColour] = useState(''); 
+    // handle sticky notes state management here
+    const [notes, setNotes] = useState([]);
+    const [questions, setQuestions] = useState([]);
+    const [emojis,setEmojis] = useState([]);
+    const [accessCode, setAccessCode] = useState('');
+    const [noteColour, setNoteColour] = useState(''); 
+    const [userID, setUserID] = useState('');
+  
+    // Fetch all sticky notes from the database when the component mounts
+    useEffect(() => {
+        axios
+            .get(apiUrl + `/api/project/${projectId}/sticky-notes`)
+           
+            .then((response) => {
+                const activeNotes = response.data.filter(note => note.status === "Active");
+                setNotes(activeNotes);
+            })
+            .catch((error) => {
+                console.error("apiURL is:" + apiUrl);
+                console.error("Error fetching sticky notes:", error);
+            });
+    }, [projectId, setNotes]);
 
-  // Fetch all sticky notes from the database when the component mounts
-  useEffect(() => {
-    axios
-      .get(apiUrl + `/api/project/${projectId}/sticky-notes`)
-      .then((response) => {
-        setNotes(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("apiURL is:" + apiUrl);
-        console.error("Error fetching sticky notes:", error);
-      });
-  }, [projectId, setNotes]);
+    // Load in saved matrix data from database
+    useEffect(() => {
 
-  // Load in saved matrix data from database
-  useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUserID(user.uid);
+                axios.get(apiUrl + `/api/getUserColour/${projectId}/${user.uid}`)
+                .then((response) => {
+                    setNoteColour(response.data.colour);
+                })
+                .catch((error) => {
+                    console.log("Error getting user note colour:", error);
+                });
+            } else {
+                // User is signed out
+                // ...
+                navigate("/");
+                console.log("User is logged out");
+            }
+            console.log("End")
+        })
+    }, []);
 
-    onAuthStateChanged(auth, (user) => {
-
-      if (user) {
-          axios.get(apiUrl + `/api/getUserColour/${projectId}/${user.uid}`)
-          .then((response) => {
-            setNoteColour(response.data.colour);
-          })
-          .catch((error) => {
-
-              console.log("Error getting user note colour:", error);
-          });
-      } else {
-          // User is signed out
-          // ...
-          navigate("/");
-          console.log("User is logged out");
-      }
-      console.log("End")
-    })
-}, []);
-
-    // Get access code for Admin user
+    // Check Admin Access
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                const userID = user.uid;
+                setUserID(user.uid);
                 axios
-                    .get(apiUrl + `/api/getAccessCode/${projectId}/${userID}`)
+                    .get(apiUrl + `/api/checkAdminAccess/${projectId}/${userID}`)
                     .then((response) => {
                         if (response.data !== false) {
-                            setAccessCode(response.data);
+                            setIsAdmin(response.data);
+                        }else{
+                            setIsAdmin(false);
                         }
                     })
                     .catch((error) => {
@@ -93,13 +100,38 @@ const InfiniteCanvas = () => {
         });
     }, []);
 
+        // Get access code for Admin user
+        useEffect(() => {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    const userID = user.uid;
+                    axios
+                        .get(apiUrl + `/api/getAccessCode/${projectId}/${userID}`)
+                        .then((response) => {
+                            if (response.data !== false) {
+                                setAccessCode(response.data);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("apiURL is:" + apiUrl);
+                            console.error("Error fetching sticky notes:", error);
+                        });
+                } else {
+                    // User is signed out
+                    // ...
+                    navigate("/");
+                    console.log("User is logged out");
+                }
+            });
+        }, []);
+
     // Get the Question
     useEffect(() => {
         axios
             .get(apiUrl + `/api/project/${projectId}/questions`)
             .then((response) => {
                 setQuestions(response.data);
-                console.log(response.data);
+                // console.log(response.data);
             })
             .catch((error) => {
                 console.error("Error fetching questions:", error);
@@ -143,7 +175,7 @@ const InfiniteCanvas = () => {
                 }
             });
             // Log the updated notes to the console
-            console.log("Updated notes:", updatedNotes);
+            // console.log("Updated notes:", updatedNotes);
             setNotes(updatedNotes);
         });
 
@@ -189,7 +221,7 @@ const InfiniteCanvas = () => {
                 }
             });
             // Log the updated notes to the console
-            console.log("Updated Emoji:", updatedEmoji);
+            // console.log("Updated Emoji:", updatedEmoji);
             setEmojis(updatedEmoji);
         });
 
@@ -198,9 +230,9 @@ const InfiniteCanvas = () => {
     };
 }, [projectId, localChanges]);
 
-  //Firebase Realtime Database listener for updates Emojis
+  //Firebase Realtime Database listener for question updates
   useEffect(() => {
-    console.log("Listener");
+    // console.log("Listener");
     const questionRef = ref(realtimeDb, `Projects/${projectId}/questions`);
 
     const unsubscribe = onValue(questionRef, (snapshot) => {
@@ -208,6 +240,8 @@ const InfiniteCanvas = () => {
         snapshot.forEach((childSnapshot) => {
           const questionId = childSnapshot.key;
           const questionData = childSnapshot.val();
+
+          // TODO: This if is never actually used, can be removed
           if (localChanges.some(change => change.id === questionId)) {
               // If the question ID is in localChanges, then retain the current question data
               // Find the current question data
@@ -228,7 +262,7 @@ const InfiniteCanvas = () => {
           }
         });
         // Log the updated questions to the console
-        console.log("Updated Questions:", updatedQuestion);
+        // console.log("Updated Questions:", updatedQuestion);
         setQuestions(updatedQuestion);
       });
 
@@ -237,6 +271,38 @@ const InfiniteCanvas = () => {
       };
   }, [projectId, localChanges]);
 
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+        if (e.ctrlKey && e.key === 'z') {
+            const lastId = localUndoIds.pop();
+            console.log()
+            if (lastId) {
+                // Update localUndoIds state if necessary
+                setLocalUndoIds([...localUndoIds]);
+
+                // Get a reference to the Firebase Realtime Database
+                axios
+                .put(apiUrl + `/api/sticky-notes-restore/${lastId}`, {
+                    projectKey: projectId,
+                    status: "Active"
+                })
+                .then((response) => {
+                    console.log("Sticky note activated successfully:", response.data);
+                })
+                .catch((error) => {
+                    console.error("Error activating sticky note:", error);
+                });
+            }
+        }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+    };
+}, [localUndoIds]);
 
   return (
     
@@ -255,7 +321,7 @@ const InfiniteCanvas = () => {
             <div className="wrapContainer">
               {/* <img src={StopWatch}></img> */}
               {/* <div className="timer">5:30</div> */}
-              <Timer projectId={projectId} />
+              <Timer projectId={projectId} userID={userID}  adminAccess={isAdmin}/>
             </div>
           </div>
         </div>
@@ -263,7 +329,6 @@ const InfiniteCanvas = () => {
       <div className="bodyContainer">
         <ACTMatrix notes={notes} setNotes={setNotes} emojis ={emojis} setEmojis= {setEmojis} projectId={projectId}/>
         <ACTSidebar notes={notes} setNotes={setNotes} projectId={projectId} emojis ={emojis} setEmojis= {setEmojis} noteColour={noteColour}/>
-
       </div>
     </div>
   );

@@ -1,0 +1,64 @@
+[debug] [2023-10-16T03:24:35.443Z] ----------------------------------------------------------------------
+[debug] [2023-10-16T03:24:35.445Z] Command:       E:\Program Files (x86)\node.exe C:\Users\Kieran\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting:teamoji-matrix
+[debug] [2023-10-16T03:24:35.445Z] CLI Version:   12.4.7
+[debug] [2023-10-16T03:24:35.446Z] Platform:      win32
+[debug] [2023-10-16T03:24:35.446Z] Node Version:  v16.15.0
+[debug] [2023-10-16T03:24:35.446Z] Time:          Mon Oct 16 2023 14:24:35 GMT+1100 (Australian Eastern Daylight Time)
+[debug] [2023-10-16T03:24:35.447Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-10-16T03:24:35.517Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-10-16T03:24:35.517Z] > authorizing via signed-in user (kieranmoran02@gmail.com)
+[debug] [2023-10-16T03:24:35.518Z] [iam] checking project project-5389016526708021196 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-10-16T03:24:35.520Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/project-5389016526708021196:testIamPermissions [none]
+[debug] [2023-10-16T03:24:35.520Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/project-5389016526708021196:testIamPermissions x-goog-quota-user=projects/project-5389016526708021196
+[debug] [2023-10-16T03:24:35.520Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/project-5389016526708021196:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-10-16T03:24:36.590Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/project-5389016526708021196:testIamPermissions 200
+[debug] [2023-10-16T03:24:36.590Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/project-5389016526708021196:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-10-16T03:24:36.591Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/project-5389016526708021196 [none]
+[debug] [2023-10-16T03:24:37.372Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/project-5389016526708021196 200
+[debug] [2023-10-16T03:24:37.372Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/project-5389016526708021196 {"projectId":"project-5389016526708021196","projectNumber":"99663445948","displayName":"4002","name":"projects/project-5389016526708021196","resources":{"hostingSite":"project-5389016526708021196","realtimeDatabaseInstance":"project-5389016526708021196-default-rtdb","storageBucket":"project-5389016526708021196.appspot.com","locationId":"australia-southeast1"},"state":"ACTIVE","etag":"1_e96070b6-961f-4dd4-bdcf-3ea53587bed2"}
+[info] 
+[info] === Deploying to 'project-5389016526708021196'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2023-10-16T03:24:37.378Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/teamoji-matrix/versions [none]
+[debug] [2023-10-16T03:24:37.378Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/teamoji-matrix/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2023-10-16T03:24:39.573Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/teamoji-matrix/versions 200
+[debug] [2023-10-16T03:24:39.574Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/teamoji-matrix/versions {"name":"projects/99663445948/sites/teamoji-matrix/versions/b4c479209183f111","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[teamoji-matrix]: beginning deploy... 
+[info] i  hosting[teamoji-matrix]: found 38 files in public 
+[debug] [2023-10-16T03:24:39.603Z] [hosting] uploading with 200 concurrency
+[debug] [2023-10-16T03:24:39.611Z] [hosting] hash cache [cHVibGlj] stored for 38 files
+[debug] [2023-10-16T03:24:39.611Z] [hosting][hash queue][FINAL] {"max":3,"min":1,"avg":1,"active":0,"complete":38,"success":38,"errored":0,"retried":0,"total":38,"elapsed":5}
+[debug] [2023-10-16T03:24:39.612Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/99663445948/sites/teamoji-matrix/versions/b4c479209183f111:populateFiles [none]
+[debug] [2023-10-16T03:24:39.612Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/99663445948/sites/teamoji-matrix/versions/b4c479209183f111:populateFiles {"files":{"/2df12103979c5078e0c9.jpg":"ada406b54ba04c9f8dc68bdf7dca3a8f894ebef4faee09d79728dc1fa8c23e39\r","/57b4b2fffcd3c925c00f.jpg":"611ad8276e07b6cb637c6ca0b8fea2aa5894ccec88530fd74fafc1a4eecfbf79\r","/990.bundle.js":"210187469b666b147687937291c47ee45cdaea29e284a4dee4cfa1d60722f2e1\r","/bundle.js":"a940f3d20b49d6828233a15bea93432f8ed05fd908fcd8e3435ff299a5b313f0","/bundle.js.LICENSE.txt":"5a22ab6e40d5ae2d45057473377e99a3847bf6e316568dcb7d63326d9d913925\r","/d3f2324b590f67e4e78d.png":"cc5b3d7e8abe8d2bc19c2359c28c67fc8d5308d366a919608e90cb9e793b0bf9\r","/dd6afdc04464dd387b11.png":"ae9df7661644524f7cffece8b6db6bbf645620d5f558a93fa8c63aa3f76b224a\r","/index.html":"004ccf136a6bb7789426700174ccc9425b816a7eb68ca3926d799e9bdc9b472a\r","/mockServiceWorker.js":"561d8ee74d4f9c695f1d701d39634fa537ae300e49bf095a9d23cdedcde1c0d7","/client/src/assets/ACT.svg":"8b18a1362f132ee8a783a6f094dd5b6f78034cd619055a601989171adf1e476a\r","/client/src/assets/Arrow.svg":"551584bdcc90572a093be1e0f8f3faad770fb75a181f26fd397a99c9f72ce2db","/client/src/assets/Camera.png":"49189c09080c9642ab09ecb4ac3c8d3664662c44f919f27f1d841a712a8b75d2\r","/client/src/assets/Cursor.svg":"de92846563146256d6d2e64d53bf23e39e68dce4fea4dd455b64328a34ee2162\r","/client/src/assets/delete.svg":"8cf358878974b65ee8adeb69f18875ddcfbe7fa96046d53322d2ba5b2a9aabb9\r","/client/src/assets/Face.png":"5698f459fdfcd9298b0e26b6c8e04e485eacd9010350925e4709b7a1e44f63f9\r","/client/src/assets/Face.svg":"2d339503d3fcde5c5cd07b5ed0c5183efe23f74a822c05e4107a2482a2e0a533\r","/client/src/assets/google-focus-btn.svg":"8a8bfc2f8c5d881fe069750ea60c586254688a64c6b8c99daeb9a3e0d90e0e6b","/client/src/assets/google-normal-btn.svg":"5b889ae9a15ea57ee16fd665ae63d6fcc772fee5bdf139be57306c32d1f7935a","/client/src/assets/happy-emoji.svg":"4e25ef349cf3a061e5caf7dc7d24965425f5e9a22212d30344c90e5492098f67\r","/client/src/assets/Heart.png":"87d085fd2991348a9c4431f5d43a6bf1524f007762b55724ab9654f224441216\r","/client/src/assets/Hook.png":"5284d1b202701264a68d031f91f00f74d5d588a21a57032d997c2f064914fa7d\r","/client/src/assets/LandingPage.svg":"fe26f76386197baf3455c321a30b72c2b5cb0d1a0eecafa29e150a378e1533cd\r","/client/src/assets/Line.svg":"ba64321fc9a6b8e8c852224d6a2a2f3c10eb25b3d448bd0f18f4ee470fa8085f\r","/client/src/assets/locationPin.svg":"9e92d0bedf1f44a19d0fdce04acd1f3ede9a5bfb4535ce7cc870b4c216ebb4a4","/client/src/assets/logInCover.svg":"c7af2425ac6792d28de8991921b3d6329109bc402203ff1bb1dbeca175a9bb26\r","/client/src/assets/neutral-emoji.svg":"ab4545c0108778a08874075f40b2e570d953ca8c5280a548d6ac6c2d8d0a0970\r","/client/src/assets/paper-background.jpg":"6dbb5793d276001a422a55f79db61743aa0362ace73e130b0de960ba43867d41\r","/client/src/assets/Pointer.png":"af54c620a17f8b8a253f857c13033684baa320fa315a8cf7e80ece8522417557\r","/client/src/assets/sad-emoji.svg":"97f9228b89c775dee52889000620807254dd5d63f9b23e9595f63b2a9cae0968\r","/client/src/assets/search-icon.png":"d5f4ee730253e83597d392802b055ec7cbdd392b624ee50c019c4b18c66e7e11\r","/client/src/assets/settings-icon.png":"fe370061a89b807249c0d98cef6d38b574e3853650773226926527355a653830\r","/client/src/assets/signUpPageCover.svg":"d1dfc92b9322da08e3b90f247edaf8fbe0decb0140b7f1e89dd050392c3cde42\r","/client/src/assets/StickyNote-Icon.png":"fa696e141618078e09795849da9310941a970188e96474712be82afb9f983945\r","/client/src/assets/StickyNote.svg":"b331965cc6aa282d9b16b4dc0d5add342b78d487e2b5baf528019f6e9f788012\r","/client/src/assets/StickyNoteIcon.png":"0fb30f433a8e77fc344f9da18191e098d56d5d84993f15820acfef3de90f635f\r","/client/src/assets/StickyNotesMultiple.png":"4c950b79d22cdc4e4b1276a1f2d1666e0132e95f14656e22ebf8bfc9099f43dd\r","/client/src/assets/stopwatch.svg":"62ec7b8878e99c08cbad94161543018148f502af603a09399186598c4e632f81\r","/client/src/assets/team.png":"79acde7cdf24e6738fb9c5720ed613357571443a512e4f7bb62dd169735f803a\r"}}
+[debug] [2023-10-16T03:24:40.969Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/99663445948/sites/teamoji-matrix/versions/b4c479209183f111:populateFiles 200
+[debug] [2023-10-16T03:24:40.969Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/99663445948/sites/teamoji-matrix/versions/b4c479209183f111:populateFiles {"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/teamoji-matrix/versions/b4c479209183f111/files"}
+[debug] [2023-10-16T03:24:40.970Z] [hosting][populate queue][FINAL] {"max":1360,"min":1360,"avg":1360,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":1360}
+[debug] [2023-10-16T03:24:40.970Z] [hosting] uploads queued: 0
+[debug] [2023-10-16T03:24:40.971Z] [hosting][upload queue][FINAL] {"max":0,"min":9999999999,"avg":0,"active":0,"complete":0,"success":0,"errored":0,"retried":0,"total":0,"elapsed":1697426680971}
+[info] +  hosting[teamoji-matrix]: file upload complete 
+[debug] [2023-10-16T03:24:40.973Z] [hosting] deploy completed after 1394ms
+[debug] [2023-10-16T03:24:40.974Z] [
+  {
+    "config": {
+      "site": "teamoji-matrix",
+      "public": "public",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    "version": "projects/99663445948/sites/teamoji-matrix/versions/b4c479209183f111"
+  }
+]
+[info] i  hosting[teamoji-matrix]: finalizing version... 
+[debug] [2023-10-16T03:24:40.980Z] >>> [apiv2][query] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/teamoji-matrix/versions/b4c479209183f111 updateMask=status%2Cconfig
+[debug] [2023-10-16T03:24:40.980Z] >>> [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/teamoji-matrix/versions/b4c479209183f111 {"status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]}}
