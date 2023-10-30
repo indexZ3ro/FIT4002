@@ -74,7 +74,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                     .then((response) => {
                         // If the user should not have access, remove them from the matrix.
                         if (!response.data.status) {
-                            navigate("/Home");
+                            navigate("/Create");
                         }
                     })
                     .catch((error) => {

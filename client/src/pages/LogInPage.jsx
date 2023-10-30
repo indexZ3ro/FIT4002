@@ -28,7 +28,7 @@ const LogInPage = () => {
     });
 
     const logIn = () => {
-        navigate("/Home");
+        navigate("/Create");
     };
 
     const signUp = () => {
@@ -47,7 +47,7 @@ const LogInPage = () => {
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
-                navigate("/Home");
+                navigate("/Create");
                 // console.log(user);
             })
             .catch((error) => {
@@ -81,7 +81,7 @@ const LogInPage = () => {
                 const user = result.user;
                 // IdP data available using getAdditionalUserInfo(result)
                 // ...
-                navigate("/Home");
+                navigate("/Create");
             })
             .catch((error) => {
                 // Handle Errors here.

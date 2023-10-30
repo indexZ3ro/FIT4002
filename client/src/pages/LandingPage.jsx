@@ -35,7 +35,7 @@ const LandingPage = () => {
     };
 
     const create = () => {
-        navigate("/Home");
+        navigate("/Create");
     };
 
     const history = () => {
@@ -83,7 +83,7 @@ const LandingPage = () => {
     function GuestHeader() {
         return (
             <>
-                <LandingPageButton id="About Us" handleClick={aboutUs} />
+                {/* <LandingPageButton id="About Us" handleClick={aboutUs} /> */}
                 <LandingPageButton id="Log In" handleClick={logIn} />
                 <LandingPageButton id="Sign Up" handleClick={SignUp} />
             </>

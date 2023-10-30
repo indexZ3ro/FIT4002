@@ -9,7 +9,7 @@ const AboutUs = () => {
     const navigate = useNavigate();
 
     const home = () => {
-        navigate("/Home");
+        navigate("/Create");
     };
 
     useEffect(() => {

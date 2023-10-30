@@ -26,7 +26,7 @@ const SignUpPage = () => {
 
     const signUp = () => {
         // onSubmit;
-        navigate("/Home");
+        navigate("/Create");
     };
 
     const logIn = () => {
@@ -59,7 +59,7 @@ const SignUpPage = () => {
                         console.log(error);
                     });
 
-                navigate("/Home");
+                navigate("/Create");
             })
             .catch((error) => {
                 const errorCode = error.code;
