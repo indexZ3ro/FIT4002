@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../css/sidebar.css";
 import { Link } from "react-router-dom";
 import { slide as Menu } from "react-burger-menu";
@@ -7,12 +7,18 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
-const Sidebar = (props) => {
+const Sidebar = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const closeMenu = () => {
+    setIsSidebarOpen(false);
+  };
+
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        props.closeMenu();
+        closeMenu();
         navigate("/");
         console.log("Signed out successfully");
       })
@@ -22,27 +28,36 @@ const Sidebar = (props) => {
   };
 
   const closeMenuOnClick = () => {
-    props.closeMenu(); // Close the sidebar when any link is clicked
+    closeMenu(); // Close the sidebar when any link is clicked
   };
 
+  const navigate = useNavigate();  // Get the navigate function
   const sideBarState = useSelector((state) => state.sideBar.sideBar);
-  return sideBarState ? (
-    <Menu width={"250px"} styles={{ bmMenu: { overflow: "hidden" } }}>
-      <Link to="/Home" className="menu-item" onClick={closeMenuOnClick}>
-        Home
-      </Link>
-      <Link to="/HistoryPage" className="menu-item" onClick={closeMenuOnClick}>
-        History
-      </Link>
-      <Link to="/Settings" className="menu-item" onClick={closeMenuOnClick}>
-        Settings
-      </Link>
-      <Link className="menu-item" onClick={handleLogout}>
-        Sign Out
-      </Link>
-    </Menu>
-  ) : (
-    <div></div>
+
+  return (
+    <>
+      {sideBarState && (
+        <Menu 
+          isOpen={isSidebarOpen}  // Control open state using isSidebarOpen
+          width={"250px"} 
+          styles={{ bmMenu: { overflow: "hidden" } }}
+          onStateChange={({ isOpen }) => setIsSidebarOpen(isOpen)}  // Update the local state when sidebar state changes
+        >
+          <Link to="/Home" className="menu-item" onClick={closeMenuOnClick}>
+            Home
+          </Link>
+          <Link to="/HistoryPage" className="menu-item" onClick={closeMenuOnClick}>
+            History
+          </Link>
+          <Link to="/Settings" className="menu-item" onClick={closeMenuOnClick}>
+            Settings
+          </Link>
+          <Link className="menu-item" onClick={handleLogout}>
+            Sign Out
+          </Link>
+        </Menu>
+      )}
+    </>
   );
 };
 
