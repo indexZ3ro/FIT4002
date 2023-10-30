@@ -93,9 +93,16 @@ class Timer extends Component {
     });
     const timerRef = ref(realtimeDb, `Projects/${projectId}/timer`);
     onValue(timerRef, (snapshot) => {
-      const seconds = snapshot.val().seconds;
-      const minutes = snapshot.val().minutes;
-      const startAt = snapshot.val().startAt;
+      let seconds = 0
+      let minutes = 0
+      let startAt = Date.now();
+  
+      if(snapshot.exists()){
+        seconds = snapshot.val().seconds 
+        minutes = snapshot.val().minutes;
+        startAt = snapshot.val().startAt;
+      }
+     
       const totalSeconds = seconds + (minutes * 60);
       const { adminAccess } = this.props;
 

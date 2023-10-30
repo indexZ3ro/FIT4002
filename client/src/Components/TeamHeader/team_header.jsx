@@ -3,8 +3,9 @@ import "../../css/team-header.css";
 import Line from "../../assets/Line.svg";
 
 import { useParams } from "react-router-dom";
-import { ref, child, get, push, set, getDatabase } from "firebase/database";
+import { ref, child, get, push, set, getDatabase, update } from "firebase/database";
 import { realtimeDb } from "../../firebase";
+
 
 const TeamHeader = ({ accessCode }) => {
   const [projectName, setName] = useState("");
@@ -17,15 +18,9 @@ const TeamHeader = ({ accessCode }) => {
   };
 
   const handleBlur = (e) => {
-    // sessionStorage.setItem("teamName", name);
-    set(ref(realtimeDb, "Projects/" + projectId), {
-      accessCode: cache.accessCode,
-      admin: cache.admin,
-      name: projectName,
-      questions: cache.questions,
-      stickyNotes: cache.stickyNotes,
-      users: cache.users,
-    })
+    console.log(projectName);
+    const projectRef = ref(realtimeDb, "Projects/" + projectId);
+    update(projectRef, { name: projectName })
       .then(() => {
         // Data saved successfully!
       })
