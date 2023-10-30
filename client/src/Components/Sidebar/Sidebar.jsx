@@ -43,8 +43,11 @@ const Sidebar = () => {
           styles={{ bmMenu: { overflow: "hidden" } }}
           onStateChange={({ isOpen }) => setIsSidebarOpen(isOpen)}  // Update the local state when sidebar state changes
         >
-          <Link to="/Home" className="menu-item" onClick={closeMenuOnClick}>
+          <Link to="/" className="menu-item" onClick={closeMenuOnClick}>
             Home
+          </Link>
+          <Link to="/Create" className="menu-item" onClick={closeMenuOnClick}>
+            Create
           </Link>
           <Link to="/HistoryPage" className="menu-item" onClick={closeMenuOnClick}>
             History
