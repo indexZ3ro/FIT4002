@@ -79,7 +79,7 @@ const InfiniteCanvas = () => {
             if (user) {
                 setUserID(user.uid);
                 axios
-                    .get(apiUrl + `/api/checkAdminAccess/${projectId}/${userID}`)
+                    .get(apiUrl + `/api/checkAdminAccess/${projectId}/${user.uid}`)
                     .then((response) => {
                         if (response.data !== false) {
                             setIsAdmin(response.data);
