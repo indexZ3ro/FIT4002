@@ -1,83 +1,58 @@
-# Getting Started with Create React App
+# Teamoji
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About
 
-## Available Scripts
+The Teamoji Application is a tool designed to track how teams or individuals are progressing and feeling over time and to share people's ideas and feelings with the rest of the team.
 
-In the project directory, you can run:
+This is done through the ACT Matrix in which users can place sticky notes and emojis to illustrate their thoughts and emotions in regards to their current state. 
 
-### `npm start`
+The application also allows users to view their previous history of ACT matrices and collaborate in real time with other team members.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Security was not in the budget for this release of this project, likely to be a key feature for future releases due to the handling of possibly sensitive information.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Teams can review each matrix once completed, tracking how the team is feeling over a period of time on a specific topic/project/question.
 
-### `npm test`
+A React Frontend with node.js used as the event-driven server, and a Firebase Backend/Database is used.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Running Application
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Ensure Node version 12 or higher is installed
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To run in a development enviroment:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+`npm run dev`
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Building Application
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To compile code to public folder:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+`npx webpack --config webpack.config.js`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Deploying Application
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Ensure Firebase is installed using:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`npm install firebase`
 
-### Code Splitting
+to deploy:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+`firebase deploy --only hosting:teamoji-matrix`
 
-### Analyzing the Bundle Size
+## Website
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+https://teamoji-matrix.web.app/
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-# Notes
+Notes:
 
 to deploy run:
 firebase deploy --only hosting:teamoji-matrix which will deploy the public directory
 
 to compile code to public folder run:
 npx webpack --config webpack.config.js
-
-site: https://teamoji-matrix.web.app/
 
 to deploy the backend
 use: "C:\Users\Kieran\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin\gcloud" app deploy (for Kieran only)

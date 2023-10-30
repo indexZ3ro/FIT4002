@@ -14,6 +14,8 @@ import Sidebar from "./Components/Sidebar/Sidebar";
 import "./App.css";
 import LocalChangeContext from "./contexts/LocalChangeContext";
 import QuestionContext from "./contexts/QuestionContext";
+import ScaleContext from "./contexts/scaleContext";
+import UndoContext from "./contexts/UndoContext";
 import React, { useRef, useState } from "react";
 import HistoryPage from "./pages/history_page";
 import Settings from "./pages/settings_page";
@@ -23,29 +25,35 @@ import InfiniteCanvas from "./pages/infiniteCanvas";
 function App() {
   const [localChanges, setLocalChanges] = useState([]);
   const [localQuestions, setLocalQuestions] = useState([]);
+  const [localScale, setLocalScale] = useState(1);
+  const [localUndoIds, setLocalUndoIds] = useState([]);
   return (
     <Provider store={store}>
       <LocalChangeContext.Provider value={{ localChanges, setLocalChanges }}>
         <QuestionContext.Provider value={{ localQuestions, setLocalQuestions }}>
-          <Router>
-            <div className="App">
-              <Sidebar />
-              <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/LogIn" element={<LogInPage />} />
-                <Route path="/Home" element={<Homepage />} />
-                <Route path="/Signup" element={<SignUpPage />} />
-                <Route path="/AboutUs" element={<AboutUs />} />
-                <Route
-                  path="/CreateTeamMatrix"
-                  element={<CreateTeamMatrix />}
-                />
-                <Route path="/ACTMatrixSession/:projectId" element={<InfiniteCanvas />} />
-                <Route path="/HistoryPage" element={<HistoryPage />} />
-                <Route path="/Settings" element={<Settings />} />
-              </Routes>
-            </div>
-          </Router>
+         <ScaleContext.Provider value={[localScale, setLocalScale ]}>
+          <UndoContext.Provider value={{ localUndoIds, setLocalUndoIds }}>
+            <Router>
+              <div className="App">
+                <Sidebar />
+                <Routes>
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/LogIn" element={<LogInPage />} />
+                  <Route path="/Home" element={<Homepage />} />
+                  <Route path="/Signup" element={<SignUpPage />} />
+                  <Route path="/AboutUs" element={<AboutUs />} />
+                  <Route
+                    path="/CreateTeamMatrix"
+                    element={<CreateTeamMatrix />}
+                  />
+                  <Route path="/ACTMatrixSession/:projectId" element={<InfiniteCanvas />} />
+                  <Route path="/HistoryPage" element={<HistoryPage />} />
+                  <Route path="/Settings" element={<Settings />} />
+                </Routes>
+              </div>
+            </Router>
+          </UndoContext.Provider>
+          </ScaleContext.Provider>
         </QuestionContext.Provider>
       </LocalChangeContext.Provider>
     </Provider>

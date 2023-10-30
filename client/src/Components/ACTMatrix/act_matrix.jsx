@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useContext,useEffect, useState, useRef } from "react";
 import "../../css/act-matrix.css";
 import Note from "../Note/Note.jsx";
 import ACT from "../../assets/ACT.svg";
@@ -11,26 +11,28 @@ import Hook from "../../assets/Hook.png";
 import Heart from "../../assets/Heart.png";
 import Camera from "../../assets/Camera.png";
 import arrow from "../../assets/Arrow.svg";
+import ScaleContext from "../../contexts/scaleContext";
 
 const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
     const apiUrl = process.env.REACT_APP_API_URL;
     const [isDragging, setIsDragging] = useState(false);
     const [scale, setScale] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
-
+    const [localScale,setLocalScale] =  useContext(ScaleContext);
     const [lastMousePosition, setLastMousePosition] = useState(null);
     const canvasRef = useRef(null);
     const navigate = useNavigate();
-
+    const activeNotes = notes.filter(note => note.status === "Active");
     const handleWheel = (e) => {
         // e.preventDefault();
         let newScale = scale + e.deltaY * -0.001;
         newScale = Math.min(Math.max(0.125, newScale), 4);
         setScale(newScale);
+        setLocalScale(newScale)
     };
 
     const handleMouseDown = (e) => {
-        if (e.button === 0) {
+        if (e.button === 1) {
             e.preventDefault();
             setIsDragging(true);
             setLastMousePosition({ x: e.clientX, y: e.clientY });
@@ -38,7 +40,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
     };
 
     const handleMouseUp = (e) => {
-        if (e.button === 0) {
+        if (e.button === 1) {
             setIsDragging(false);
         }
     };
@@ -88,6 +90,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
     }, []);
 
     return (
+     
         <div
             className={`outer-infinite ${isDragging ? "grabbing" : ""}`}
             onWheel={handleWheel}
@@ -126,7 +129,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                     </div>
                 </div>
                 {/* stickynotes */}
-                {notes.map((note) => (
+                {activeNotes.map((note) => (
                     <Note
                         key={note.id}
                         id={note.id}
@@ -138,6 +141,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                         scale={scale}
                         projectId={projectId}
                         noteColour={note.noteColour}
+                        status= {note.status}
                     />
                 ))}
                 {emojis.map((emoji) => (
@@ -155,6 +159,7 @@ const ACTMatrix = ({ notes, setNotes, projectId, emojis, setEmojis }) => {
                 ))}
             </div>
         </div>
+
     );
 };
 

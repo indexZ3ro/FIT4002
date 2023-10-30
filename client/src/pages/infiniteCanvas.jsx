@@ -8,7 +8,7 @@ import ACTMatrix from "../Components/ACTMatrix/act_matrix";
 import Timer from "../Components/Timer/Timer";
 import ACTSidebar from "../Components/ACTSidebar/act-sidebar";
 import { realtimeDb } from "../firebase";
-import { onValue, ref } from "firebase/database";
+import { getDatabase,onValue, ref,update } from "firebase/database";
 import LocalChangeContext from "../contexts/LocalChangeContext";
 import ACTQuestionsContainer from "../Components/ACTQuestions/act_questions_container";
 import ACT from "../assets/ACT.svg";
@@ -17,11 +17,14 @@ import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
+import UndoContext from "../contexts/UndoContext";
+
 const InfiniteCanvas = () => {
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
     const { projectId } = useParams();
     const { localChanges, setLocalChanges } = useContext(LocalChangeContext);
+    const {localUndoIds, setLocalUndoIds} = useContext(UndoContext);
     const [isAdmin, setIsAdmin] = useState(false);
 
     // handle sticky notes state management here
@@ -31,13 +34,15 @@ const InfiniteCanvas = () => {
     const [accessCode, setAccessCode] = useState('');
     const [noteColour, setNoteColour] = useState(''); 
     const [userID, setUserID] = useState('');
-
+  
     // Fetch all sticky notes from the database when the component mounts
     useEffect(() => {
         axios
             .get(apiUrl + `/api/project/${projectId}/sticky-notes`)
+           
             .then((response) => {
-                setNotes(response.data);
+                const activeNotes = response.data.filter(note => note.status === "Active");
+                setNotes(activeNotes);
             })
             .catch((error) => {
                 console.error("apiURL is:" + apiUrl);
@@ -266,6 +271,38 @@ const InfiniteCanvas = () => {
       };
   }, [projectId, localChanges]);
 
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+        if (e.ctrlKey && e.key === 'z') {
+            const lastId = localUndoIds.pop();
+            console.log()
+            if (lastId) {
+                // Update localUndoIds state if necessary
+                setLocalUndoIds([...localUndoIds]);
+
+                // Get a reference to the Firebase Realtime Database
+                axios
+                .put(apiUrl + `/api/sticky-notes-restore/${lastId}`, {
+                    projectKey: projectId,
+                    status: "Active"
+                })
+                .then((response) => {
+                    console.log("Sticky note activated successfully:", response.data);
+                })
+                .catch((error) => {
+                    console.error("Error activating sticky note:", error);
+                });
+            }
+        }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+    };
+}, [localUndoIds]);
 
   return (
     
