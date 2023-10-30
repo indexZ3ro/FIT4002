@@ -41,7 +41,6 @@ class Timer extends Component {
         const reviewData = childSnapshot.val();
         reviews.push({ ...reviewData, id: reviewId });
       });
-
       // Find the latest review
       const latestReview = reviews.reduce((latest, review) => {
         if (!latest || review.date_time > latest.date_time) {
@@ -63,6 +62,7 @@ class Timer extends Component {
 
   // Call the Firebase listener setup in componentDidMount
   componentDidMount() {
+    this.setupDatabaseListener();
     setTimeout(() => {
       this.handleFirebaseListener();
     }, 1000);
@@ -77,10 +77,6 @@ class Timer extends Component {
 
   componentWillUnmount() {
     this.stopTimer();
-  }
-
-  componentDidMount() {
-    this.setupDatabaseListener();
   }
 
   setupDatabaseListener = () => {
