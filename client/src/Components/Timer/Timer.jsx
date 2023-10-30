@@ -108,7 +108,7 @@ class Timer extends Component {
 
       const timeLeft = (totalSeconds * 1000) - (Date.now() - startAt - serverTimeOffset);
 
-      if( !adminAccess && timeLeft>0 && this.timerInterval == null){
+      if( timeLeft>0 && this.timerInterval == null){
         this.timerInterval = setInterval(() => {
           const timeLeft = (totalSeconds * 1000) - (Date.now() - startAt - serverTimeOffset);
           if (timeLeft < 0) {
