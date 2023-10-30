@@ -11,7 +11,7 @@ const ACTQuestions = ({ id, text, type, projectId }) => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [name, setName] = useState(text || ""); // Renamed state variable from 'Question' to 'name'
   const divRef = useRef();
-  divRef.current.textContent = text;
+  // divRef.current.textContent = text;
   const { localQuestions, setLocalQuestions } = useContext(QuestionContext);
   const [isUpdated, setIsUpdated] = useState(false); // Flag to track user modification
   const [questions, setQuestions] = useState([]);
