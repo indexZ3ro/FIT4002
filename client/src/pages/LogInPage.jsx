@@ -14,6 +14,7 @@ import { auth } from "../firebase";
 import LogInCover from "../assets/logInCover.svg";
 import google_normal from "../assets/google-normal-btn.svg";
 import google_hover from "../assets/google-focus-btn.svg";
+import TeamojiHeader from "../Components/TeamojiHeader";
 
 const LogInPage = () => {
     const dispatch = useDispatch();
@@ -98,9 +99,7 @@ const LogInPage = () => {
     return (
         <div className="login-page">
             <div className="split-left-login">
-                <div className="logInPageTeam" onClick={navigateLanding}>
-                    Teamoji
-                </div>
+                <TeamojiHeader />
                 <img className="logInPageCoverImg" src={LogInCover}></img>
             </div>
 

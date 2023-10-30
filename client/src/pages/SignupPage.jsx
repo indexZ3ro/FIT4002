@@ -9,6 +9,7 @@ import { auth } from "../firebase";
 import "../css/sign-up.css";
 import TextButton from "../Components/Buttons/textButton";
 import SignUpPageCover from "../assets/signUpPageCover.svg";
+import TeamojiHeader from "../Components/TeamojiHeader";
 
 const SignUpPage = () => {
     const dispatch = useDispatch();
@@ -32,27 +33,31 @@ const SignUpPage = () => {
         navigate("/LogIn");
     };
 
+    const navigateLanding = () => {
+        navigate("/");
+    };
+
     const onSubmit = async (e) => {
         e.preventDefault();
 
         await createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
-                console.log(userCredential)
+                console.log(userCredential);
                 const user = userCredential.user;
 
                 updateProfile(user, {
                     displayName: name,
                 })
-                .then(() => {
-                    // Profile updated!
-                    // ...
-                })
-                .catch((error) => {
-                    // An error occurred
-                    // ...
-                    console.log(error);
-                });
+                    .then(() => {
+                        // Profile updated!
+                        // ...
+                    })
+                    .catch((error) => {
+                        // An error occurred
+                        // ...
+                        console.log(error);
+                    });
 
                 navigate("/Home");
             })
@@ -86,7 +91,7 @@ const SignUpPage = () => {
     return (
         <div className="signUpPage">
             <div className="split-left-signup">
-                <div className="signUpPageTeam">Teamoji</div>
+                <TeamojiHeader />
                 <div className="signUpPageCover">
                     <img
                         className="signUpPageCoverImg"
